@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 module.exports = {
   reactStrictMode: true,
   swcMinify: true,
@@ -11,7 +12,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/home',
+        destination: '/welcome',
         permanent: true,
       },
     ];
