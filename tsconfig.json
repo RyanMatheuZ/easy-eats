@@ -30,13 +30,22 @@
       "@components/*": [
         "components/*"
       ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
       "@pages/*": [
         "pages/*"
       ],
+      "@services/*": [
+        "services/*"
+      ],
       "@styles/*": [
         "styles/*"
+      ],
+      "@utils/*": [
+        "utils/*"
       ]
-    },
+    }
   },
   "include": [
     "next-env.d.ts",
