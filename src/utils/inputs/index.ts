@@ -1,0 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export const hasOnlyNumbers = (value: string): boolean => {
+  return !/^\d+$/.test(value);
+};
+
+export const formatCPNJ = (cnpj: string): string => {
+  // 1. Removes any non-numeric characters
+  // 2. Make sure it's 14 digits
+  // 3. Add the dots and dashes
+  return cnpj
+    .replace(/\D/g, '')
+    .slice(0, 14).
+    replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+};
+
+export const validateCNPJ = (cnpj: string): boolean => {
+  cnpj = cnpj.replace(/[^\d]+/g, '');
+  if (cnpj.length !== 14) return false;
+
+  let size = cnpj.length - 2,
+    numbers = cnpj.substring(0, size),
+    sum = 0,
+    pos = size - 7;
+  const digits = cnpj.substring(size);
+  for (let i = size; i >= 1; i--) {
+    sum += Number(numbers.charAt(size - i)) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+  if (result != Number(digits.charAt(0))) return false;
+
+  size = size + 1;
+  numbers = cnpj.substring(0, size);
+  sum = 0;
+  pos = size - 7;
+  for (let i = size; i >= 1; i--) {
+    sum += Number(numbers.charAt(size - i)) * pos--;
+    if (pos < 2) pos = 9;
+  }
+  result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+  if (result != Number(digits.charAt(1))) return false;
+
+  return true;
+};

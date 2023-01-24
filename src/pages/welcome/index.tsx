@@ -1,12 +1,25 @@
-import type { FC } from 'react';
+import type { NextPage } from 'next';
 
+import { useRouter } from 'next/router';
+
+import StyledButton from '@components/elements/StyledButton/styles';
 import Head from '@components/meta/Head';
+import BottomActions from '@components/modules/BottomActions';
+import MaxWidthContainer from '@components/modules/MaxWidthContainer';
 
-import BottomActions from './BottomActions';
+import { Container, ButtonContainer, Title, Text } from './styles';
 
-import { Container } from './styles';
+const Login: NextPage = () => {
+  const router = useRouter();
 
-const Login: FC = () => {
+  const handleRedirectToSignInPage = () => {
+    router.push('/sign-in');
+  };
+
+  const handleRedirectToSignUpPage = () => {
+    router.push('/sign-up');
+  };
+
   return (
     <>
       <Head
@@ -14,7 +27,25 @@ const Login: FC = () => {
         description='O jeito mais fácil de pedir aquilo que te agrada!'
       />
       <Container>
-        <BottomActions />
+        <BottomActions $primary>
+          <MaxWidthContainer>
+            <Title>
+              Bem-vindo!
+            </Title>
+            <Text>
+              Agora seus clientes podem realizar pedidos com muita facilidade e rapidez.
+              Tudo isso aliado à nossa flexibilidade e cuidado!
+            </Text>
+            <ButtonContainer>
+              <StyledButton $primary onClick={handleRedirectToSignInPage}>
+                Entrar
+              </StyledButton>
+              <StyledButton onClick={handleRedirectToSignUpPage}>
+                Cadastrar-se
+              </StyledButton>
+            </ButtonContainer>
+          </MaxWidthContainer>
+        </BottomActions>
       </Container>
     </>
   );

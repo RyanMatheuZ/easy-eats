@@ -14,7 +14,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <MuiThemeProvider theme={muiTheme}>
         <GlobalStyle />
         <NextNProgress
-          color={theme.palette.primary.main}
+          color={theme.palette.common.black}
           startPosition={0.3}
           stopDelayMs={200}
           height={3}
