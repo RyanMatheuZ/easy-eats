@@ -1,16 +1,30 @@
 import styled from 'styled-components';
 
+import { Typography } from '@mui/material';
+
 export const Container = styled.div`
-  background-color: ${({ theme }) => theme.palette.common.white};
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 1fr;
   height: 100vh;
+
+  & > svg {
+    align-self: center;
+    justify-self: center;
+  }
 `;
 
-export const MaxWidthContainer = styled.section`
-  padding: ${({ theme }) => theme.spacing(4)};
-  margin: 0 auto;
-  max-width: 800px;
-  width: 100%;
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing(2)};
+`;
+
+export const Title = styled.h1`
+  color: ${({ theme }) => theme.palette.secondary.main};
+  text-align: center;
+`;
+export const Text = styled(Typography)`
+  text-align: center;
+  margin-bottom: ${({ theme }) => theme.spacing(4)};
 `;

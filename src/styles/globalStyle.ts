@@ -9,6 +9,8 @@ export default createGlobalStyle(
 
     html,
     body {
+      background-color: ${theme.palette.common.white};
+      font-size: 14px;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased !important;
       scroll-behavior: smooth;
@@ -18,11 +20,13 @@ export default createGlobalStyle(
 
     h1 {
       font-size: 2.25rem;
+      margin: 0;
     }
 
     a {
-      color: inherit;
+      color: currentColor;
       text-decoration: none;
+      border-bottom: 2px solid currentColor;
     }
 
     ul,
