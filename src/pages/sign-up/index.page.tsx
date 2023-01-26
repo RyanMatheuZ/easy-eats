@@ -9,15 +9,15 @@ import BottomActions from '@components/modules/BottomActions';
 import HeaderWithBackButton from '@components/modules/HeaderWithBackButton';
 import MaxWidthContainer from '@components/modules/MaxWidthContainer';
 
-import { formatCPNJ } from '@utils/inputs';
+import { formatCNPJ } from '@utils/inputs';
 
 import { signUpInitialValues, signUpSchema, SignUpValues } from './utils';
 
-import { Container, SubmitButtonContainer } from './styles';
+import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
-  const handleSubmit = () => {
-    return alert('SUBMIT');
+  const onSubmit = () => {
+    return console.log('Submit!');
   };
 
   return (
@@ -31,20 +31,30 @@ const SignUp: NextPage = () => {
           text="Já possui uma conta?"
           routeToRedirect="/sign-in"
         />
+        <MaxWidthContainer>
+          <HeroContainer>
+            <Title>
+              Crie sua conta!
+            </Title>
+            <Text>
+              Desfrute do melhor da tecnologia para o seu negócio...
+            </Text>
+          </HeroContainer>
+        </MaxWidthContainer>
         <BottomActions>
           <MaxWidthContainer>
             <Formik
               initialValues={signUpInitialValues as SignUpValues}
               validationSchema={signUpSchema}
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
             >
               {({ values }) => (
                 <Form noValidate>
                   <FormikTextField
                     type="text"
-                    dataTestId="establishment-name"
-                    name="establishmentName"
-                    label="Nome do estabelecimento"
+                    dataTestId="fantasy-name"
+                    name="fantasyName"
+                    label="Nome fantasia"
                     fullWidth
                   />
                   <FormikTextField
@@ -52,7 +62,7 @@ const SignUp: NextPage = () => {
                     dataTestId="cnpj"
                     name="cnpj"
                     label="CNPJ"
-                    value={formatCPNJ(values.cnpj)}
+                    value={formatCNPJ(values.cnpj)}
                     fullWidth
                   />
                   <FormikTextField

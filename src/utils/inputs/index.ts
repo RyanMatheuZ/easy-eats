@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export const hasOnlyNumbers = (value: string): boolean => {
   return !/^\d+$/.test(value);
 };
 
-export const formatCPNJ = (cnpj: string): string => {
+export const formatCNPJ = (cnpj: string): string => {
   // 1. Removes any non-numeric characters
   // 2. Make sure it's 14 digits
   // 3. Add the dots and dashes
@@ -15,6 +13,8 @@ export const formatCPNJ = (cnpj: string): string => {
 };
 
 export const validateCNPJ = (cnpj: string): boolean => {
+  // Applies calculation to validate a CNPJ
+  // https://blog.dbins.com.br/como-funciona-a-logica-da-validacao-do-cnpj
   cnpj = cnpj.replace(/[^\d]+/g, '');
   if (cnpj.length !== 14) return false;
 

@@ -20,6 +20,7 @@ export default createGlobalStyle(
 
     h1 {
       font-size: 2.25rem;
+      margin: 0;
     }
 
     a {

@@ -3,25 +3,25 @@ import * as Yup from 'yup';
 import { hasOnlyNumbers, validateCNPJ } from '@utils/inputs';
 
 export interface SignUpValues {
-  establishmentName: string;
+  fantasyName: string;
   cnpj: string;
   email: string;
   password: string;
 }
 
 export const signUpInitialValues: SignUpValues = {
-  establishmentName: '',
+  fantasyName: '',
   cnpj: '',
   email: '',
   password: ''
 };
 
 export const signUpSchema = Yup.object().shape({
-  establishmentName: Yup
+  fantasyName: Yup
     .string()
-    .required('Você deve inserir o nome do seu estabelecimento!')
+    .required('Você deve inserir o nome fantasia!')
     .test(
-      'isEstablishmentNameValid',
+      'isSantasyNameValid',
       'Esse nome não pode ser numérico!',
       (value) => hasOnlyNumbers(value || '')
     ),
@@ -36,7 +36,7 @@ export const signUpSchema = Yup.object().shape({
   email: Yup
     .string()
     .email('Você deve inserir um e-mail válido!')
-    .required('Você deve inserir seu e-mail!'),
+    .required('Você deve inserir um e-mail!'),
   password: Yup
     .string()
     .min(8, 'Sua senha deve ter no mínimo 8 caracteres!')

@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 
 import { useRouter } from 'next/router';
 
+import Logo from '@components/svgs/Logo';
+
 import StyledButton from '@components/elements/StyledButton/styles';
 import Head from '@components/meta/Head';
 import BottomActions from '@components/modules/BottomActions';
@@ -27,6 +29,7 @@ const Login: NextPage = () => {
         description='O jeito mais fácil de pedir aquilo que te agrada!'
       />
       <Container>
+        <Logo />
         <BottomActions $primary>
           <MaxWidthContainer>
             <Title>

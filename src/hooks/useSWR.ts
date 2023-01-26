@@ -7,7 +7,7 @@ const defaultConfig: SWRConfiguration = {
     const { data } = await axiosInstance.get(url);
     return data;
   },
-  errorRetryCount: 1,
+  errorRetryCount: 2,
 };
 
 const useSWR = (url: string) => {

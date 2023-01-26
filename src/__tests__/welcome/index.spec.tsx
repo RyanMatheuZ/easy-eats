@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 
-import { render, waitFor } from '@utils/tests';
-import userEvent from '@testing-library/user-event';
+import { render, waitFor, fireEvent } from '@utils/tests';
 
-import Welcome from '..';
+import Welcome from '@pages/welcome/index.page';
 
 jest.mock('next/router', () => {
   return {
@@ -40,7 +39,7 @@ describe('Welcome page', () => {
 
     const signInButton = getByRole('button', { name: /entrar/i });
 
-    userEvent.click(signInButton);
+    fireEvent.click(signInButton);
 
     await waitFor(() => {
       expect(router.push).toHaveBeenCalledWith('/sign-in');
@@ -54,7 +53,7 @@ describe('Welcome page', () => {
 
     const signUpButton = getByRole('button', { name: /cadastrar-se/i });
 
-    userEvent.click(signUpButton);
+    fireEvent.click(signUpButton);
 
     await waitFor(() => {
       expect(router.push).toHaveBeenCalledWith('/sign-up');
