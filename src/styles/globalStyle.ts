@@ -19,7 +19,7 @@ export default createGlobalStyle(
     }
 
     h1 {
-      font-size: 2.25rem;
+      font-size: 2.5rem;
       margin: 0;
     }
 

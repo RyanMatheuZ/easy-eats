@@ -9,7 +9,7 @@ const defaultConfig: AxiosRequestConfig = {
 
 const axiosInstance = axios.create({
   ...defaultConfig,
-  baseURL: `${process.env.REACT_APP_BASE_URL}/api/v1`,
+  baseURL: `${process.env.REACT_APP_BASE_API}/api/v1`,
 });
 
 export default axiosInstance;

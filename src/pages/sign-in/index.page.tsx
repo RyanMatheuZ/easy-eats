@@ -8,11 +8,11 @@ import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@compone
 
 import { formatCNPJ } from '@utils/inputs';
 
-import { signUpInitialValues, signUpSchema, SignUpValues } from './utils';
+import { signInInitialValues, signInSchema, SignInValues } from './utils';
 
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage = () => {
   const onSubmit = () => {
     return console.log('Submit!');
   };
@@ -20,53 +20,39 @@ const SignUp: NextPage = () => {
   return (
     <>
       <Head
-        title='Cadastrar-se | EasyEats'
+        title='Entrar | EasyEats'
         description='Desfrute do melhor da tecnologia para o seu negócio...'
       />
       <Container>
         <HeaderWithBackButton
-          text="Já possui uma conta?"
-          routeToRedirect="/sign-in"
+          text="Ainda não possui uma conta?"
+          routeToRedirect="/sign-up"
         />
         <MaxWidthContainer>
           <HeroContainer>
             <Title>
-              Crie sua conta!
+              Olá novamente!
             </Title>
             <Text>
               Desfrute do melhor da tecnologia para o seu negócio...
             </Text>
           </HeroContainer>
         </MaxWidthContainer>
-        <BottomActions>
+        <BottomActions $primary>
           <MaxWidthContainer>
             <Formik
-              initialValues={signUpInitialValues as SignUpValues}
-              validationSchema={signUpSchema}
+              initialValues={signInInitialValues as SignInValues}
+              validationSchema={signInSchema}
               onSubmit={onSubmit}
             >
               {({ values }) => (
                 <Form noValidate>
-                  <FormikTextField
-                    type="text"
-                    dataTestId="fantasy-name"
-                    name="fantasyName"
-                    label="Nome fantasia"
-                    fullWidth
-                  />
                   <FormikTextField
                     type="tel" // Numeric keyboard without parsing to number
                     dataTestId="cnpj"
                     name="cnpj"
                     label="CNPJ"
                     value={formatCNPJ(values.cnpj)}
-                    fullWidth
-                  />
-                  <FormikTextField
-                    type="email"
-                    dataTestId="email"
-                    name="email"
-                    label="E-mail"
                     fullWidth
                   />
                   <FormikTextField
@@ -77,8 +63,8 @@ const SignUp: NextPage = () => {
                     fullWidth
                   />
                   <SubmitButtonContainer>
-                    <StyledButton type="submit" $primary>
-                      Cadastrar-se
+                    <StyledButton type="submit">
+                      Entrar
                     </StyledButton>
                   </SubmitButtonContainer>
                 </Form>
@@ -91,4 +77,4 @@ const SignUp: NextPage = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

@@ -1,7 +1,7 @@
 import type { Theme, Palette, Breakpoints } from '@mui/material/styles';
 
 declare module 'styled-components' {
-  export interface DefaultTheme extends Theme {
+  interface DefaultTheme extends Theme {
     palette: Palette;
     breakpoints: Breakpoints;
   }
