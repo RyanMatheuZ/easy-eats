@@ -26,5 +26,6 @@ export const Title = styled.h1`
 `;
 export const Text = styled(Typography)`
   text-align: center;
+  font-size: 1.2rem;
   margin-bottom: ${({ theme }) => theme.spacing(4)};
 `;

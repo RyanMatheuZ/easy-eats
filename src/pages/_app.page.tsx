@@ -20,9 +20,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           height={3}
           showOnShallow={true}
         />
-        <main>
-          <Component {...pageProps} />
-        </main>
+        <Component {...pageProps} />
       </MuiThemeProvider>
     </StyledThemeProvider>
   );

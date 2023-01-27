@@ -37,7 +37,7 @@ export const muiTheme = createTheme({
 const theme: Theme = {
   ...muiTheme,
   palette: {
-    ...muiTheme.palette,
+    ...muiTheme.palette
   },
   breakpoints: {
     ...muiTheme.breakpoints

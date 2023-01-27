@@ -23,8 +23,8 @@ describe('Welcome page', () => {
     const title = getByText(/bem-vindo!/i);
     const text = getByText(/agora seus clientes podem realizar pedidos com muita facilidade e rapidez. Tudo isso aliado à nossa flexibilidade e cuidado!/i);
 
-    const signInButton = getByRole('button', { name: /entrar/i });
-    const signUpButton = getByRole('button', { name: /cadastrar-se/i });
+    const signInButton = getByRole('button', { name: /Entrar/i });
+    const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
 
     expect(title).toBeInTheDocument();
     expect(text).toBeInTheDocument();
@@ -33,31 +33,24 @@ describe('Welcome page', () => {
     expect(signUpButton).toBeInTheDocument();
   });
 
-  it('should redirect to the SIGN IN page on clicking the button', async () => {
-    const { getByRole } = render(<Welcome />);
-    const router = useRouter();
+  it.each`
+    LABEL              | REDIRECT
+    ${/Entrar/i}       | ${'/sign-in'}
+    ${/Cadastrar-se/i} | ${'/sign-up'}
+  `(
+    'should redirect to <REDIRECT> when clicking on each button <LABEL>',
+    async ({ LABEL, REDIRECT }) => {
+      const { getByRole } = render(<Welcome />);
+      const router = useRouter();
 
-    const signInButton = getByRole('button', { name: /entrar/i });
+      const button = getByRole('button', { name: LABEL });
 
-    fireEvent.click(signInButton);
+      fireEvent.click(button);
 
-    await waitFor(() => {
-      expect(router.push).toHaveBeenCalledWith('/sign-in');
-      expect(router.push).toBeCalledTimes(1);
-    });
-  });
-
-  it('should redirect to the SIGN UP page on clicking the button', async () => {
-    const { getByRole } = render(<Welcome />);
-    const router = useRouter();
-
-    const signUpButton = getByRole('button', { name: /cadastrar-se/i });
-
-    fireEvent.click(signUpButton);
-
-    await waitFor(() => {
-      expect(router.push).toHaveBeenCalledWith('/sign-up');
-      expect(router.push).toBeCalledTimes(1);
-    });
-  });
+      await waitFor(() => {
+        expect(router.push).toHaveBeenCalledWith(REDIRECT);
+        expect(router.push).toBeCalledTimes(1);
+      });
+    }
+  );
 });

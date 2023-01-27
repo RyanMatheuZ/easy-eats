@@ -6,9 +6,20 @@ const StyleInput = styled(TextField).attrs({
   variant: 'filled'
 })`
   & div {
+    background-color: #EDECED;
     border-radius: 50px;
     margin-bottom:  ${({ theme }) => theme.spacing(0.5)};
     padding-left: ${({ theme }) => theme.spacing(2)};
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: #EDECED;
+    }
+
+    &:hover {
+      background-color: #E9E9E9;
+    }
 
     &::before,
     &::after,
