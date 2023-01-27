@@ -76,6 +76,13 @@ const SignUp: NextPage = () => {
                     label="Senha"
                     fullWidth
                   />
+                  <FormikTextField
+                    type="password"
+                    dataTestId="confirm-password"
+                    name="confirmPassword"
+                    label="Confirme a senha"
+                    fullWidth
+                  />
                   <SubmitButtonContainer>
                     <StyledButton type="submit" $primary>
                       Cadastrar-se
