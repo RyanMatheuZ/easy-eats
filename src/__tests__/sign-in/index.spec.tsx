@@ -14,7 +14,7 @@ jest.mock('next/router', () => {
 
 describe('Sign Up page', () => {
   it('should render a page with all the informations', () => {
-    const { getByTestId, getByText } = render(<SignIn />);
+    const { getByTestId, getByText, getByRole } = render(<SignIn />);
 
     const backButton = getByTestId('back-button');
     const headerText = getByText(/Ainda não possui uma conta?/i);
@@ -25,6 +25,8 @@ describe('Sign Up page', () => {
     const cnpjField = getByTestId('cnpj');
     const passwordField = getByTestId('password');
 
+    const signUpButton = getByRole('button', { name: /Entrar/i });
+
     expect(backButton).toBeInTheDocument();
     expect(headerText).toBeInTheDocument();
 
@@ -33,6 +35,8 @@ describe('Sign Up page', () => {
 
     expect(cnpjField).toBeInTheDocument();
     expect(passwordField).toBeInTheDocument();
+
+    expect(signUpButton).toBeInTheDocument();
   });
 
   it('should redirect the user to PREVIOUS page to access that page and click on the back button', async () => {

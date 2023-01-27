@@ -26,12 +26,17 @@ const schemas = {
   password: Yup
     .string()
     .min(8, 'Sua senha deve ter no mínimo 8 caracteres!')
-    .required('Você deve inserir uma senha!')
+    .required('Você deve inserir uma senha!'),
+  confirmPassword: Yup
+    .string()
+    .oneOf([Yup.ref('password')], 'As senhas não conferem!')
+    .required('Você deve confirmar a senha!'),
 };
 
 export const {
   fantasyName,
   cnpj,
   email,
-  password
+  password,
+  confirmPassword
 } = schemas;

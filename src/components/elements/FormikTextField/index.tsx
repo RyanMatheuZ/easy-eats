@@ -32,7 +32,7 @@ const FormikTextField: FC<FormikTextFieldProps> = ({
         label={label}
         required={required}
         fullWidth={fullWidth}
-        data-testid={dataTestId}
+        inputProps={{ 'data-testid': dataTestId }}
         autoComplete="off"
         as={StyleInput}
         {...props}
