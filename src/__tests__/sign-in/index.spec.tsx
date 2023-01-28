@@ -1,8 +1,15 @@
 import { useRouter } from 'next/router';
 
+import { faker } from '@faker-js/faker';
+
 import { render, waitFor, fireEvent } from '@utils/tests';
 
+import axiosInstance from '@services/axios';
+
 import SignIn from '@pages/sign-in/index.page';
+
+jest.mock('@services/axios');
+const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 
 jest.mock('next/router', () => {
   return {
@@ -12,7 +19,12 @@ jest.mock('next/router', () => {
   };
 });
 
-describe('Sign Up page', () => {
+const FAKE_SIGN_IN_DATA = {
+  cnpj: '82514016000187',
+  password: faker.internet.password(10),
+};
+
+describe('Sign In page', () => {
   it('should render a page with all the informations', () => {
     const { getByTestId, getByText, getByRole } = render(<SignIn />);
 
@@ -25,7 +37,7 @@ describe('Sign Up page', () => {
     const cnpjField = getByTestId('cnpj');
     const passwordField = getByTestId('password');
 
-    const signUpButton = getByRole('button', { name: /Entrar/i });
+    const signInButton = getByRole('button', { name: /Entrar/i });
 
     expect(backButton).toBeInTheDocument();
     expect(headerText).toBeInTheDocument();
@@ -36,7 +48,7 @@ describe('Sign Up page', () => {
     expect(cnpjField).toBeInTheDocument();
     expect(passwordField).toBeInTheDocument();
 
-    expect(signUpButton).toBeInTheDocument();
+    expect(signInButton).toBeInTheDocument();
   });
 
   it('should redirect the user to PREVIOUS page to access that page and click on the back button', async () => {
@@ -53,7 +65,32 @@ describe('Sign Up page', () => {
     });
   });
 
-  // ! TODO: add test for submission after submission
+  it('should correctly fill the fields and submit data for sign in', async () => {
+    const { getByRole, getByTestId } = render(<SignIn />);
+
+    const cnpjField = getByTestId('cnpj');
+    const passwordField = getByTestId('password');
+
+    const signInButton = getByRole('button', { name: /Entrar/i });
+
+    const { cnpj, password } = FAKE_SIGN_IN_DATA;
+
+    fireEvent.change(cnpjField, {
+      target: { value: cnpj }
+    });
+    fireEvent.change(passwordField, {
+      target: { value: password }
+    });
+
+    mockedAxios.post.mockResolvedValueOnce(FAKE_SIGN_IN_DATA);
+
+    fireEvent.click(signInButton);
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/company/sign-in', FAKE_SIGN_IN_DATA);
+      expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    });
+  });
 
   it.each`
     FIELD         | MESSAGE
@@ -64,9 +101,9 @@ describe('Sign Up page', () => {
     async ({ FIELD, MESSAGE }) => {
       const { getByRole, getByTestId } = render(<SignIn />);
 
-      const signUpButton = getByRole('button', { name: /Entrar/i });
+      const signInButton = getByRole('button', { name: /Entrar/i });
 
-      fireEvent.click(signUpButton);
+      fireEvent.click(signInButton);
 
       await waitFor(() => {
         expect(getByTestId(`${FIELD}-error-message`)).toHaveTextContent(MESSAGE);

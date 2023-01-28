@@ -1,15 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const defaultConfig: AxiosRequestConfig = {
-  timeout: 10000,
-  headers: {
-    Accept: 'application/json;charset=UTF-8', 'Content-Type': 'application/json',
-  }
+  timeout: 10000
 };
 
 const axiosInstance = axios.create({
   ...defaultConfig,
-  baseURL: `${process.env.REACT_APP_BASE_API}/api/v1`,
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
 });
 
 export default axiosInstance;

@@ -2,19 +2,26 @@ import type { NextPage } from 'next';
 
 import { Formik, Form } from 'formik';
 
+import useCompany from '@hooks/useCompany';
+
 import { FormikTextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
 
-import { formatCNPJ } from '@utils/inputs';
+import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
 
 import { signUpInitialValues, signUpSchema, SignUpValues } from './utils';
 
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
-  const onSubmit = () => {
-    return console.log('Submit!');
+  const { handleSignUp } = useCompany();
+
+  const onSubmit = (data: SignUpValues) => {
+    handleSignUp({
+      ...data,
+      cnpj: unformatCNPJ(data.cnpj)
+    });
   };
 
   return (
