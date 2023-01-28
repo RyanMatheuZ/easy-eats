@@ -12,6 +12,11 @@ export const formatCNPJ = (cnpj: string): string => {
     replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
 };
 
+export const unformatCNPJ = (cnpj: string): string => {
+  // Remove all non-digit characters (numbers from 0 to 9)
+  return cnpj.replace(/[^\d]/g, '');
+};
+
 export const validateCNPJ = (cnpj: string): boolean => {
   // Applies calculation to validate a CNPJ
   // https://blog.dbins.com.br/como-funciona-a-logica-da-validacao-do-cnpj

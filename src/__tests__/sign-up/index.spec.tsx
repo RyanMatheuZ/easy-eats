@@ -1,10 +1,15 @@
 import { useRouter } from 'next/router';
 
-import { render, waitFor, fireEvent } from '@utils/tests';
-
 import { faker } from '@faker-js/faker';
 
+import { render, waitFor, fireEvent } from '@utils/tests';
+
+import axiosInstance from '@services/axios';
+
 import SignUp from '@pages/sign-up/index.page';
+
+jest.mock('@services/axios');
+const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 
 jest.mock('next/router', () => {
   return {
@@ -13,6 +18,15 @@ jest.mock('next/router', () => {
     })
   };
 });
+
+const password = faker.internet.password(10);
+const FAKE_SIGN_UP_DATA = {
+  fantasyName: faker.company.name(),
+  cnpj: '82514016000187',
+  email: faker.internet.email(),
+  password,
+  confirmPassword: password
+};
 
 describe('Sign Up page', () => {
   it('should render a page with all the informations', () => {
@@ -28,6 +42,7 @@ describe('Sign Up page', () => {
     const cnpjField = getByTestId('cnpj');
     const emailField = getByTestId('email');
     const passwordField = getByTestId('password');
+    const confirmPasswordField = getByTestId('confirm-password');
 
     const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
 
@@ -41,6 +56,7 @@ describe('Sign Up page', () => {
     expect(cnpjField).toBeInTheDocument();
     expect(emailField).toBeInTheDocument();
     expect(passwordField).toBeInTheDocument();
+    expect(confirmPasswordField).toBeInTheDocument();
 
     expect(signUpButton).toBeInTheDocument();
   });
@@ -84,7 +100,44 @@ describe('Sign Up page', () => {
     });
   });
 
-  // ! TODO: add test for submission after submission
+  it('should correctly fill the fields and submit data for sign up', async () => {
+    const { getByRole, getByTestId } = render(<SignUp />);
+
+    const fantasyNameField = getByTestId('fantasy-name');
+    const cnpjField = getByTestId('cnpj');
+    const emailField = getByTestId('email');
+    const passwordField = getByTestId('password');
+    const confirmPasswordField = getByTestId('confirm-password');
+
+    const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
+
+    const { fantasyName, cnpj, email, password, confirmPassword } = FAKE_SIGN_UP_DATA;
+
+    fireEvent.change(fantasyNameField, {
+      target: { value: fantasyName }
+    });
+    fireEvent.change(cnpjField, {
+      target: { value: cnpj }
+    });
+    fireEvent.change(emailField, {
+      target: { value: email }
+    });
+    fireEvent.change(passwordField, {
+      target: { value: password }
+    });
+    fireEvent.change(confirmPasswordField, {
+      target: { value: confirmPassword }
+    });
+
+    mockedAxios.post.mockResolvedValueOnce(FAKE_SIGN_UP_DATA);
+
+    fireEvent.click(signUpButton);
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/company/sign-up', FAKE_SIGN_UP_DATA);
+      expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+    });
+  });
 
   it.each`
     FIELD                 | MESSAGE
