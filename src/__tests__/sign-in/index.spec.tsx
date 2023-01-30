@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { faker } from '@faker-js/faker';
 
@@ -11,7 +11,7 @@ import SignIn from '@pages/sign-in/index.page';
 jest.mock('@services/axios');
 const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 
-jest.mock('next/router', () => {
+jest.mock('next/navigation', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
       back: jest.fn()

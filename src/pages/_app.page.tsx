@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import AuthProviver, { useAuth } from '@context/auth/index';
