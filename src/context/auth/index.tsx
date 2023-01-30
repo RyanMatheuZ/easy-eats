@@ -1,15 +1,24 @@
 import type { FC, PropsWithChildren } from 'react';
+
 import { useState, useContext, createContext } from 'react';
 
+import type { ICompany } from 'types';
+
+import { authenticatedRoutes, unauthenticatedRoutes } from './utils';
+
 type AuthContextType = {
-  company: any | null;
-  handleSignIn: () => void;
+  company: ICompany | null;
+  authenticatedRoutes: string[];
+  unauthenticatedRoutes: string[];
+  handleSignIn: (company: ICompany) => void;
   handleSignOut: () => void;
 };
 
 
 const authContextDefaultValues: AuthContextType = {
   company: null,
+  authenticatedRoutes,
+  unauthenticatedRoutes,
   handleSignIn: () => null,
   handleSignOut: () => null,
 };
@@ -19,8 +28,8 @@ const AuthContext = createContext<AuthContextType>(authContextDefaultValues);
 const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   const [company, setCompany] = useState(authContextDefaultValues.company);
 
-  const handleSignIn = () => {
-    setCompany(null);
+  const handleSignIn = (company: ICompany) => {
+    setCompany(company);
   };
 
   const handleSignOut = () => {
@@ -28,7 +37,13 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ company, handleSignIn, handleSignOut }}>
+    <AuthContext.Provider value={{
+      company,
+      authenticatedRoutes,
+      unauthenticatedRoutes,
+      handleSignIn,
+      handleSignOut
+    }}>
       {children}
     </AuthContext.Provider>
   );

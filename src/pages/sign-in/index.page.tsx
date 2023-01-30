@@ -6,11 +6,11 @@ import type { ISignIn } from 'types';
 
 import useCompany from '@hooks/useCompany';
 
+import { useRouter } from 'next/navigation';
+
 import { FormikTextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
-
-import { useAuth } from '@context/auth';
 
 import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
 
@@ -19,7 +19,7 @@ import { signInInitialValues, signInSchema } from './utils';
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
-  const { handleSignIn: xpto } = useAuth();
+  const router = useRouter();
 
   const { handleSignIn } = useCompany();
 
@@ -43,7 +43,7 @@ const SignIn: NextPage = () => {
         />
         <MaxWidthContainer>
           <HeroContainer>
-            <Title>
+            <Title onClick={() => router.push('/admin')}>
               Olá novamente!
             </Title>
             <Text>
