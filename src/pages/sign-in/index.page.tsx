@@ -8,6 +8,8 @@ import { FormikTextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
 
+import { useAuth } from '@context/auth';
+
 import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
 
 import { signInInitialValues, signInSchema, SignInValues } from './utils';
@@ -15,6 +17,8 @@ import { signInInitialValues, signInSchema, SignInValues } from './utils';
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
+  const { handleSignIn: xpto } = useAuth();
+
   const { handleSignIn } = useCompany();
 
   const onSubmit = (data: SignInValues) => {

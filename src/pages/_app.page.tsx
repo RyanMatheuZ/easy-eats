@@ -5,6 +5,8 @@ import NextNProgress from 'nextjs-progressbar';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
+import AuthProviver from '@context/auth';
+
 import theme, { muiTheme } from '@styles/theme';
 import GlobalStyle from '@styles/globalStyle';
 
@@ -20,7 +22,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           height={3}
           showOnShallow={true}
         />
-        <Component {...pageProps} />
+        <AuthProviver>
+          <Component {...pageProps} />
+        </AuthProviver>
       </MuiThemeProvider>
     </StyledThemeProvider>
   );

@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 const Logo: FC = () => {
-  return <svg width="330" height="134" viewBox="0 0 330 134" className="css-1j8o68f">
+  return <svg width="330" height="135" viewBox="0 0 330 134" className="css-1j8o68f">
     <defs id="SvgjsDefs1001"></defs>
     <g id="SvgjsG1007" transform="matrix(1,0,0,1,0,0)" fill="#ffb900">
       <rect xmlns="http://www.w3.org/2000/svg" width="110" height="134" rx="10" ry="10"></rect>
