@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 
 import { Formik, Form } from 'formik';
 
+import type { ISignUp } from 'types';
+
 import useCompany from '@hooks/useCompany';
 
 import { FormikTextField, StyledButton } from '@components/elements';
@@ -10,14 +12,14 @@ import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@compone
 
 import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
 
-import { signUpInitialValues, signUpSchema, SignUpValues } from './utils';
+import { signUpInitialValues, signUpSchema } from './utils';
 
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
   const { handleSignUp } = useCompany();
 
-  const onSubmit = (data: SignUpValues) => {
+  const onSubmit = (data: ISignUp) => {
     handleSignUp({
       ...data,
       cnpj: unformatCNPJ(data.cnpj)
@@ -48,7 +50,7 @@ const SignUp: NextPage = () => {
         <BottomActions>
           <MaxWidthContainer>
             <Formik
-              initialValues={signUpInitialValues as SignUpValues}
+              initialValues={signUpInitialValues as ISignUp}
               validationSchema={signUpSchema}
               onSubmit={onSubmit}
             >

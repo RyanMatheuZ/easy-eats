@@ -27,6 +27,9 @@
       "@components/*": [
         "components/*"
       ],
+      "@context/*": [
+        "context/*"
+      ],
       "@hooks/*": [
         "hooks/*"
       ],
@@ -38,6 +41,9 @@
       ],
       "@styles/*": [
         "styles/*"
+      ],
+      "@types/*": [
+        "types/*"
       ],
       "@utils/*": [
         "utils/*"

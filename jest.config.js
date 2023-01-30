@@ -14,10 +14,12 @@ const customJestConfig = {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@assets/(.*)': '<rootDir>/src/assets/$1',
     '^@components/(.*)': '<rootDir>/src/components/$1',
+    '^@context/(.*)': '<rootDir>/src/context/$1',
     '^@hooks/(.*)': '<rootDir>/src/hooks/$1',
     '^@pages/(.*)': '<rootDir>/src/pages/$1',
     '^@services/(.*)': '<rootDir>/src/services/$1',
     '^@styles/(.*)': '<rootDir>/src/styles/$1',
+    '^@types/(.*)': '<rootDir>/src/types/$1',
     '^@utils/(.*)': '<rootDir>/src/utils/$1'
   },
   testEnvironment: 'jest-environment-jsdom',

@@ -1,16 +1,10 @@
 import * as Yup from 'yup';
 
+import type { ISignUp } from 'types';
+
 import { fantasyName, cnpj, email, password, confirmPassword } from '@utils/schemas';
 
-export interface SignUpValues {
-  fantasyName: string;
-  cnpj: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-export const signUpInitialValues: SignUpValues = {
+export const signUpInitialValues: ISignUp = {
   fantasyName: '',
   cnpj: '',
   email: '',
