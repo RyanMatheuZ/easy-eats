@@ -2,13 +2,12 @@ import { useCallback } from 'react';
 
 import axiosInstance from '@services/axios';
 
-import { SignInValues } from '@pages/sign-in/utils';
-import { SignUpValues } from '@pages/sign-up/utils';
+import type { ISignIn, ISignUp } from 'types';
 
 const useCompany = () => {
   const endpoint = '/company';
 
-  const handleSignIn = useCallback(async (data: SignInValues) => {
+  const handleSignIn = useCallback(async (data: ISignIn) => {
     try {
       const response = await axiosInstance.post(`${endpoint}/sign-in`, data);
       return Promise.resolve(response);
@@ -18,7 +17,7 @@ const useCompany = () => {
   }, []);
 
 
-  const handleSignUp = useCallback(async (data: SignUpValues) => {
+  const handleSignUp = useCallback(async (data: ISignUp) => {
     try {
       const response = await axiosInstance.post(`${endpoint}/sign-up`, data);
       return Promise.resolve(response);

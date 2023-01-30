@@ -1,13 +1,10 @@
 import * as Yup from 'yup';
 
+import type { ISignIn } from 'types';
+
 import { cnpj, password } from '@utils/schemas';
 
-export interface SignInValues {
-  cnpj: string;
-  password: string;
-}
-
-export const signInInitialValues: SignInValues = {
+export const signInInitialValues: ISignIn = {
   cnpj: '',
   password: ''
 };
