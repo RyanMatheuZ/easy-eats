@@ -1,4 +1,4 @@
-import type { ICompany } from 'types';
+import type { ICompany } from '@ts/interfaces';
 
 export const hasOnlyNumbers = (value: string): boolean => {
   return !/^\d+$/.test(value);

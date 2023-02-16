@@ -1,10 +1,8 @@
-import type { AppProps } from 'next/app';
-
-import NextNProgress from 'nextjs-progressbar';
-
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import { useEffect } from 'react';
+
+import NextNProgress from 'nextjs-progressbar';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -12,26 +10,29 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
-import AuthProviver, { useAuth } from '@context/auth/index';
+import type { TAppPropsWithLayout } from '@ts/types';
+
+import AuthProviver, { useAuth } from '@context/auth';
 
 import theme, { muiTheme } from '@styles/theme';
 import GlobalStyle from '@styles/globalStyle';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
   const router = useRouter();
-  const pathname = usePathname();
 
-  const { company, authenticatedRoutes } = useAuth();
+  const { company, unauthenticatedRoutes } = useAuth();
 
-  const isUnauthenticatedUser = !company && authenticatedRoutes.includes(pathname as string);
+  const isUnauthenticatedUser = false; // !company && !unauthenticatedRoutes.includes(router.asPath);
+
+  const getLayout = Component.getLayout || ((page) => page);
 
   useEffect(() => {
     if (isUnauthenticatedUser) {
-      router.back();
+      return router.back();
     }
-  }, [pathname]);
+  }, [router.asPath]);
 
   return (
     <StyledThemeProvider theme={theme}>
@@ -46,7 +47,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           showOnShallow={true}
         />
         <AuthProviver>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
         </AuthProviver>
       </MuiThemeProvider>
     </StyledThemeProvider>

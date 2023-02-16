@@ -1,4 +1,4 @@
-export interface ICompany {
+interface ICompany {
   _id: string;
   token: string;
   cnpj: string;
@@ -17,3 +17,5 @@ export interface ICompany {
   },
   accountCreatedAt: Date;
 }
+
+export default ICompany;

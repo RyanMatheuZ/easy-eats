@@ -1,16 +1,19 @@
 import type { FC, PropsWithChildren } from 'react';
+import { useState, useContext, useCallback, createContext } from 'react';
 
-import { useState, useContext, createContext } from 'react';
+import type { AxiosResponse } from 'axios';
 
-import type { ICompany, IAuthContext } from 'types';
+import type { ICompany, IAuthContext, ISignIn, ISignUp } from '@ts/interfaces';
 
-import { authenticatedRoutes, unauthenticatedRoutes } from './utils';
+import axiosInstance from '@services/axios';
+
+import { unauthenticatedRoutes } from './utils';
 
 const authContextDefaultValues: IAuthContext = {
   company: null,
-  authenticatedRoutes,
   unauthenticatedRoutes,
-  handleSignIn: () => null,
+  handleSignIn: () => Promise.resolve(),
+  handleSignUp: () => Promise.resolve(),
   handleSignOut: () => null,
 };
 
@@ -19,9 +22,25 @@ const AuthContext = createContext<IAuthContext>(authContextDefaultValues);
 const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   const [company, setCompany] = useState(authContextDefaultValues.company);
 
-  const handleSignIn = (company: ICompany) => {
-    setCompany(company);
-  };
+  const endpoint = '/auth/company';
+
+  const handleSignIn = useCallback(async (signInValues: ISignIn) => {
+    try {
+      const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${endpoint}/sign-in`, signInValues);
+      setCompany(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const handleSignUp = useCallback(async (signUpValues: ISignUp) => {
+    try {
+      const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${endpoint}/sign-up`, signUpValues);
+      setCompany(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const handleSignOut = () => {
     setCompany(null);
@@ -30,9 +49,9 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   return (
     <AuthContext.Provider value={{
       company,
-      authenticatedRoutes,
       unauthenticatedRoutes,
       handleSignIn,
+      handleSignUp,
       handleSignOut
     }}>
       {children}

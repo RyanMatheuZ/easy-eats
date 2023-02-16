@@ -1,7 +1,7 @@
 import { toast, TypeOptions } from 'react-toastify';
 
 export const showToast = (message: string, type: TypeOptions) => {
-  toast(message, {
+  return toast(message, {
     position: toast.POSITION.TOP_LEFT,
     autoClose: 5000,
     closeOnClick: true,

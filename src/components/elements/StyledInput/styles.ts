@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { TextField } from '@mui/material';
 
-const StyleInput = styled(TextField).attrs({
+const StyledInput = styled(TextField).attrs({
   variant: 'filled'
 })`
   & div {
@@ -38,6 +38,16 @@ const StyleInput = styled(TextField).attrs({
       color: ${({ theme }) => theme.palette.secondary.main};
     }
   }
+
+  & .MuiInputBase-root {
+    input.Mui-disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  & .MuiInputBase-root::before {
+    border-style: none
+  }
 `;
 
-export default StyleInput;
+export default StyledInput;

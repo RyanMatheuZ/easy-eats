@@ -4,7 +4,7 @@ import type { TextFieldProps } from '@mui/material';
 
 import { Field, ErrorMessage } from 'formik';
 
-import StyleInput from '@components/elements/StyledInput/styles';
+import StyledInput from '@components/elements/StyledInput/styles';
 
 import {
   Container,
@@ -34,7 +34,7 @@ const FormikTextField: FC<FormikTextFieldProps> = ({
         fullWidth={fullWidth}
         inputProps={{ 'data-testid': dataTestId }}
         autoComplete="off"
-        as={StyleInput}
+        as={StyledInput}
         {...props}
       />
       <ErrorMessage name={name || ''} render={

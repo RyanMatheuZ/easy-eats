@@ -1,8 +1,10 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import { faker } from '@faker-js/faker';
 
 import { render, waitFor, fireEvent } from '@utils/tests';
+
+import type { ISignUp } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 
@@ -11,7 +13,7 @@ import SignUp from '@pages/sign-up/index.page';
 jest.mock('@services/axios');
 const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 
-jest.mock('next/navigation', () => {
+jest.mock('next/router', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
       back: jest.fn()
@@ -20,7 +22,7 @@ jest.mock('next/navigation', () => {
 });
 
 const password = faker.internet.password(10);
-const FAKE_SIGN_UP_DATA = {
+const FAKE_SIGN_UP_DATA: ISignUp = {
   fantasyName: faker.company.name(),
   cnpj: '82514016000187',
   email: faker.internet.email(),
@@ -134,7 +136,7 @@ describe('Sign Up page', () => {
     fireEvent.click(signUpButton);
 
     await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith('/company/sign-up', FAKE_SIGN_UP_DATA);
+      expect(mockedAxios.post).toHaveBeenCalledWith('/auth/sign-up', FAKE_SIGN_UP_DATA);
       expect(mockedAxios.post).toHaveBeenCalledTimes(1);
     });
   });

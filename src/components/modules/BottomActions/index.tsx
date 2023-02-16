@@ -1,10 +1,9 @@
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-interface BottomActionsProps {
+interface BottomActionsProps extends PropsWithChildren {
   $primary?: boolean;
-  children: ReactNode;
 }
 
 const BottomActions: FC<BottomActionsProps> = ({ $primary, children }) => {

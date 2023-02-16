@@ -1,8 +1,4 @@
-export const authenticatedRoutes = [
-  '/admin'
-];
-
-export const unauthenticatedRoutes = [
+export const unauthenticatedRoutes: string [] = [
   '/welcome',
   '/sign-in',
   '/sign-up'

@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
 
-import { useRouter } from 'next/navigation';
-
-import { Logo } from '@components/svgs';
+import { useRouter } from 'next/router';
 
 import { StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, MaxWidthContainer } from '@components/modules';
+import { Logo } from '@components/svgs';
 
 import { Container, ButtonContainer, Title, Text } from './styles';
 

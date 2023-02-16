@@ -2,9 +2,9 @@ import type { NextPage } from 'next';
 
 import { Formik, Form } from 'formik';
 
-import type { ISignUp } from 'types';
+import type { ISignUp } from '@ts/interfaces';
 
-import useCompany from '@hooks/useCompany';
+import { useAuth } from '@context/auth';
 
 import { FormikTextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
@@ -17,12 +17,12 @@ import { signUpInitialValues, signUpSchema } from './utils';
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
-  const { handleSignUp } = useCompany();
+  const { handleSignUp } = useAuth();
 
-  const onSubmit = (data: ISignUp) => {
+  const onSubmit = (signUpValues: ISignUp) => {
     handleSignUp({
-      ...data,
-      cnpj: unformatCNPJ(data.cnpj)
+      ...signUpValues,
+      cnpj: unformatCNPJ(signUpValues.cnpj)
     });
   };
 

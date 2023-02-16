@@ -7,7 +7,7 @@ const schemas = {
     .string()
     .required('Você deve inserir o nome fantasia!')
     .test(
-      'isSantasyNameValid',
+      'isValidFantasyName',
       'Esse nome não pode ser numérico!',
       (value) => hasOnlyNumbers(value || '')
     ),
@@ -15,7 +15,7 @@ const schemas = {
     .string()
     .required('Você deve inserir o CNPJ!')
     .test(
-      'isCNPJValid',
+      'isValidCNPJ',
       'Esse CNPJ não é válido!',
       (value) => validateCNPJ(value || '')
     ),
