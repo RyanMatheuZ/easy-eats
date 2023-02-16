@@ -1,11 +1,25 @@
+/** @type {import('next').NextConfig} */
 // eslint-disable-next-line no-undef
 module.exports = {
+  pageExtensions: [
+    'page.tsx',
+    'page.ts'
+  ],
+
   reactStrictMode: true,
   swcMinify: true,
 
   compiler: {
-    // ssr and displayName are configured by default
     styledComponents: true
+  },
+
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
   },
 
   async redirects() {
@@ -13,7 +27,7 @@ module.exports = {
       {
         source: '/',
         destination: '/welcome',
-        permanent: true,
+        permanent: false
       },
     ];
   },

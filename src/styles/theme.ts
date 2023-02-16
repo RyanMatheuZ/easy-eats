@@ -1,30 +1,47 @@
 import { createTheme, Theme } from '@mui/material/styles';
 
 import { colors } from './colors';
+import { sizes, down, up, between } from './breakpoints';
+
+const { primary, secondary, white } = colors;
+const { mobile, tablet, laptop, desktop } = sizes;
 
 export const muiTheme = createTheme({
   palette: {
     primary: {
-      main: colors.primary
+      main: primary
     },
     secondary: {
-      main: colors.secondary
+      main: secondary
     },
     common: {
-      white: colors.white
+      white
     }
   },
   typography: {
     fontFamily: 'Poppins',
   },
-  spacing: 8,
+  breakpoints: {
+    down,
+    up,
+    between,
+    values: {
+      mobile,
+      tablet,
+      laptop,
+      desktop
+    }
+  }
 });
 
 const theme: Theme = {
   ...muiTheme,
   palette: {
-    ...muiTheme.palette,
+    ...muiTheme.palette
   },
+  breakpoints: {
+    ...muiTheme.breakpoints
+  }
 };
 
 export default theme;

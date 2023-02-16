@@ -18,7 +18,7 @@ const secondaryBaseStyles = css`
   box-shadow: ${({ theme }) => theme.palette.common.black};
 `;
 
-export const StyledButton = styled(Button) <StyledButtonProps>`
+const StyledButton = styled(Button) <StyledButtonProps>`
   ${({ $primary }) => $primary ? primaryBaseStyles : secondaryBaseStyles};
   text-align: center;
   border-radius: 50px;
@@ -30,3 +30,5 @@ export const StyledButton = styled(Button) <StyledButtonProps>`
     box-shadow: 0px 3px 10px;
   }
 `;
+
+export default StyledButton;
