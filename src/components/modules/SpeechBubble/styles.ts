@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.primary.light};
   border-radius: 8px;
   padding: ${({ theme }) => theme.spacing(2)};
   position: relative;
@@ -10,7 +10,7 @@ export const Container = styled.div`
 
   &::before {
     content: '';
-    background-color: ${({ theme }) => theme.palette.common.white};
+    background-color: ${({ theme }) => theme.palette.primary.light};
     position: absolute;
     left: 15px;
     bottom: -5px;

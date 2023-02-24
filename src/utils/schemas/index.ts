@@ -1,13 +1,14 @@
 import * as Yup from 'yup';
 
-import { hasOnlyNumbers, validateCNPJ } from '@utils/inputs';
+import { validateCNPJ } from '@utils/inputs/cnpj';
+import { hasOnlyNumbers } from '@utils/inputs/has';
 
 const schemas = {
   fantasyName: Yup
     .string()
     .required('Você deve inserir o nome fantasia!')
     .test(
-      'isSantasyNameValid',
+      'isValidFantasyName',
       'Esse nome não pode ser numérico!',
       (value) => hasOnlyNumbers(value || '')
     ),
@@ -15,7 +16,7 @@ const schemas = {
     .string()
     .required('Você deve inserir o CNPJ!')
     .test(
-      'isCNPJValid',
+      'isValidCNPJ',
       'Esse CNPJ não é válido!',
       (value) => validateCNPJ(value || '')
     ),

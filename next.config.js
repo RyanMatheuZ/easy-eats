@@ -1,10 +1,7 @@
 /** @type {import('next').NextConfig} */
 // eslint-disable-next-line no-undef
 module.exports = {
-  pageExtensions: [
-    'page.tsx',
-    'page.ts'
-  ],
+  pageExtensions: ['page.tsx'],
 
   reactStrictMode: true,
   swcMinify: true,

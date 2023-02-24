@@ -1,30 +1,29 @@
 import type { NextPage } from 'next';
 
-import { useRouter } from 'next/navigation';
-
-import { Logo } from '@components/svgs';
+import { useRouter } from 'next/router';
 
 import { StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, MaxWidthContainer } from '@components/modules';
+import { Logo } from '@components/svgs';
 
 import { Container, ButtonContainer, Title, Text } from './styles';
 
 const Login: NextPage = () => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   const handleRedirectToSignInPage = () => {
-    router.push('/sign-in');
+    push('/sign-in');
   };
 
   const handleRedirectToSignUpPage = () => {
-    router.push('/sign-up');
+    push('/sign-up');
   };
 
   return (
     <>
       <Head
-        title='Bem-vindo | EasyEats'
+        title='Bem-vindo'
         description='O jeito mais fácil de pedir aquilo que te agrada!'
       />
       <Container>

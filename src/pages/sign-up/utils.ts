@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import type { ISignUp } from 'types';
+import type { ISignUp } from '@ts/interfaces';
 
 import { fantasyName, cnpj, email, password, confirmPassword } from '@utils/schemas';
 

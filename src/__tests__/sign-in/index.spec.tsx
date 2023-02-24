@@ -1,8 +1,10 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import { faker } from '@faker-js/faker';
 
 import { render, waitFor, fireEvent } from '@utils/tests';
+
+import type { ISignIn } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 
@@ -11,7 +13,7 @@ import SignIn from '@pages/sign-in/index.page';
 jest.mock('@services/axios');
 const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 
-jest.mock('next/navigation', () => {
+jest.mock('next/router', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
       back: jest.fn()
@@ -19,7 +21,7 @@ jest.mock('next/navigation', () => {
   };
 });
 
-const FAKE_SIGN_IN_DATA = {
+const FAKE_SIGN_IN_DATA: ISignIn = {
   cnpj: '82514016000187',
   password: faker.internet.password(10),
 };
@@ -87,7 +89,7 @@ describe('Sign In page', () => {
     fireEvent.click(signInButton);
 
     await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalledWith('/company/sign-in', FAKE_SIGN_IN_DATA);
+      expect(mockedAxios.post).toHaveBeenCalledWith('/auth/sign-in', FAKE_SIGN_IN_DATA);
       expect(mockedAxios.post).toHaveBeenCalledTimes(1);
     });
   });

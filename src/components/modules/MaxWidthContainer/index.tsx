@@ -1,12 +1,8 @@
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-interface MaxWidthContainerProps {
-  children: ReactNode;
-}
-
-const MaxWidthContainer: FC<MaxWidthContainerProps> = ({ children }) => {
+const MaxWidthContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       {children}

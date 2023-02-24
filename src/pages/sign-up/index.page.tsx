@@ -2,34 +2,34 @@ import type { NextPage } from 'next';
 
 import { Formik, Form } from 'formik';
 
-import type { ISignUp } from 'types';
+import type { ISignUp } from '@ts/interfaces';
 
-import useCompany from '@hooks/useCompany';
+import { useAuth } from '@context/auth';
 
-import { FormikTextField, StyledButton } from '@components/elements';
+import { TextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
 
-import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
+import { formatCNPJ, unformatCNPJ } from '@utils/inputs/cnpj';
 
 import { signUpInitialValues, signUpSchema } from './utils';
 
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
-  const { handleSignUp } = useCompany();
+  const { handleSignUp } = useAuth();
 
-  const onSubmit = (data: ISignUp) => {
+  const onSubmit = (signUpValues: ISignUp) => {
     handleSignUp({
-      ...data,
-      cnpj: unformatCNPJ(data.cnpj)
+      ...signUpValues,
+      cnpj: unformatCNPJ(signUpValues.cnpj)
     });
   };
 
   return (
     <>
       <Head
-        title='Cadastrar-se | EasyEats'
+        title='Cadastrar-se'
         description='Desfrute do melhor da tecnologia para o seu negócio...'
       />
       <Container>
@@ -56,14 +56,14 @@ const SignUp: NextPage = () => {
             >
               {({ values }) => (
                 <Form noValidate>
-                  <FormikTextField
+                  <TextField
                     type="text"
                     dataTestId="fantasy-name"
                     name="fantasyName"
                     label="Nome fantasia"
                     fullWidth
                   />
-                  <FormikTextField
+                  <TextField
                     type="tel" // Numeric keyboard without parsing to number
                     dataTestId="cnpj"
                     name="cnpj"
@@ -71,21 +71,21 @@ const SignUp: NextPage = () => {
                     value={formatCNPJ(values.cnpj)}
                     fullWidth
                   />
-                  <FormikTextField
+                  <TextField
                     type="email"
                     dataTestId="email"
                     name="email"
                     label="E-mail"
                     fullWidth
                   />
-                  <FormikTextField
+                  <TextField
                     type="password"
                     dataTestId="password"
                     name="password"
                     label="Senha"
                     fullWidth
                   />
-                  <FormikTextField
+                  <TextField
                     type="password"
                     dataTestId="confirm-password"
                     name="confirmPassword"

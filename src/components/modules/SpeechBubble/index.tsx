@@ -1,12 +1,8 @@
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-interface SpeechBubbleProps {
-  children: ReactNode;
-}
-
-const SpeechBubble: FC<SpeechBubbleProps> = ({ children }) => {
+const SpeechBubble: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       {children}

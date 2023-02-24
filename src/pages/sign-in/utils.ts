@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import type { ISignIn } from 'types';
+import type { ISignIn } from '@ts/interfaces';
 
 import { cnpj, password } from '@utils/schemas';
 

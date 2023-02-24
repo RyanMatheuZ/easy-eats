@@ -1,10 +1,10 @@
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 import { render, waitFor, fireEvent } from '@utils/tests';
 
 import Welcome from '@pages/welcome/index.page';
 
-jest.mock('next/navigation', () => {
+jest.mock('next/router', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
       push: jest.fn()

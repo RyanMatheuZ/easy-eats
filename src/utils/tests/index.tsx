@@ -1,23 +1,25 @@
-import type { FC, ReactNode, ReactElement } from 'react';
+import type { FC, ReactElement, PropsWithChildren } from 'react';
 
 import { render, RenderOptions } from '@testing-library/react';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import type { DefaultTheme } from 'styled-components';
+
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
+
+import AuthProviver from '@context/auth';
 
 import theme, { muiTheme } from '@styles/theme';
 import GlobalStyle from '@styles/globalStyle';
 
-interface AllTheProvidersProps {
-  children: ReactNode;
-}
-
-const AllTheProviders: FC<AllTheProvidersProps> = ({ children }) => {
+const AllTheProviders: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider theme={theme as DefaultTheme}>
       <MuiThemeProvider theme={muiTheme}>
         <GlobalStyle />
-        {children}
+        <AuthProviver>
+          {children}
+        </AuthProviver>
       </MuiThemeProvider>
     </StyledThemeProvider>
   );

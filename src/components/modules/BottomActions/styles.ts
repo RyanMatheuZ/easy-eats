@@ -9,7 +9,7 @@ const primaryBaseStyles = css`
 `;
 
 const secondaryBaseStyles = css`
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.primary.light};
 `;
 
 export const Container = styled.section<ContainerProps>`

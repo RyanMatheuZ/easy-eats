@@ -2,34 +2,34 @@ import type { NextPage } from 'next';
 
 import { Formik, Form } from 'formik';
 
-import type { ISignIn } from 'types';
+import type { ISignIn } from '@ts/interfaces';
 
-import useCompany from '@hooks/useCompany';
+import { useAuth } from '@context/auth';
 
-import { FormikTextField, StyledButton } from '@components/elements';
+import { TextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
 import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
 
-import { formatCNPJ, unformatCNPJ } from '@utils/inputs';
+import { formatCNPJ, unformatCNPJ } from '@utils/inputs/cnpj';
 
 import { signInInitialValues, signInSchema } from './utils';
 
 import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
-  const { handleSignIn } = useCompany();
+  const { handleSignIn } = useAuth();
 
-  const onSubmit = (data: ISignIn) => {
+  const onSubmit = (signInValues: ISignIn) => {
     handleSignIn({
-      ...data,
-      cnpj: unformatCNPJ(data.cnpj)
+      ...signInValues,
+      cnpj: unformatCNPJ(signInValues.cnpj)
     });
   };
 
   return (
     <>
       <Head
-        title='Entrar | EasyEats'
+        title='Entrar'
         description='Desfrute do melhor da tecnologia para o seu negócio...'
       />
       <Container>
@@ -56,7 +56,7 @@ const SignIn: NextPage = () => {
             >
               {({ values }) => (
                 <Form noValidate>
-                  <FormikTextField
+                  <TextField
                     type="tel" // Numeric keyboard without parsing to number
                     dataTestId="cnpj"
                     name="cnpj"
@@ -64,7 +64,7 @@ const SignIn: NextPage = () => {
                     value={formatCNPJ(values.cnpj)}
                     fullWidth
                   />
-                  <FormikTextField
+                  <TextField
                     type="password"
                     dataTestId="password"
                     name="password"

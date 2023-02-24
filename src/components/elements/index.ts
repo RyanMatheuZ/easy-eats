@@ -1,11 +1,11 @@
 import BackButton from './BackButton';
-import FormikTextField from './FormikTextField';
+import SelectField from './Formik/SelectField';
+import TextField from './Formik/TextField';
 import StyledButton from './StyledButton/styles';
-import StyleInput from './StyledInput/styles';
 
 export {
   BackButton,
-  FormikTextField,
+  SelectField,
+  TextField,
   StyledButton,
-  StyleInput
 };
