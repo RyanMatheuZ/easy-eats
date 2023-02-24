@@ -7,24 +7,23 @@ import {
   ListSubheader,
   ListItemButton,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from '@mui/material';
-import { FolderCopy, Home } from '@mui/icons-material';
+import { Home, FolderCopy, MeetingRoom } from '@mui/icons-material';
 
 import { StyledBackButton } from '@components/elements/BackButton/styles';
 
 import { openedMixin, closedMixin } from './utils';
 
 interface ToggleButtonDrawerProps {
-  isDrawerOpen: boolean;
+  $isDrawerOpen: boolean;
 }
 
 interface ListButtonProps {
-  isCurrentPath: boolean;
+  $isCurrentPath?: boolean;
 }
 
 const drawerIconBaseStyled = css`
-  fill: ${({ theme }) => theme.palette.primary.main};
   height: 25px;
   width: 25px;
 `;
@@ -49,6 +48,10 @@ export const Container = styled.div`
   display: flex;
 `;
 
+export const ListItemsContainer = styled.div`
+  flex: 1;
+`;
+
 export const Content = styled.section`
   flex-grow: 1;
   padding: ${({ theme }) => theme.spacing(2)};
@@ -69,7 +72,7 @@ export const StyledDrawerHeader = styled.div`
 
 export const ToggleButtonDrawer = styled(StyledBackButton) <ToggleButtonDrawerProps>`
   fill: ${({ theme }) => theme.palette.primary.main};
-  transform: ${({ isDrawerOpen }) => isDrawerOpen ? 'rotate(360deg)' : 'rotate(180deg)'};
+  transform: ${({ $isDrawerOpen }) => $isDrawerOpen ? 'rotate(360deg)' : 'rotate(180deg)'};
   transition: transform 500ms ease-in-out;
 `;
 
@@ -83,26 +86,48 @@ export const StyledListSubheader = styled(ListSubheader)`
 `;
 
 export const StyledListItemButton = styled(ListItemButton) <ListButtonProps>`
-  background-color: ${({ theme, isCurrentPath }) => isCurrentPath && theme.palette.primary.main};
+  background-color: ${({ theme, $isCurrentPath }) => $isCurrentPath && theme.palette.primary.main};
+  border-radius: 8px;
   display: flex;
   align-items: flex-start;
+  margin: ${({ theme }) => theme.spacing(1)};
+
   &:hover {
-    background-color: ${({ theme, isCurrentPath }) => isCurrentPath && theme.palette.primary.main};
+    background-color: ${({ theme, $isCurrentPath }) => $isCurrentPath && theme.palette.primary.main};
     opacity: 0.75;
   }
 `;
 
 export const StyledListItemIcon = styled(ListItemIcon) <ListButtonProps>`
   margin-inline: ${({ theme }) => theme.spacing(4, 1)};
+
   & svg {
-    fill: ${({ theme, isCurrentPath }) => isCurrentPath ? theme.palette.common.white : theme.palette.primary.main};
+    fill: ${({ theme, $isCurrentPath }) => $isCurrentPath ? theme.palette.primary.light : theme.palette.primary.main};
   }
 `;
 
 export const StyledListItemText = styled(ListItemText) <ListButtonProps>`
-  color: ${({ theme, isCurrentPath }) => isCurrentPath ? theme.palette.common.white : theme.palette.common.black};
+  color: ${({ theme, $isCurrentPath }) => $isCurrentPath ? theme.palette.primary.light : theme.palette.common.black};
   overflow: auto;
   overflow-x: hidden;
+`;
+
+export const SignOutButton = styled(StyledListItemButton)`
+  background-color: ${({ theme }) => theme.palette.common.black};
+  flex: 0;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.common.black};
+    opacity: 0.75;
+  }
+`;
+
+export const SignOutIconContainer = styled(ListItemIcon)`
+  margin-inline: ${({ theme }) => theme.spacing(4, 1)};
+`;
+
+export const SignOutText = styled(StyledListItemText)`
+  color: ${({ theme }) => theme.palette.primary.light};
 `;
 
 export const HomeIcon = styled(Home)`
@@ -110,5 +135,10 @@ export const HomeIcon = styled(Home)`
 `;
 
 export const CompanyDataIcon = styled(FolderCopy)`
+  ${drawerIconBaseStyled};
+`;
+
+export const SignOutIcon = styled(MeetingRoom)`
+  fill: ${({ theme }) => theme.palette.primary.light};
   ${drawerIconBaseStyled};
 `;

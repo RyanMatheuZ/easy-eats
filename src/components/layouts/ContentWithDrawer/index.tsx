@@ -3,19 +3,26 @@ import { useState } from 'react';
 
 import { Button, Divider } from '@mui/material';
 
+import { useAuth } from '@context/auth';
+
 import UserInformations from './UserInformations';
 import ListItems from './ListItems';
 
 import {
+  Container,
+  Content,
   StyledDrawer,
   StyledDrawerHeader,
   ToggleButtonDrawer,
-  Container,
-  Content
 } from './styles';
 
 const ContentWithDrawer: FC<PropsWithChildren> = ({ children }) => {
+  const { company } = useAuth();
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const companyOwnerName = `${company?.owner?.firstName} ${company?.owner?.surname}`;
+  const companyOwnerRole = company?.owner?.role as string;
 
   const handleToggleDrawer = () => {
     setIsDrawerOpen((prevState) => !prevState);
@@ -30,11 +37,11 @@ const ContentWithDrawer: FC<PropsWithChildren> = ({ children }) => {
         >
           <StyledDrawerHeader>
             <UserInformations
-              name='Ryan Oliveira'
-              role='Sócio'
+              name={companyOwnerName}
+              role={companyOwnerRole}
             />
             <Button onClick={handleToggleDrawer}>
-              <ToggleButtonDrawer isDrawerOpen={isDrawerOpen} />
+              <ToggleButtonDrawer $isDrawerOpen={isDrawerOpen} />
             </Button>
           </StyledDrawerHeader>
           <Divider />

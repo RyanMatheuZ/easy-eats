@@ -2,19 +2,19 @@ import styled, { css } from 'styled-components';
 
 import { Button } from '@mui/material';
 
-interface StyledButtonProps {
+export interface StyledButtonProps {
   $primary?: boolean;
 }
 
 const primaryBaseStyles = css`
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.primary.light};
   background-color: ${({ theme }) => theme.palette.common.black};
-  box-shadow: ${({ theme }) => theme.palette.common.white};
+  box-shadow: ${({ theme }) => theme.palette.primary.light};
 `;
 
 const secondaryBaseStyles = css`
   color: ${({ theme }) => theme.palette.common.black};
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.primary.light};
   box-shadow: ${({ theme }) => theme.palette.common.black};
 `;
 

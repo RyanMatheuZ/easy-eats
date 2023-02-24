@@ -1,4 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import {
+  Html,
+  Head,
+  Main,
+  NextScript
+} from 'next/document';
 
 const Document = () => {
   const author = 'Ryan M. de Oliveira';

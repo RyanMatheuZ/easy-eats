@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 import ErrorIcon from '@mui/icons-material/Error';
 
-export const Container = styled.div`
-  margin-bottom: ${({ theme }) => theme.spacing(1.5)};
-`;
-
 export const ErrorMessageContainer = styled.div`
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import type ICompany from './Company';
+import type { ICompany } from '@ts/interfaces';
 
 interface ISignIn {
   cnpj: ICompany['cnpj'];

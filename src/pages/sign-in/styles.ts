@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Typography } from '@mui/material';
 
 export const Container = styled.div`
-  background-color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.palette.primary.light};
   display: flex;
   flex-direction: column;
   justify-content: space-between;

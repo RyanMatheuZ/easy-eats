@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
-import { hasOnlyNumbers, validateCNPJ } from '@utils/inputs';
+import { validateCNPJ } from '@utils/inputs/cnpj';
+import { hasOnlyNumbers } from '@utils/inputs/has';
 
 const schemas = {
   fantasyName: Yup

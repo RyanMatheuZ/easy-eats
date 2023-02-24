@@ -1,6 +1,4 @@
-import ICompany from './Company';
-import ISignIn from './SignIn';
-import ISignUp from './SignUp';
+import type { ICompany, ISignIn, ISignUp } from '@ts/interfaces';
 
 interface IAuthContext {
   company: ICompany | null;

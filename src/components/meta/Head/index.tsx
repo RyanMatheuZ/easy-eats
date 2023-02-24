@@ -7,7 +7,12 @@ interface HeadProps {
   description: string;
 }
 
-const Head: FC<HeadProps> = ({ title, description }) => {
+const Head: FC<HeadProps> = ({
+  title = 'Carregando...',
+  description
+}) => {
+  const formattedTitle = `${title} | EasyEats`;
+
   return (
     <HeadContainer>
       {/* https://nextjs.org/docs/messages/no-document-viewport-meta */}
@@ -19,7 +24,7 @@ const Head: FC<HeadProps> = ({ title, description }) => {
       <meta name="url" content="" />
       <meta name="theme-color" content="" />
 
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={formattedTitle} />
       <meta property="og:site_name" content="" />
       <meta property="og:url" content="" />
       <meta property="og:description" content={description} />
@@ -27,7 +32,7 @@ const Head: FC<HeadProps> = ({ title, description }) => {
 
       <link rel="canonical" href="" />
 
-      <title>{title}</title>
+      <title>{formattedTitle}</title>
     </HeadContainer>
   );
 };

@@ -10,7 +10,7 @@ const BackButton: FC = () => {
   const { back } = useRouter();
 
   const handleRedirectToPreviousPage = () => {
-    return back();
+    back();
   };
 
   return (

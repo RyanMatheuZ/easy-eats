@@ -10,20 +10,20 @@ import { Logo } from '@components/svgs';
 import { Container, ButtonContainer, Title, Text } from './styles';
 
 const Login: NextPage = () => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   const handleRedirectToSignInPage = () => {
-    router.push('/sign-in');
+    push('/sign-in');
   };
 
   const handleRedirectToSignUpPage = () => {
-    router.push('/sign-up');
+    push('/sign-up');
   };
 
   return (
     <>
       <Head
-        title='Bem-vindo | EasyEats'
+        title='Bem-vindo'
         description='O jeito mais fácil de pedir aquilo que te agrada!'
       />
       <Container>

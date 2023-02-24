@@ -1,27 +1,33 @@
 import type { ReactElement } from 'react';
 import { useState, useEffect } from 'react';
 
-import { TNextPageWithLayout } from '@ts/types';
+import type { TNextPageWithLayout } from '@ts/types';
+
+import { useAuth } from '@context/auth';
 
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
+import { StepperCard } from '@components/modules';
+import { FlowFinanceMan } from '@components/svgs';
 
 import { randomMessage } from '@utils/random';
 
 import {
+  Container,
   Card,
   CardBody,
   CardTitle,
   CardText,
   SeeMoreButton,
-  StyledFlowFinanceMan
 } from './styles';
 
 const Admin: TNextPageWithLayout = () => {
-  const companyName = 'Empresinha';
+  const { company } = useAuth();
+
   const [message, setMessage] = useState('');
 
-  // Rehydration was necessary
+  const ownerFirstName = !!company?.owner?.firstName && `, ${company?.owner?.firstName}`;
+
   // https://nextjs.org/docs/messages/react-hydration-error
   useEffect(() => {
     setMessage(randomMessage());
@@ -30,33 +36,34 @@ const Admin: TNextPageWithLayout = () => {
   return (
     <>
       <Head
-        title={`${companyName} | EasyEats`}
+        title={company?.fantasyName as string}
         description='Aqui você pode gerenciar sua empresa, colaboradores e muito mais...'
       />
-      <Card>
-        <CardBody>
-          <CardTitle>
-            Bem-vindo(a), Ryan!
-          </CardTitle>
-          <CardText>
-            {message}
-          </CardText>
-          <SeeMoreButton>
-            Ver mais
-          </SeeMoreButton>
-        </CardBody>
-        <StyledFlowFinanceMan />
-      </Card>
+      <Container>
+        <Card>
+          <CardBody>
+            <CardTitle>
+              Bem-vindo(a){ownerFirstName}!
+            </CardTitle>
+            <CardText>
+              {message}
+            </CardText>
+            <SeeMoreButton>
+              Ver mais
+            </SeeMoreButton>
+          </CardBody>
+          <FlowFinanceMan />
+        </Card>
+        <StepperCard />
+      </Container>
     </>
   );
 };
 
-Admin.getLayout = (page: ReactElement) => {
-  return (
-    <ContentWithDrawer>
-      {page}
-    </ContentWithDrawer>
-  );
-};
+Admin.getLayout = (page: ReactElement) => (
+  <ContentWithDrawer>
+    {page}
+  </ContentWithDrawer>
+);
 
 export default Admin;

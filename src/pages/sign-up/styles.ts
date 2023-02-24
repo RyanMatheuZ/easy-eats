@@ -30,7 +30,7 @@ export const HeroContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.primary.light};
   margin-left: ${({ theme }) => theme.spacing(2)};
   margin-bottom: ${({ theme }) => theme.spacing(2)};
 
@@ -40,7 +40,7 @@ export const Title = styled.h1`
 `;
 
 export const Text = styled(Typography)`
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.primary.light};
   font-size: 1.5rem;
   font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
   margin-left: ${({ theme }) => theme.spacing(4)};

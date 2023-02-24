@@ -3,6 +3,8 @@ import type { FC, ReactElement, PropsWithChildren } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import type { DefaultTheme } from 'styled-components';
+
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
 import AuthProviver from '@context/auth';
@@ -12,7 +14,7 @@ import GlobalStyle from '@styles/globalStyle';
 
 const AllTheProviders: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <StyledThemeProvider theme={theme}>
+    <StyledThemeProvider theme={theme as DefaultTheme}>
       <MuiThemeProvider theme={muiTheme}>
         <GlobalStyle />
         <AuthProviver>
