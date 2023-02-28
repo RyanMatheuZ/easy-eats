@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 
 import { useEffect } from 'react';
 
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import type { DefaultTheme } from 'styled-components';
 
@@ -23,6 +25,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
   const { push, replace } = useRouter();
 
+  const queryClient = new QueryClient();
+
   const { company, unauthenticatedRoutes } = useAuth();
 
   const isAuthenticatedUser = true; // !!company && !!unauthenticatedRoutes.includes(router.asPath);
@@ -38,22 +42,24 @@ const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
   }, []);
 
   return (
-    <StyledThemeProvider theme={theme as DefaultTheme}>
-      <MuiThemeProvider theme={muiTheme}>
-        <GlobalStyle />
-        <ToastContainer />
-        <NextNProgress
-          color={theme.palette.common.black}
-          startPosition={0.3}
-          stopDelayMs={200}
-          height={3}
-          showOnShallow={true}
-        />
-        <AuthProviver>
-          {getLayout(<Component {...pageProps} />)}
-        </AuthProviver>
-      </MuiThemeProvider>
-    </StyledThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <StyledThemeProvider theme={theme as DefaultTheme}>
+        <MuiThemeProvider theme={muiTheme}>
+          <GlobalStyle />
+          <ToastContainer />
+          <NextNProgress
+            color={theme.palette.common.black}
+            startPosition={0.3}
+            stopDelayMs={200}
+            height={3}
+            showOnShallow={true}
+          />
+          <AuthProviver>
+            {getLayout(<Component {...pageProps} />)}
+          </AuthProviver>
+        </MuiThemeProvider>
+      </StyledThemeProvider>
+    </QueryClientProvider>
   );
 };
 
