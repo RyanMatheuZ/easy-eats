@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const defaultConfig: AxiosRequestConfig = {
-  timeout: 10000,
+  timeout: 10000
 };
 
 const axiosInstance = axios.create({

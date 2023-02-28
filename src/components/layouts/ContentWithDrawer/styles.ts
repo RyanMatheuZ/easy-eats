@@ -9,7 +9,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import { Home, FolderCopy, MeetingRoom } from '@mui/icons-material';
+import { Home, FolderCopy, MeetingRoom, AddCircle, Visibility } from '@mui/icons-material';
 
 import { StyledBackButton } from '@components/elements/BackButton/styles';
 
@@ -77,12 +77,15 @@ export const ToggleButtonDrawer = styled(StyledBackButton) <ToggleButtonDrawerPr
 `;
 
 export const StyledList = styled(List)`
-  padding-bottom: none;
+  padding-block: 0;
 `;
 
 export const StyledListSubheader = styled(ListSubheader)`
   font-size: 1.1rem;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 export const StyledListItemButton = styled(ListItemButton) <ListButtonProps>`
@@ -135,6 +138,14 @@ export const HomeIcon = styled(Home)`
 `;
 
 export const CompanyDataIcon = styled(FolderCopy)`
+  ${drawerIconBaseStyled};
+`;
+
+export const CreateEmployessIcon = styled(AddCircle)`
+  ${drawerIconBaseStyled};
+`;
+
+export const ViewEmployessIcon = styled(Visibility)`
   ${drawerIconBaseStyled};
 `;
 

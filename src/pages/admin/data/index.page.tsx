@@ -11,7 +11,7 @@ import { useAuth } from '@context/auth';
 
 import { useAddress } from '@hooks/index';
 
-import { StyledButton } from '@components/elements';
+import { StyledButton, StyledLabel } from '@components/elements';
 import { TextField, SelectField } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
@@ -24,7 +24,6 @@ import { adminDataSchema, states } from './utils';
 
 import {
   StyledForm,
-  StyledLabel,
   CityAndStateContainer,
   FirstNameAndSurnameContainer,
   SubmitButtonContainer

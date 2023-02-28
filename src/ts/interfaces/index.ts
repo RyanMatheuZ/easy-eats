@@ -1,5 +1,6 @@
 import type ICompany from './Company';
 import type ICompanyOwner from './CompanyOwner';
+import type IEmployee from './Employee';
 import type IAuthContext from './AuthContext';
 import type ISignIn from './SignIn';
 import type ISignUp from './SignUp';
@@ -10,6 +11,7 @@ import type IAddress from './Address';
 export type {
   ICompany,
   ICompanyOwner,
+  IEmployee,
   IAuthContext,
   ISignIn,
   ISignUp,

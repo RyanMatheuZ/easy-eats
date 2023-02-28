@@ -8,7 +8,7 @@ interface ICompany {
   corporateName?: string;
   email?: string;
   password?: string;
-  confirmPassword?: ICompany['password'];
+  confirmPassword?: string;
   address?: IAddress;
   owner?: ICompanyOwner;
   accountCreatedAt?: Date;
