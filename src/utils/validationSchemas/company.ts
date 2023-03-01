@@ -20,10 +20,6 @@ const schemas = {
       'Esse CNPJ não é válido!',
       (value) => validateCNPJ(value || '')
     ),
-  email: Yup
-    .string()
-    .email('Você deve inserir um e-mail válido!')
-    .required('Você deve inserir um e-mail!'),
   password: Yup
     .string()
     .min(8, 'Sua senha deve ter no mínimo 8 caracteres!')
@@ -37,7 +33,6 @@ const schemas = {
 export const {
   fantasyName,
   cnpj,
-  email,
   password,
   confirmPassword
 } = schemas;

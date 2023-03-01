@@ -1,7 +1,6 @@
-import type { ICompany } from '@ts/interfaces';
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-export const formatCNPJ = (cnpj: ICompany['cnpj']): string => {
+export const formatCNPJ = (cnpj: string): string => {
   // 1. Removes any non-numeric characters
   // 2. Make sure it's 14 digits
   // 3. Add the dots and dashes
@@ -11,13 +10,8 @@ export const formatCNPJ = (cnpj: ICompany['cnpj']): string => {
     replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
 };
 
-export const unformatCNPJ = (cnpj: ICompany['cnpj']): string => {
-  // Remove all non-digit characters (numbers from 0 to 9)
-  return cnpj!.replace(/[^\d]/g, '');
-};
-
-export const validateCNPJ = (cnpj: ICompany['cnpj']): boolean => {
-  // Applies calculation to validate a CNPJ
+export const validateCNPJ = (cnpj: string): boolean => {
+  // Applies rule to validate a CNPJ
   // https://blog.dbins.com.br/como-funciona-a-logica-da-validacao-do-cnpj
   cnpj = cnpj!.replace(/[^\d]+/g, '');
   if (cnpj.length !== 14) return false;

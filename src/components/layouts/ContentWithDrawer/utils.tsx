@@ -9,8 +9,6 @@ export interface ListItems {
   }[];
 }
 
-export const basePath = '/admin';
-
 export const openedMixin = (theme: Theme): CSSObject => ({
   overflowX: 'hidden',
   width: '25%',

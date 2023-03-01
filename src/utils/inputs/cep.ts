@@ -1,6 +1,4 @@
-import { IAddress } from '@ts/interfaces';
-
-export const formatCEP = (cep: IAddress['cep']): string => {
+export const formatCEP = (cep: string): string => {
   return cep
     .replace(/\D/g, '')
     .replace(/(\d{5})(\d{1,3})/, '$1-$2')

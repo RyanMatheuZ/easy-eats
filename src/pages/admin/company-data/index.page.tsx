@@ -5,47 +5,48 @@ import { Formik } from 'formik';
 import { MenuItem } from '@mui/material';
 
 import type { TNextPageWithLayout } from '@ts/types';
-import type { ICompany } from '@ts/interfaces';
 
 import { useAuth } from '@context/auth';
 
 import { useAddress } from '@hooks/index';
 
-import { StyledButton, StyledLabel } from '@components/elements';
-import { TextField, SelectField } from '@components/elements';
+import { TextField, SelectField, StyledLabel, StyledButton } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
-import { MaxWidthContainer } from '@components/modules';
+import {
+  CityAndStateContainer,
+  FirstNameAndSurnameContainer,
+  MaxWidthContainer,
+  StyledFormContainer,
+  SubmitButtonContainer
+} from '@components/modules';
 
 import { formatCEP } from '@utils/inputs/cep';
 import { formatCNPJ } from '@utils/inputs/cnpj';
+import { states } from '@utils/states';
 
-import { adminDataSchema, states } from './utils';
+import { companyDataSchema } from './utils';
 
-import {
-  StyledForm,
-  CityAndStateContainer,
-  FirstNameAndSurnameContainer,
-  SubmitButtonContainer
-} from './styles';
-
-const AdminData: TNextPageWithLayout = () => {
+const CompanyData: TNextPageWithLayout = () => {
   const { company } = useAuth();
 
-  const { address, isLoadingAddress, getAdress } = useAddress();
+  const { handleGetAdress } = useAddress();
 
-  const adminDataInitialValues = {
+  const companyDataInitialValues = {
     fantasyName: '' || company?.fantasyName,
     cnpj: '' || company?.cnpj,
     email: '' || company?.email,
     zipCode: '' || company?.address?.cep,
-    publicPlace: '' || company?.address?.logradouro,
+    address: '' || company?.address?.logradouro,
     district: '' || company?.address?.bairro,
     city: '' || company?.address?.localidade,
-    state: '' || company?.address?.uf
+    state: '' || company?.address?.uf,
+    firstName: '' || company?.owner?.firstName,
+    surname: '' || company?.owner?.surname,
+    role: '' || company?.owner?.role
   };
 
-  const onSubmit = (companyUpdateData: Pick<ICompany, 'fantasyName' | 'cnpj' | 'email' | 'address'>) => {
+  const onSubmit = () => {
     //
   };
 
@@ -53,16 +54,16 @@ const AdminData: TNextPageWithLayout = () => {
     <>
       <Head
         title={company?.fantasyName as string}
-        description=''
+        description='Bem-vindo(a) à página de informações da empresa! Aqui, você pode inserir as informações da sua empresa em nosso sistema, incluindo informações de contato, endereço, descrição do negócio e outras informações. Além disso, nossa plataforma segura garante que todas as informações inseridas sejam mantidas confidenciais e protegidas. Adicionar informações da empresa nunca foi tão fácil e seguro! Experimente agora e torne sua gestão de negócios mais eficiente.'
       />
       <MaxWidthContainer>
         <Formik
-          initialValues={adminDataInitialValues}
-          validationSchema={adminDataSchema}
+          initialValues={companyDataInitialValues}
+          validationSchema={companyDataSchema}
           onSubmit={onSubmit}
         >
           {({ values, setFieldValue }) => (
-            <StyledForm noValidate>
+            <StyledFormContainer>
               <StyledLabel>Informações gerais:</StyledLabel>
               <TextField
                 type="text"
@@ -91,13 +92,13 @@ const AdminData: TNextPageWithLayout = () => {
               <StyledLabel>Localização:</StyledLabel>
               <TextField
                 type="tel" // Numeric keyboard without parsing to number
-                dataTestId="zipCode"
+                dataTestId="zip-code"
                 name="zipCode"
                 label="CEP"
                 fullWidth
                 onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                   setFieldValue('zipCode', formatCEP(e.target.value));
-                  getAdress(e.target.value);
+                  handleGetAdress(e.target.value);
                 }}
               />
               <TextField
@@ -142,24 +143,24 @@ const AdminData: TNextPageWithLayout = () => {
               <FirstNameAndSurnameContainer>
                 <TextField
                   type="text"
-                  dataTestId="firstNameOwner"
-                  name="firstNameOwner"
+                  dataTestId="first-name"
+                  name="firstName"
                   label="Nome"
                   fullWidth
                 />
                 <TextField
                   type="text"
-                  dataTestId="surnameOwner"
-                  name="surnameOwner"
+                  dataTestId="surname"
+                  name="surname"
                   label="Sobrenome"
                   fullWidth
                 />
               </FirstNameAndSurnameContainer>
               <TextField
                 type="text"
-                dataTestId="roleOwner"
-                name="roleOwner"
-                label="Cargo"
+                dataTestId="role"
+                name="role"
+                label="Cargo/função"
                 fullWidth
               />
               <SubmitButtonContainer>
@@ -170,7 +171,7 @@ const AdminData: TNextPageWithLayout = () => {
                   Atualizar dados
                 </StyledButton>
               </SubmitButtonContainer>
-            </StyledForm>
+            </StyledFormContainer>
           )}
         </Formik>
       </MaxWidthContainer>
@@ -178,10 +179,10 @@ const AdminData: TNextPageWithLayout = () => {
   );
 };
 
-AdminData.getLayout = (page: ReactElement) => (
+CompanyData.getLayout = (page: ReactElement) => (
   <ContentWithDrawer>
     {page}
   </ContentWithDrawer>
 );
 
-export default AdminData;
+export default CompanyData;

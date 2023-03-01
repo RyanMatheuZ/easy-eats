@@ -1,11 +1,6 @@
-import axios, { AxiosRequestConfig } from 'axios';
-
-const defaultConfig: AxiosRequestConfig = {
-  timeout: 10000
-};
+import axios from 'axios';
 
 const axiosInstance = axios.create({
-  ...defaultConfig,
   baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`
 });
 

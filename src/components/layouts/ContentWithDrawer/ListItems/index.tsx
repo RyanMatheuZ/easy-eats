@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { useAuth } from '@context/auth';
 
-import { basePath, ListItems } from '../utils';
+import type { ListItems } from '../utils';
 
 import {
   ListItemsContainer,
@@ -20,7 +20,7 @@ import {
   SignOutIcon,
   HomeIcon,
   CompanyDataIcon,
-  CreateEmployessIcon,
+  RegisterEmployeesIcon,
   ViewEmployessIcon
 } from '../styles';
 
@@ -29,6 +29,8 @@ const ListItems: FC = () => {
 
   const { handleSignOut } = useAuth();
 
+  const basePath = '/admin';
+
   const listItems: ListItems[] = [
     {
       subHeader: 'Empresa',
@@ -36,7 +38,7 @@ const ListItems: FC = () => {
         {
           icon: <CompanyDataIcon />,
           label: 'Dados',
-          path: `${basePath}/data`
+          path: `${basePath}/company-data`
         }
       ]
     },
@@ -44,9 +46,9 @@ const ListItems: FC = () => {
       subHeader: 'Colaboradores',
       items: [
         {
-          icon: <CreateEmployessIcon />,
-          label: 'Criação',
-          path: `${basePath}/create-employee`
+          icon: <RegisterEmployeesIcon />,
+          label: 'Cadastro',
+          path: `${basePath}/register-employee`
         },
         {
           icon: <ViewEmployessIcon />,

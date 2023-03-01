@@ -8,13 +8,14 @@ import { useAuth } from '@context/auth';
 
 import { TextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
-import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
+import { BottomActions, HeaderWithBackButton, MaxWidthContainer, SubmitButtonContainer } from '@components/modules';
 
-import { formatCNPJ, unformatCNPJ } from '@utils/inputs/cnpj';
+import { formatCNPJ } from '@utils/inputs/cnpj';
+import { unformat } from '@utils/inputs/unformat';
 
 import { signUpInitialValues, signUpSchema } from './utils';
 
-import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
+import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
   const { handleSignUp } = useAuth();
@@ -22,7 +23,7 @@ const SignUp: NextPage = () => {
   const onSubmit = (signUpValues: ISignUp) => {
     handleSignUp({
       ...signUpValues,
-      cnpj: unformatCNPJ(signUpValues.cnpj)
+      cnpj: unformat(String(signUpValues.cnpj))
     });
   };
 
@@ -30,7 +31,7 @@ const SignUp: NextPage = () => {
     <>
       <Head
         title='Cadastrar-se'
-        description='Desfrute do melhor da tecnologia para o seu negócio...'
+        description='Bem-vindo(a)! Aqui você pode criar uma conta para acessar todas as funcionalidades do nosso sistema. Para criar uma nova conta, preencha o formulário de cadastro com suas informações básicas. Certifique-se de preencher todos os campos antes de clicar no botão "CADASTRAR-SE". Caso já tenha uma conta, basta clicar no link "Já possui uma conta?" no topo da página para acessar o sistema.'
       />
       <Container>
         <HeaderWithBackButton
@@ -50,7 +51,7 @@ const SignUp: NextPage = () => {
         <BottomActions>
           <MaxWidthContainer>
             <Formik
-              initialValues={signUpInitialValues as ISignUp}
+              initialValues={signUpInitialValues}
               validationSchema={signUpSchema}
               onSubmit={onSubmit}
             >

@@ -1,7 +1,3 @@
-import * as Yup from 'yup';
-
-import { fantasyName, cnpj, email } from '@utils/schemas';
-
 export const states = [
   'AC', 'AL', 'AP',
   'AM', 'BA', 'CE',
@@ -13,9 +9,3 @@ export const states = [
   'RO', 'RR', 'SC',
   'SP', 'SE', 'TO',
 ];
-
-export const adminDataSchema = Yup.object().shape({
-  fantasyName,
-  cnpj,
-  email
-});

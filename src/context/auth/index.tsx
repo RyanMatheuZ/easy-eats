@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 
-import { FC, PropsWithChildren } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { useState, useContext, useCallback, createContext } from 'react';
 
 import type { AxiosResponse } from 'axios';
 
 import type { ICompany, IAuthContext, ISignIn, ISignUp } from '@ts/interfaces';
 
-import useLocalStorage from '@hooks/useLocalStorage';
+import { useLocalStorage } from '@hooks/index';
 
 import axiosInstance from '@services/axios';
 
@@ -22,9 +22,9 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
 
   const { setStorageValue, getStorageValue, removeStorageValue } = useLocalStorage();
 
-  const STORAGE_COMPANY_KEY = '@company_data';
-
   const ENDPOINT = '/auth/company';
+
+  const STORAGE_COMPANY_KEY = '@company_data';
 
   const storageCompanyInitialValue = getStorageValue(STORAGE_COMPANY_KEY);
 

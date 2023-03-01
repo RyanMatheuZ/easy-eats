@@ -141,7 +141,7 @@ export const CompanyDataIcon = styled(FolderCopy)`
   ${drawerIconBaseStyled};
 `;
 
-export const CreateEmployessIcon = styled(AddCircle)`
+export const RegisterEmployeesIcon = styled(AddCircle)`
   ${drawerIconBaseStyled};
 `;
 

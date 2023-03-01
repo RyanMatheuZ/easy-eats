@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 import type { ISignIn } from '@ts/interfaces';
 
-import { cnpj, password } from '@utils/schemas';
+import { cnpj, password } from '@utils/validationSchemas/company';
 
 export const signInInitialValues: ISignIn = {
   cnpj: '',

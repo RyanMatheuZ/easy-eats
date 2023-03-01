@@ -10,12 +10,6 @@ export const Container = styled.div`
   height: 100vh;
 `;
 
-export const SubmitButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const HeroContainer = styled.div`
   display: flex;
   align-items: flex-start;
