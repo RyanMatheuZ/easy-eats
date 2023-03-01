@@ -69,7 +69,7 @@ const SignUp: NextPage = () => {
                     dataTestId="cnpj"
                     name="cnpj"
                     label="CNPJ"
-                    value={formatCNPJ(values.cnpj)}
+                    value={formatCNPJ(String(values.cnpj))}
                     fullWidth
                   />
                   <TextField
