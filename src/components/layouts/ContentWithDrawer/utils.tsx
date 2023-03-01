@@ -1,8 +1,6 @@
 import type { CSSObject, Theme } from '@mui/material';
 
-import { CompanyDataIcon } from './styles';
-
-interface ListItems {
+export interface ListItems {
   subHeader: string;
   items: {
     icon: JSX.Element;
@@ -10,21 +8,6 @@ interface ListItems {
     path: string;
   }[];
 }
-
-export const basePath = '/admin';
-
-export const listItems: ListItems[] = [
-  {
-    subHeader: 'Empresa',
-    items: [
-      {
-        icon: <CompanyDataIcon />,
-        label: 'Dados',
-        path: `${basePath}/data`
-      }
-    ]
-  }
-];
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   overflowX: 'hidden',

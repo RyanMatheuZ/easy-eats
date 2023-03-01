@@ -8,13 +8,14 @@ import { useAuth } from '@context/auth';
 
 import { TextField, StyledButton } from '@components/elements';
 import { Head } from '@components/meta';
-import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
+import { BottomActions, HeaderWithBackButton, MaxWidthContainer, SubmitButtonContainer } from '@components/modules';
 
-import { formatCNPJ, unformatCNPJ } from '@utils/inputs/cnpj';
+import { formatCNPJ } from '@utils/inputs/cnpj';
+import { unformat } from '@utils/inputs/unformat';
 
 import { signInInitialValues, signInSchema } from './utils';
 
-import { Container, HeroContainer, SubmitButtonContainer, Title, Text } from './styles';
+import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
   const { handleSignIn } = useAuth();
@@ -22,7 +23,7 @@ const SignIn: NextPage = () => {
   const onSubmit = (signInValues: ISignIn) => {
     handleSignIn({
       ...signInValues,
-      cnpj: unformatCNPJ(signInValues.cnpj)
+      cnpj: unformat(String(signInValues.cnpj))
     });
   };
 
@@ -30,7 +31,7 @@ const SignIn: NextPage = () => {
     <>
       <Head
         title='Entrar'
-        description='Desfrute do melhor da tecnologia para o seu negócio...'
+        description='Bem-vindo(a)! Aqui você pode acessar todas as funcionalidades do nosso sistema. Para fazer login, insira o CNPJ da empresa e senha nos campos correspondentes e clique no botão "ENTRAR". Lembre-se de que todas as informações fornecidas são protegidas por nossa política de privacidade e serão mantidas em sigilo. Obrigado por escolher nosso sistema de gerenciamento de empresas!'
       />
       <Container>
         <HeaderWithBackButton
@@ -50,7 +51,7 @@ const SignIn: NextPage = () => {
         <BottomActions $primary>
           <MaxWidthContainer>
             <Formik
-              initialValues={signInInitialValues as ISignIn}
+              initialValues={signInInitialValues}
               validationSchema={signInSchema}
               onSubmit={onSubmit}
             >
@@ -61,7 +62,7 @@ const SignIn: NextPage = () => {
                     dataTestId="cnpj"
                     name="cnpj"
                     label="CNPJ"
-                    value={formatCNPJ(values.cnpj)}
+                    value={formatCNPJ(String(values.cnpj))}
                     fullWidth
                   />
                   <TextField

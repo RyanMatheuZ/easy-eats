@@ -12,10 +12,8 @@ const useCEP = () => {
   const [address, setAddress] = useState<IAddress>();
   const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>();
 
-  const getAdress = useCallback(async (cep: IAddress['cep']) => {
-    if (cep.length < 8) {
-      return;
-    }
+  const handleGetAdress = useCallback(async (cep: IAddress['cep']) => {
+    if (cep.length < 8) return;
 
     const ENDPOINT = `https://viacep.com.br/ws/${cep}/json/`;
 
@@ -29,17 +27,17 @@ const useCEP = () => {
       }
 
       setAddress(data);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error) {
+      console.error(error);
     } finally {
       setIsLoadingAddress(false);
     }
   }, []);
 
   return {
+    handleGetAdress,
     address,
-    isLoadingAddress,
-    getAdress
+    isLoadingAddress
   };
 };
 

@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 
+import { useRouter } from 'next/router';
+
 import HeadContainer from 'next/head';
 
 interface HeadProps {
@@ -11,7 +13,12 @@ const Head: FC<HeadProps> = ({
   title = 'Carregando...',
   description
 }) => {
+  const { asPath } = useRouter();
+
   const formattedTitle = `${title} | EasyEats`;
+
+  const baseUrl = 'https://easy-eats-br.vercel/app';
+  const formattedUrl = `${baseUrl}${asPath}`;
 
   return (
     <HeadContainer>
@@ -21,12 +28,11 @@ const Head: FC<HeadProps> = ({
       <meta name="description" content={description} />
       <meta name="keywords" content="" />
       <meta name="subject" content="" />
-      <meta name="url" content="" />
+      <meta name="url" content={formattedUrl} />
       <meta name="theme-color" content="" />
 
       <meta property="og:title" content={formattedTitle} />
-      <meta property="og:site_name" content="" />
-      <meta property="og:url" content="" />
+      <meta property="og:url" content={formattedUrl} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content="" />
 
