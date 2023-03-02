@@ -40,9 +40,9 @@ const RegisterEmployee: TNextPageWithLayout = () => {
     handleRegisterEmployee({
       ...employeeValues,
       cpf: unformat(employeeValues.cpf),
-      cellPhone: employeeValues.cellPhone,
+      cellPhone: unformat(employeeValues.cellPhone),
       zipCode: unformat(employeeValues.zipCode),
-      responsibleCnpj: company?.cnpj as string
+      responsibleCnpj: unformat(String(company?.cnpj))
     });
   };
 
