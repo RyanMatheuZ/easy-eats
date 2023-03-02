@@ -10,7 +10,7 @@ import { Head } from '@components/meta';
 import { StepperCard } from '@components/modules';
 import { FlowFinanceMan } from '@components/svgs';
 
-import { randomMessage } from '@utils/random';
+import { randomNumber, randomMessage } from '@utils/random';
 
 import {
   Container,
@@ -30,7 +30,7 @@ const Admin: TNextPageWithLayout = () => {
 
   // https://nextjs.org/docs/messages/react-hydration-error
   useEffect(() => {
-    setMessage(randomMessage());
+    setMessage(randomMessage(randomNumber()));
   }, []);
 
   return (

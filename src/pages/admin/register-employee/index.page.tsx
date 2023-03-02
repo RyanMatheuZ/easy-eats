@@ -26,7 +26,7 @@ import { formatCEP } from '@utils/inputs/cep';
 import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
-import { states } from '@utils/states';
+import { states } from '@utils/datas/states';
 
 import { employeeInitialValues, registerEmployeeSchema } from './utils';
 
