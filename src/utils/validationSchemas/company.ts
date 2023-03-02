@@ -10,7 +10,7 @@ const schemas = {
     .test(
       'isValidFantasyName',
       'Esse nome não pode ser numérico!',
-      (value) => hasOnlyNumbers(value || '')
+      (value) => !hasOnlyNumbers(value || '')
     ),
   cnpj: Yup
     .string()

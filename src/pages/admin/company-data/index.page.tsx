@@ -23,7 +23,7 @@ import {
 
 import { formatCEP } from '@utils/inputs/cep';
 import { formatCNPJ } from '@utils/inputs/cnpj';
-import { states } from '@utils/states';
+import { states } from '@utils/datas/states';
 
 import { companyDataSchema } from './utils';
 

@@ -30,15 +30,15 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
 
   const [company, setCompany] = useState<IAuthContext['company']>(storageCompanyInitialValue);
 
-  const handleStoreCompanyData = (company: ICompany) => {
+  const handleStoreCompanyData = (key: string, company: ICompany) => {
     setCompany(company);
-    setStorageValue(STORAGE_COMPANY_KEY, company);
+    setStorageValue(key, company);
   };
 
   const handleSignIn = useCallback(async (signInValues: ISignIn) => {
     try {
       const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${ENDPOINT}/sign-in`, signInValues);
-      handleStoreCompanyData(data);
+      handleStoreCompanyData(STORAGE_COMPANY_KEY, data);
       router.push('/admin');
       showToast('Empresa autenticada com sucesso!', 'success');
     } catch (error: any) {
@@ -49,7 +49,7 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   const handleSignUp = useCallback(async (signUpValues: ISignUp) => {
     try {
       const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${ENDPOINT}/sign-up`, signUpValues);
-      handleStoreCompanyData(data);
+      handleStoreCompanyData(STORAGE_COMPANY_KEY, data);
       router.push('/admin');
       showToast('Empresa cadastrada com sucesso!', 'success');
     } catch (error: any) {
@@ -67,6 +67,7 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
     <AuthContext.Provider value={{
       company,
       unauthenticatedRoutes,
+      handleStoreCompanyData,
       handleSignIn,
       handleSignUp,
       handleSignOut

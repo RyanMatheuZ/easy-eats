@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useEffect } from 'react';
 
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import type { DefaultTheme } from 'styled-components';
@@ -17,6 +17,8 @@ import type { TAppPropsWithLayout } from '@ts/types';
 
 import AuthProviver, { useAuth } from '@context/auth';
 
+import { queryClient } from '@services/tanstackQuery';
+
 import theme, { muiTheme } from '@styles/theme';
 import GlobalStyle from '@styles/globalStyle';
 
@@ -24,8 +26,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
   const { push, replace } = useRouter();
-
-  const queryClient = new QueryClient();
 
   const { company, unauthenticatedRoutes } = useAuth();
 
