@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 
 import { faker } from '@faker-js/faker';
 
-import { render, renderHook, waitFor, fireEvent } from '@utils/tests';
+import { render, waitFor, fireEvent } from '@utils/tests';
 
 import type { ISignUp } from '@ts/interfaces';
-
-import { useLocalStorage } from '@hooks/index';
 
 import axiosInstance from '@services/axios';
 
@@ -25,24 +23,19 @@ jest.mock('next/router', () => {
   };
 });
 
-const { result: localStorageResult } = renderHook(() => {
-  return useLocalStorage();
-});
+const { password, email } = faker.internet;
+const { name } = faker.company;
 
-const password = faker.internet.password(10);
+const mockPassword = password(10);
 const FAKE_SIGN_UP_DATA: ISignUp = {
-  fantasyName: faker.company.name(),
+  fantasyName: name(),
   cnpj: '82514016000187',
-  email: faker.internet.email(),
-  password,
-  confirmPassword: password
+  email: email(),
+  password: mockPassword,
+  confirmPassword: mockPassword
 };
 
 describe('Sign Up page', () => {
-  beforeEach(() => {
-    localStorageResult.current.setStorageValue('@company_data', null);
-  });
-
   it('should render a page with all the informations', () => {
     const { getByTestId, getByText, getByRole } = render(<SignUp />);
 
@@ -92,8 +85,8 @@ describe('Sign Up page', () => {
   it('should show error when passwords dont match', async () => {
     const { getByTestId, getByRole } = render(<SignUp />);
 
-    const firstPasswordCase = faker.internet.password(10);
-    const secondPasswordCase = faker.internet.password(20);
+    const firstPasswordCase = password(10);
+    const secondPasswordCase = password(20);
 
     const passwordField = getByTestId('password');
     const confirmPasswordField = getByTestId('confirm-password');
@@ -153,25 +146,36 @@ describe('Sign Up page', () => {
     });
   });
 
-  it.each`
-    FIELD                 | MESSAGE
-    ${'fantasy-name'}     | ${/Você deve inserir o nome fantasia!/i}
-    ${'cnpj'}             | ${/Você deve inserir o CNPJ!/i}
-    ${'email'}            | ${/Você deve inserir um e-mail!/i}
-    ${'password'}         | ${/Você deve inserir uma senha!/i}
-    ${'confirm-password'} | ${/Você deve confirmar a senha!/i}
-  `(
-    'should show error <MESSSAGE> for each <FIELD>',
-    async ({ FIELD, MESSAGE }) => {
-      const { getByRole, getByTestId } = render(<SignUp />);
+  it.each([
+    {
+      field: 'fantasy-name',
+      message: /Você deve inserir o nome fantasia!/i
+    },
+    {
+      field: 'cnpj',
+      message: /Você deve inserir o CNPJ!/i
+    },
+    {
+      field: 'email',
+      message: /Você deve inserir um e-mail!/i
+    },
+    {
+      field: 'password',
+      message: /Você deve inserir uma senha!/i
+    },
+    {
+      field: 'confirm-password',
+      message: /Você deve confirmar a senha!/i
+    },
+  ])('should show error <MESSSAGE> for each <FIELD>', async ({ field, message }) => {
+    const { getByRole, getByTestId } = render(<SignUp />);
 
-      const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
+    const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
 
-      fireEvent.click(signUpButton);
+    fireEvent.click(signUpButton);
 
-      await waitFor(() => {
-        expect(getByTestId(`${FIELD}-error-message`)).toHaveTextContent(MESSAGE);
-      });
-    }
-  );
+    await waitFor(() => {
+      expect(getByTestId(`${field}-error-message`)).toHaveTextContent(message);
+    });
+  });
 });

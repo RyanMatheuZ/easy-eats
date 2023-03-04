@@ -34,24 +34,26 @@ describe('Welcome page', () => {
     expect(signUpButton).toBeInTheDocument();
   });
 
-  it.each`
-    LABEL              | REDIRECT
-    ${/Entrar/i}       | ${'/sign-in'}
-    ${/Cadastrar-se/i} | ${'/sign-up'}
-  `(
-    'should redirect to <REDIRECT> when clicking on each button <LABEL>',
-    async ({ LABEL, REDIRECT }) => {
-      const { getByRole } = render(<Welcome />);
-      const router = useRouter();
-
-      const button = getByRole('button', { name: LABEL });
-
-      fireEvent.click(button);
-
-      await waitFor(() => {
-        expect(router.push).toHaveBeenCalledWith(REDIRECT);
-        expect(router.push).toBeCalledTimes(1);
-      });
+  it.each([
+    {
+      label: /Entrar/i,
+      redirect: '/sign-in'
+    },
+    {
+      label: /Cadastrar-se/i,
+      redirect: '/sign-up'
     }
-  );
+  ])('should redirect to <REDIRECT> when clicking on each button <LABEL>', async ({ label, redirect }) => {
+    const { getByRole } = render(<Welcome />);
+    const router = useRouter();
+
+    const button = getByRole('button', { name: label });
+
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(router.push).toHaveBeenCalledWith(redirect);
+      expect(router.push).toBeCalledTimes(1);
+    });
+  });
 });

@@ -2,11 +2,9 @@ import { useRouter } from 'next/router';
 
 import { faker } from '@faker-js/faker';
 
-import { render, renderHook, waitFor, fireEvent } from '@utils/tests';
+import { render, waitFor, fireEvent } from '@utils/tests';
 
 import type { ISignIn } from '@ts/interfaces';
-
-import { useLocalStorage } from '@hooks/index';
 
 import axiosInstance from '@services/axios';
 
@@ -25,20 +23,14 @@ jest.mock('next/router', () => {
   };
 });
 
-const { result: localStorageResult } = renderHook(() => {
-  return useLocalStorage();
-});
+const { password } = faker.internet;
 
 const FAKE_SIGN_IN_DATA: ISignIn = {
   cnpj: '82514016000187',
-  password: faker.internet.password(10),
+  password: password(10),
 };
 
 describe('Sign In page', () => {
-  beforeEach(() => {
-    localStorageResult.current.setStorageValue('@company_data', null);
-  });
-
   it('should render a page with all the informations', () => {
     const { getByTestId, getByText, getByRole } = render(<SignIn />);
 
@@ -106,22 +98,24 @@ describe('Sign In page', () => {
     });
   });
 
-  it.each`
-    FIELD         | MESSAGE
-    ${'cnpj'}     | ${/Você deve inserir o CNPJ!/i}
-    ${'password'} | ${/Você deve inserir uma senha!/i}
-  `(
-    'should show error <MESSSAGE> for each <FIELD>',
-    async ({ FIELD, MESSAGE }) => {
-      const { getByRole, getByTestId } = render(<SignIn />);
-
-      const signInButton = getByRole('button', { name: /Entrar/i });
-
-      fireEvent.click(signInButton);
-
-      await waitFor(() => {
-        expect(getByTestId(`${FIELD}-error-message`)).toHaveTextContent(MESSAGE);
-      });
+  it.each([
+    {
+      field: 'cnpj',
+      message: /Você deve inserir o CNPJ!/i
+    },
+    {
+      field: 'password',
+      message: /Você deve inserir uma senha!/i
     }
-  );
+  ])('should show error <MESSSAGE> for each <FIELD>', async ({ field, message }) => {
+    const { getByRole, getByTestId } = render(<SignIn />);
+
+    const signInButton = getByRole('button', { name: /Entrar/i });
+
+    fireEvent.click(signInButton);
+
+    await waitFor(() => {
+      expect(getByTestId(`${field}-error-message`)).toHaveTextContent(message);
+    });
+  });
 });
