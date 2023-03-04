@@ -18,6 +18,8 @@ const mockedAxios = axiosInstance as jest.Mocked<typeof axiosInstance>;
 jest.mock('next/router', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
+      push: jest.fn(),
+      replace: jest.fn(),
       back: jest.fn()
     })
   };
@@ -112,7 +114,7 @@ describe('Sign Up page', () => {
     });
   });
 
-  it.skip('should correctly fill the fields and submit data for sign up', async () => {
+  it('should correctly fill the fields and submit data for sign up', async () => {
     const { getByRole, getByTestId } = render(<SignUp />);
 
     const fantasyNameField = getByTestId('fantasy-name');
