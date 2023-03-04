@@ -4,7 +4,6 @@ module.exports = {
   pageExtensions: ['page.tsx'],
 
   reactStrictMode: true,
-  swcMinify: true,
 
   compiler: {
     styledComponents: true

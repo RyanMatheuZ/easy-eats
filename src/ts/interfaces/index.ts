@@ -7,6 +7,7 @@ import type ISignUp from './SignUp';
 import type IAPIError from './APIError';
 import type IAPIErrorResponse from './APIErrorResponse';
 import type IAddress from './Address';
+import type { IState, IActions } from './UseStore';
 
 export type {
   ICompany,
@@ -18,5 +19,7 @@ export type {
   ISignUp,
   IAPIError,
   IAPIErrorResponse,
-  IAddress
+  IAddress,
+  IState,
+  IActions
 };

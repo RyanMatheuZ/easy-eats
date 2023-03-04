@@ -7,7 +7,8 @@ import Welcome from '@pages/welcome/index.page';
 jest.mock('next/router', () => {
   return {
     useRouter: jest.fn().mockReturnValue({
-      push: jest.fn()
+      push: jest.fn(),
+      replace: jest.fn()
     })
   };
 });

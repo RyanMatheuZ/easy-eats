@@ -9,7 +9,10 @@ const Document = () => {
   const author = 'Ryan M. de Oliveira';
 
   return (
-    <Html lang='pt-br' translate='no'>
+    <Html
+      lang='pt-br'
+      translate='no'
+    >
       <Head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
