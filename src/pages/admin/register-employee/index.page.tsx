@@ -27,7 +27,7 @@ import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
 
 import type { RegisterEmployeeFormValues } from './utils';
-import { employeeInitialValues, registerEmployeeSchema } from './utils';
+import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
   const formikRef = useRef<FormikProps<RegisterEmployeeFormValues> | null>();
@@ -35,6 +35,8 @@ const RegisterEmployee: TNextPageWithLayout = () => {
   const { company } = useAuth();
 
   const { handleRegisterEmployee } = useEmployee();
+
+  const { description } = head;
 
   const onSubmit = (employeeValues: IRegisterEmployee) => {
     handleRegisterEmployee({
@@ -48,10 +50,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Head
-        title={company?.fantasyName as string}
-        description='Bem-vindo(a) à página de cadastro de colaboradores! Aqui, você pode adicionar novos membros da equipe ao seu sistema com apenas alguns cliques. Você pode inserir facilmente informações de contato e outras informações relevantes. Além disso, nossa plataforma segura garante que todas as informações inseridas sejam mantidas confidenciais e protegidas. Torne sua gestão de equipe mais eficiente.'
-      />
+      <Head title={company?.fantasyName as string} description={description} />
       <MaxWidthContainer>
         <Formik
           innerRef={(ref) => formikRef.current = ref}

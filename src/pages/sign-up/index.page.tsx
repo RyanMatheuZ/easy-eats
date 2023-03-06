@@ -13,12 +13,14 @@ import { BottomActions, HeaderWithBackButton, MaxWidthContainer, SubmitButtonCon
 import { formatCNPJ } from '@utils/inputs/cnpj';
 import { unformat } from '@utils/inputs/unformat';
 
-import { signUpInitialValues, signUpSchema } from './utils';
+import { head, signUpInitialValues, signUpSchema } from './utils';
 
 import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
   const { handleSignUp } = useAuth();
+
+  const { title, description } = head;
 
   const onSubmit = (signUpValues: ISignUp) => {
     handleSignUp({
@@ -29,10 +31,7 @@ const SignUp: NextPage = () => {
 
   return (
     <>
-      <Head
-        title='Cadastrar-se'
-        description='Bem-vindo(a)! Aqui você pode criar uma conta para acessar todas as funcionalidades do nosso sistema. Para criar uma nova conta, preencha o formulário de cadastro com suas informações básicas. Certifique-se de preencher todos os campos antes de clicar no botão "CADASTRAR-SE". Caso já tenha uma conta, basta clicar no link "Já possui uma conta?" no topo da página para acessar o sistema.'
-      />
+      <Head title={title} description={description} />
       <Container>
         <HeaderWithBackButton
           text="Já possui uma conta?"
