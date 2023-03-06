@@ -9,12 +9,9 @@ import axiosInstance from '@services/axios';
 import { showToast } from '@utils/toast';
 
 const useCEP = () => {
-  const [address, setAddress] = useState<IAddress>();
   const [isLoadingAddress, setIsLoadingAddress] = useState<boolean>();
 
   const handleGetAdress = useCallback(async (cep: IAddress['cep']) => {
-    if (cep.length < 8) return;
-
     const ENDPOINT = `https://viacep.com.br/ws/${cep}/json/`;
 
     try {
@@ -23,10 +20,10 @@ const useCEP = () => {
       const { data }: AxiosResponse<IAddress> = await axiosInstance.get(ENDPOINT);
 
       if (data.erro) {
-        return showToast('CEP inválido. Tente Novamente!', 'error');
+        showToast('CEP inválido. Tente Novamente!', 'error');
       }
 
-      setAddress(data);
+      return data;
     } catch (error) {
       console.error(error);
     } finally {
@@ -36,7 +33,6 @@ const useCEP = () => {
 
   return {
     handleGetAdress,
-    address,
     isLoadingAddress
   };
 };

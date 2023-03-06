@@ -4,12 +4,13 @@ interface IAddress {
   complemento: string;
   bairro: string;
   localidade: string;
+  numeroDoLocal: string;
   uf: string;
   ibge: string;
   gia: string;
   ddd: string;
   siafi: string;
-  erro: boolean;
+  erro: string | undefined;
 }
 
 export default IAddress;

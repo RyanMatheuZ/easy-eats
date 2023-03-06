@@ -1,49 +1,47 @@
-import type { ChangeEvent, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import { useRef } from 'react';
 
+import type { FormikProps } from 'formik';
 import { Formik } from 'formik';
-
-import { MenuItem } from '@mui/material';
 
 import type { TNextPageWithLayout } from '@ts/types';
 
 import { useAuth } from '@context/auth';
 
-import { useAddress } from '@hooks/index';
-
-import { TextField, SelectField, StyledLabel, StyledButton } from '@components/elements';
+import { TextField, StyledLabel, StyledButton } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
 import {
-  CityAndStateContainer,
-  FirstNameAndSurnameContainer,
+  AddressFields,
+  HalfToHalContainer,
   MaxWidthContainer,
   StyledFormContainer,
   SubmitButtonContainer
 } from '@components/modules';
 
-import { formatCEP } from '@utils/inputs/cep';
 import { formatCNPJ } from '@utils/inputs/cnpj';
-import { states } from '@utils/datas/states';
 
+import type { CompanyFormValues } from './utils';
 import { companyDataSchema } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
+  const formikRef = useRef<FormikProps<CompanyFormValues> | null>();
+
   const { company } = useAuth();
 
-  const { handleGetAdress } = useAddress();
-
-  const companyDataInitialValues = {
-    fantasyName: '' || company?.fantasyName,
-    cnpj: '' || company?.cnpj,
-    email: '' || company?.email,
-    zipCode: '' || company?.address?.cep,
-    address: '' || company?.address?.logradouro,
-    district: '' || company?.address?.bairro,
-    city: '' || company?.address?.localidade,
-    state: '' || company?.address?.uf,
-    firstName: '' || company?.owner?.firstName,
-    surname: '' || company?.owner?.surname,
-    role: '' || company?.owner?.role
+  const companyDataInitialValues: CompanyFormValues = {
+    fantasyName: '' ?? company?.fantasyName,
+    cnpj: '' ?? company?.cnpj,
+    email: '' ?? company?.email,
+    zipCode: '' ?? company?.address?.cep,
+    address: '' ?? company?.address?.logradouro,
+    district: '' ?? company?.address?.bairro,
+    locationNumber: '' ?? company?.address?.numeroDoLocal,
+    city: '' ?? company?.address?.localidade,
+    state: '' ?? company?.address?.uf,
+    firstName: '' ?? company?.owner?.firstName,
+    surname: '' ?? company?.owner?.surname,
+    role: '' ?? company?.owner?.role
   };
 
   const onSubmit = () => {
@@ -58,6 +56,7 @@ const CompanyData: TNextPageWithLayout = () => {
       />
       <MaxWidthContainer>
         <Formik
+          innerRef={(ref) => formikRef.current = ref}
           initialValues={companyDataInitialValues}
           validationSchema={companyDataSchema}
           onSubmit={onSubmit}
@@ -89,58 +88,12 @@ const CompanyData: TNextPageWithLayout = () => {
                 label="E-mail"
                 fullWidth
               />
-              <StyledLabel>Localização:</StyledLabel>
-              <TextField
-                type="tel" // Numeric keyboard without parsing to number
-                dataTestId="zip-code"
-                name="zipCode"
-                label="CEP"
-                fullWidth
-                onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                  setFieldValue('zipCode', formatCEP(e.target.value));
-                  handleGetAdress(e.target.value);
-                }}
+              <AddressFields
+                formikRef={formikRef}
+                setFieldValue={setFieldValue}
               />
-              <TextField
-                type="text"
-                dataTestId="address"
-                name="address"
-                label="Endereço"
-                fullWidth
-              />
-              <TextField
-                type="text"
-                dataTestId="district"
-                name="district"
-                label="Bairro"
-                fullWidth
-              />
-              <CityAndStateContainer>
-                <TextField
-                  type="text"
-                  dataTestId="city"
-                  name="city"
-                  label="Cidade"
-                  fullWidth
-                />
-                <SelectField
-                  dataTestId="state"
-                  name="state"
-                  label="Estado"
-                  fullWidth
-                >
-                  {states.map((state, index) => (
-                    <MenuItem
-                      key={index}
-                      value={state}
-                    >
-                      {state}
-                    </MenuItem>
-                  ))}
-                </SelectField>
-              </CityAndStateContainer>
               <StyledLabel>Responsável:</StyledLabel>
-              <FirstNameAndSurnameContainer>
+              <HalfToHalContainer>
                 <TextField
                   type="text"
                   dataTestId="first-name"
@@ -155,7 +108,7 @@ const CompanyData: TNextPageWithLayout = () => {
                   label="Sobrenome"
                   fullWidth
                 />
-              </FirstNameAndSurnameContainer>
+              </HalfToHalContainer>
               <TextField
                 type="text"
                 dataTestId="role"

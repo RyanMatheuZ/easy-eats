@@ -7,5 +7,5 @@ export const states = [
   'PR', 'PE', 'PI',
   'RJ', 'RN', 'RS',
   'RO', 'RR', 'SC',
-  'SP', 'SE', 'TO',
+  'SP', 'SE', 'TO'
 ];

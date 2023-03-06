@@ -28,6 +28,14 @@ export const FieldBaseStyles = css`
     }
   }
 
+  & .MuiSelect-select.MuiSelect-filled.Mui-disabled {
+    background-color: transparent;
+    cursor: not-allowed;
+  }
+  & .MuiInputBase-root::before {
+    border-style: none
+  }
+
   & label {
     color: ${({ theme }) => theme.palette.secondary.main};
     font-size: 1rem;

@@ -2,7 +2,7 @@ import type { FC, PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-const FirstNameAndSurnameContainer: FC<PropsWithChildren> = ({ children }) => {
+const TwoThirdContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       {children}
@@ -10,4 +10,4 @@ const FirstNameAndSurnameContainer: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export default FirstNameAndSurnameContainer;
+export default TwoThirdContainer;

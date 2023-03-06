@@ -2,7 +2,7 @@ import type { FC, PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-const CityAndStateContainer: FC<PropsWithChildren> = ({ children }) => {
+const HalfToHalContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       {children}
@@ -10,4 +10,4 @@ const CityAndStateContainer: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export default CityAndStateContainer;
+export default HalfToHalContainer;
