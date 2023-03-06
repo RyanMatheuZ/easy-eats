@@ -1,39 +1,39 @@
-import type { ChangeEvent, ReactElement } from 'react';
+import type { ReactElement } from 'react';
+import { useRef } from 'react';
 
+import type { FormikProps } from 'formik';
 import { Formik } from 'formik';
-
-import { MenuItem } from '@mui/material';
 
 import type { TNextPageWithLayout } from '@ts/types';
 import type { IRegisterEmployee } from '@ts/interfaces';
 
 import { useAuth } from '@context/auth';
 
-import { useAddress, useEmployee } from '@hooks/index';
+import { useEmployee } from '@hooks/index';
 
-import { TextField, SelectField, StyledLabel, StyledButton } from '@components/elements';
+import { TextField, StyledLabel, StyledButton } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
 import {
-  CityAndStateContainer,
-  FirstNameAndSurnameContainer,
+  AddressFields,
+  HalfToHalContainer,
   MaxWidthContainer,
   StyledFormContainer,
   SubmitButtonContainer
 } from '@components/modules';
 
-import { formatCEP } from '@utils/inputs/cep';
 import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
-import { states } from '@utils/datas/states';
 
+import type { RegisterEmployeeFormValues } from './utils';
 import { employeeInitialValues, registerEmployeeSchema } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
+  const formikRef = useRef<FormikProps<RegisterEmployeeFormValues> | null>();
+
   const { company } = useAuth();
 
-  const { handleGetAdress } = useAddress();
   const { handleRegisterEmployee } = useEmployee();
 
   const onSubmit = (employeeValues: IRegisterEmployee) => {
@@ -54,6 +54,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
       />
       <MaxWidthContainer>
         <Formik
+          innerRef={(ref) => formikRef.current = ref}
           initialValues={employeeInitialValues}
           validationSchema={registerEmployeeSchema}
           onSubmit={onSubmit}
@@ -61,7 +62,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
           {({ values, setFieldValue }) => (
             <StyledFormContainer>
               <StyledLabel>Informações gerais:</StyledLabel>
-              <FirstNameAndSurnameContainer>
+              <HalfToHalContainer>
                 <TextField
                   type="text"
                   dataTestId="first-name"
@@ -76,7 +77,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
                   label="Sobrenome"
                   fullWidth
                 />
-              </FirstNameAndSurnameContainer>
+              </HalfToHalContainer>
               <TextField
                 type="text"
                 dataTestId="social-name"
@@ -115,56 +116,10 @@ const RegisterEmployee: TNextPageWithLayout = () => {
                 value={formatCellPhone(String(values.cellPhone))}
                 fullWidth
               />
-              <StyledLabel>Localização:</StyledLabel>
-              <TextField
-                type="tel" // Numeric keyboard without parsing to number
-                dataTestId="zip-code"
-                name="zipCode"
-                label="CEP"
-                fullWidth
-                onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                  setFieldValue('zipCode', formatCEP(e.target.value));
-                  handleGetAdress(e.target.value);
-                }}
+              <AddressFields
+                formikRef={formikRef}
+                setFieldValue={setFieldValue}
               />
-              <TextField
-                type="text"
-                dataTestId="address"
-                name="address"
-                label="Endereço"
-                fullWidth
-              />
-              <TextField
-                type="text"
-                dataTestId="district"
-                name="district"
-                label="Bairro"
-                fullWidth
-              />
-              <CityAndStateContainer>
-                <TextField
-                  type="text"
-                  dataTestId="city"
-                  name="city"
-                  label="Cidade"
-                  fullWidth
-                />
-                <SelectField
-                  dataTestId="state"
-                  name="state"
-                  label="Estado"
-                  fullWidth
-                >
-                  {states.map((state, index) => (
-                    <MenuItem
-                      key={index}
-                      value={state}
-                    >
-                      {state}
-                    </MenuItem>
-                  ))}
-                </SelectField>
-              </CityAndStateContainer>
               <SubmitButtonContainer>
                 <StyledButton
                   $primary

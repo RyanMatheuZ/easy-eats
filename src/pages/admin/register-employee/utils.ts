@@ -1,10 +1,27 @@
 import * as Yup from 'yup';
 
-import { zipCode, address, district, city } from '@utils/validationSchemas/address';
+import { zipCode, address, district, locationNumber, city } from '@utils/validationSchemas/address';
 import { email, cellPhone } from '@utils/validationSchemas/contacts';
 import { firstName, surname, socialName, cpf, role } from '@utils/validationSchemas/people';
 
-export const employeeInitialValues = {
+export interface RegisterEmployeeFormValues {
+  cpf: string;
+  firstName: string;
+  surname: string;
+  socialName: string;
+  email: string;
+  cellPhone: string;
+  dateOfBirth: Date;
+  role: string;
+  zipCode: string;
+  address: string;
+  district: string;
+  locationNumber: string;
+  city: string;
+  state: string;
+}
+
+export const employeeInitialValues: RegisterEmployeeFormValues = {
   cpf: '',
   firstName: '',
   surname: '',
@@ -16,6 +33,7 @@ export const employeeInitialValues = {
   zipCode: '',
   address: '',
   district: '',
+  locationNumber: '',
   city: '',
   state: ''
 };
@@ -31,5 +49,6 @@ export const registerEmployeeSchema = Yup.object().shape({
   zipCode,
   address,
   district,
+  locationNumber,
   city
 });

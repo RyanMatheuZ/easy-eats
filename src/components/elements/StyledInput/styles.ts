@@ -14,10 +14,6 @@ const StyledInput = styled(TextField).attrs({
       cursor: not-allowed;
     }
   }
-
-  & .MuiInputBase-root::before {
-    border-style: none
-  }
 `;
 
 export default StyledInput;
