@@ -13,12 +13,14 @@ import { BottomActions, HeaderWithBackButton, MaxWidthContainer, SubmitButtonCon
 import { formatCNPJ } from '@utils/inputs/cnpj';
 import { unformat } from '@utils/inputs/unformat';
 
-import { signInInitialValues, signInSchema } from './utils';
+import { head, signInInitialValues, signInSchema } from './utils';
 
 import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
   const { handleSignIn } = useAuth();
+
+  const { title, description } = head;
 
   const onSubmit = (signInValues: ISignIn) => {
     handleSignIn({
@@ -29,10 +31,7 @@ const SignIn: NextPage = () => {
 
   return (
     <>
-      <Head
-        title='Entrar'
-        description='Bem-vindo(a)! Aqui você pode acessar todas as funcionalidades do nosso sistema. Para fazer login, insira o CNPJ da empresa e senha nos campos correspondentes e clique no botão "ENTRAR". Lembre-se de que todas as informações fornecidas são protegidas por nossa política de privacidade e serão mantidas em sigilo. Obrigado por escolher nosso sistema de gerenciamento de empresas!'
-      />
+      <Head title={title} description={description} />
       <Container>
         <HeaderWithBackButton
           text="Ainda não possui uma conta?"

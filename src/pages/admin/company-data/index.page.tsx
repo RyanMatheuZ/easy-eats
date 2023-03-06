@@ -22,12 +22,14 @@ import {
 import { formatCNPJ } from '@utils/inputs/cnpj';
 
 import type { CompanyFormValues } from './utils';
-import { companyDataSchema } from './utils';
+import { head, companyDataSchema } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
   const formikRef = useRef<FormikProps<CompanyFormValues> | null>();
 
   const { company } = useAuth();
+
+  const { description } = head;
 
   const companyDataInitialValues: CompanyFormValues = {
     fantasyName: '' ?? company?.fantasyName,
@@ -50,10 +52,7 @@ const CompanyData: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Head
-        title={company?.fantasyName as string}
-        description='Bem-vindo(a) à página de informações da empresa! Aqui, você pode inserir as informações da sua empresa em nosso sistema, incluindo informações de contato, endereço, descrição do negócio e outras informações. Além disso, nossa plataforma segura garante que todas as informações inseridas sejam mantidas confidenciais e protegidas. Adicionar informações da empresa nunca foi tão fácil e seguro! Experimente agora e torne sua gestão de negócios mais eficiente.'
-      />
+      <Head title={company?.fantasyName as string} description={description} />
       <MaxWidthContainer>
         <Formik
           innerRef={(ref) => formikRef.current = ref}
