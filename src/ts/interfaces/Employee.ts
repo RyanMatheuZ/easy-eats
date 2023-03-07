@@ -11,6 +11,7 @@ export interface IEmployee {
   dateOfBirth: Date;
   role: string;
   password: string;
+  confirmPassword: string;
   responsibleCnpj: string;
   address: IAddress;
   accountCreatedAt?: Date;
@@ -25,9 +26,12 @@ export interface IRegisterEmployee {
   cellPhone: IEmployee['cellPhone'];
   dateOfBirth: IEmployee['dateOfBirth'];
   role: IEmployee['role'];
+  password: IEmployee['password'];
+  confirmPassword: IEmployee['confirmPassword'];
   zipCode: IAddress['cep'];
   address: IAddress['logradouro'];
   district: IAddress['bairro'];
+  locationNumber: IAddress['numeroDoLocal'];
   city: IAddress['localidade'];
   state: IAddress['uf'];
 }
