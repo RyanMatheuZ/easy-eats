@@ -26,11 +26,10 @@ import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
 
-import type { RegisterEmployeeFormValues } from './utils';
 import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
-  const formikRef = useRef<FormikProps<RegisterEmployeeFormValues> | null>();
+  const formikRef = useRef<FormikProps<IRegisterEmployee> | null>();
 
   const { company } = useAuth();
 
@@ -39,12 +38,16 @@ const RegisterEmployee: TNextPageWithLayout = () => {
   const { description } = head;
 
   const onSubmit = (employeeValues: IRegisterEmployee) => {
+    const defaultPassword = '12345678';
+
     handleRegisterEmployee({
       ...employeeValues,
       cpf: unformat(employeeValues.cpf),
       cellPhone: unformat(employeeValues.cellPhone),
       zipCode: unformat(employeeValues.zipCode),
-      responsibleCnpj: unformat(String(company?.cnpj))
+      responsibleCnpj: unformat(String(company?.cnpj)),
+      password: defaultPassword,
+      confirmPassword: defaultPassword
     });
   };
 
