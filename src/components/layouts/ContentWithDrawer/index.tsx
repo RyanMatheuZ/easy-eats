@@ -5,7 +5,7 @@ import { Button, Divider } from '@mui/material';
 
 import { useAuth } from '@context/auth';
 
-import UserInformations from './UserInformations';
+import CompanyInformations from './CompanyInformations';
 import ListItems from './ListItems';
 
 import {
@@ -21,8 +21,8 @@ const ContentWithDrawer: FC<PropsWithChildren> = ({ children }) => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const companyOwnerName = `${company?.owner?.firstName} ${company?.owner?.surname}`;
-  const companyOwnerRole = company?.owner?.role as string;
+  const fantasyName = ''; // company?.fantasyName as string;
+  const ownerCompletedName = ''; // `${company?.owner?.firstName} ${company?.owner?.surname}`;
 
   const handleToggleDrawer = () => {
     setIsDrawerOpen((prevState) => !prevState);
@@ -36,9 +36,9 @@ const ContentWithDrawer: FC<PropsWithChildren> = ({ children }) => {
           open={isDrawerOpen}
         >
           <StyledDrawerHeader>
-            <UserInformations
-              name={companyOwnerName}
-              role={companyOwnerRole}
+            <CompanyInformations
+              fantasyName={fantasyName}
+              ownerCompletedName={ownerCompletedName}
             />
             <Button onClick={handleToggleDrawer}>
               <ToggleButtonDrawer $isDrawerOpen={isDrawerOpen} />

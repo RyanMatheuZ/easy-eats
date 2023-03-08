@@ -24,12 +24,12 @@ export const Body = styled.div`
   overflow-x: hidden;
 `;
 
-export const Name = styled(Typography)`
+export const FantasyName = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.main};
   font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
 `;
 
-export const Role = styled(Typography)`
+export const OwnerCompletedName = styled(Typography)`
   color: ${({ theme }) => theme.palette.secondary.main};
 `;
 
