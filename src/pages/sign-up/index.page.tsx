@@ -18,9 +18,9 @@ import { head, signUpInitialValues, signUpSchema } from './utils';
 import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignUp: NextPage = () => {
-  const { handleSignUp } = useAuth();
-
   const { title, description } = head;
+
+  const { handleSignUp } = useAuth();
 
   const onSubmit = (signUpValues: ISignUp) => {
     handleSignUp({

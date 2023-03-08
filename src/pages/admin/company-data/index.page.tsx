@@ -25,11 +25,11 @@ import type { CompanyFormValues } from './utils';
 import { head, companyDataSchema } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
+  const { description } = head;
+
   const formikRef = useRef<FormikProps<CompanyFormValues> | null>();
 
   const { company } = useAuth();
-
-  const { description } = head;
 
   const companyDataInitialValues: CompanyFormValues = {
     fantasyName: '' ?? company?.fantasyName,

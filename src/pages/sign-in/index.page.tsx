@@ -18,9 +18,9 @@ import { head, signInInitialValues, signInSchema } from './utils';
 import { Container, HeroContainer, Title, Text } from './styles';
 
 const SignIn: NextPage = () => {
-  const { handleSignIn } = useAuth();
-
   const { title, description } = head;
+
+  const { handleSignIn } = useAuth();
 
   const onSubmit = (signInValues: ISignIn) => {
     handleSignIn({
