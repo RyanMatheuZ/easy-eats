@@ -11,6 +11,7 @@ import axiosInstance from '@services/axios';
 
 import useCompanyStore from '@services/zustand';
 
+import { catchError } from '@utils/error';
 import { showToast } from '@utils/toast';
 
 import { authContextDefaultValues, unauthenticatedRoutes } from './utils';
@@ -35,9 +36,8 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
       handlePersistCompanyData(data);
       push('/admin');
       showToast('Empresa autenticada com sucesso!', 'success');
-    } catch {
-      const errorMessage = 'Não foi possível a autenticação. Tente novamente mais tarde!';
-      showToast(errorMessage, 'error');
+    } catch (e) {
+      catchError(e);
     }
   }, []);
 
@@ -47,9 +47,8 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
       handlePersistCompanyData(data);
       push('/admin');
       showToast('Empresa cadastrada com sucesso!', 'success');
-    } catch {
-      const errorMessage = 'Não foi possível o cadastro. Tente novamente mais tarde!';
-      showToast(errorMessage, 'error');
+    } catch (e) {
+      catchError(e);
     }
   }, []);
 

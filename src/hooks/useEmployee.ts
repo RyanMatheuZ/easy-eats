@@ -4,7 +4,7 @@ import type { AxiosResponse } from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
-import type { IEmployee, IRegisterEmployee } from '@ts/interfaces';
+import type { IEmployee, IRegisterEmployee, IParams } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 
@@ -15,44 +15,50 @@ const useEmployee = () => {
   const ENDPOINT = '/employee';
 
   const handleRegisterEmployee = useCallback(async (employeeValues: IRegisterEmployee & { responsibleCnpj: string }) => {
+    const FORMATTED_ENDPOINT = `${ENDPOINT}/register`;
+
     try {
-      const response = await axiosInstance.post(`${ENDPOINT}/register`, employeeValues);
+      const response = await axiosInstance.post(FORMATTED_ENDPOINT, employeeValues);
       success(response);
     } catch (e) {
       catchError(e);
     }
   }, []);
 
-  const queryGetEmployeeById = async (employeeId: number) => {
-    try {
-      const response: AxiosResponse<IEmployee> = await axiosInstance.get(`${ENDPOINT}/get-by-id/${employeeId}`);
-      success(response);
-      return response.data;
-    } catch (e) {
-      catchError(e);
-    }
-  };
   const handleGetEmployeeById = (employeeId: number) => {
-    return useQuery<IEmployee | undefined>({
-      queryKey: ['employeeById', employeeId],
-      queryFn: () => queryGetEmployeeById(employeeId)
-    });
+    const FORMATTED_ENDPOINT = `${ENDPOINT}/get-by-id/${employeeId}`;
+
+    return useQuery(
+      ['employeeById'],
+      async (): Promise<IEmployee | undefined> => {
+        try {
+          const { data }: AxiosResponse<{ employee: IEmployee }> = await axiosInstance.get(FORMATTED_ENDPOINT);
+          return data.employee;
+        } catch (e) {
+          catchError(e);
+        }
+      }
+    );
   };
 
-  const queryGetAllEmployees = async () => {
-    try {
-      const response: AxiosResponse<IEmployee[]> = await axiosInstance.get(`${ENDPOINT}/get-all`);
-      success(response);
-      return response.data;
-    } catch (e) {
-      catchError(e);
-    }
-  };
-  const handleGetAllEmployees = () => {
-    return useQuery<IEmployee[] | undefined>({
-      queryKey: ['allEmployees'],
-      queryFn: () => queryGetAllEmployees()
-    });
+  const handleGetAllEmployees = ({ page, limit, name }: IParams) => {
+    const PARAMS = `?page=${page}&limit=${limit}&name=${name}`;
+    const FORMATTED_ENDPOINT = `${ENDPOINT}/get-all${PARAMS}`;
+
+    return useQuery(
+      ['allEmployees', page, limit, name],
+      async (): Promise<{ employess: IEmployee[]; totalCount: number } | undefined> => {
+        try {
+          const { data }: AxiosResponse<{ employess: IEmployee[]; totalCount: number }> = await axiosInstance.get(FORMATTED_ENDPOINT);
+          return data;
+        } catch (e) {
+          catchError(e);
+        }
+      },
+      {
+        keepPreviousData: true
+      }
+    );
   };
 
   return {
