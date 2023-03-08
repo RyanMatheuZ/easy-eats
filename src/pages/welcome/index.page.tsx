@@ -12,9 +12,9 @@ import { head } from './utils';
 import { Container, ButtonContainer, Title, Text } from './styles';
 
 const Login: NextPage = () => {
-  const { push } = useRouter();
-
   const { title, description } = head;
+
+  const { push } = useRouter();
 
   const handleRedirectToSignInPage = () => {
     push('/sign-in');

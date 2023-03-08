@@ -29,6 +29,8 @@ import {
 } from './styles';
 
 const ViewEmployee: TNextPageWithLayout = () => {
+  const { description } = head;
+
   const { company } = useAuth();
 
   const { handleGetAllEmployees } = useEmployee();
@@ -51,8 +53,6 @@ const ViewEmployee: TNextPageWithLayout = () => {
   const handleChangePagination = (_event: ChangeEvent<unknown>, page: number) => {
     setParams((prevState) => ({ ...prevState, page }));
   };
-
-  const { description } = head;
 
   return (
     <>

@@ -29,13 +29,13 @@ import { unformat } from '@utils/inputs/unformat';
 import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
+  const { description } = head;
+
   const formikRef = useRef<FormikProps<IRegisterEmployee> | null>();
 
   const { company } = useAuth();
 
   const { handleRegisterEmployee } = useEmployee();
-
-  const { description } = head;
 
   const onSubmit = (employeeValues: IRegisterEmployee) => {
     const defaultPassword = '12345678';
