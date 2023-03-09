@@ -17,7 +17,7 @@ export interface IEmployee {
   accountCreatedAt?: Date;
 }
 
-export interface IRegisterEmployee {
+export interface IEmployeeForm {
   cpf: IEmployee['firstName'];
   firstName: IEmployee['firstName'];
   surname: IEmployee['surname'];
