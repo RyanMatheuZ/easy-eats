@@ -1,6 +1,8 @@
 import type { ReactElement, ChangeEvent } from 'react';
 import { useState } from 'react';
 
+import Link from 'next/link';
+
 import { debounce } from 'lodash';
 
 import { Pagination } from '@mui/material';
@@ -71,22 +73,30 @@ const ViewEmployee: TNextPageWithLayout = () => {
                 color='primary'
                 count={totalPages}
                 page={params.page}
-                defaultPage={defaultPage}
                 onChange={handleChangePagination}
               />
             </PaginationContainer>
-            {data?.employess?.map(({ _id, firstName, surname, socialName, role }) => (
-              <EmployeeCard key={_id}>
-                <EmployeeIcon />
-                <EmployeeCardBody>
-                  <EmployeeName>
-                    {socialName ? socialName : `${firstName} ${surname}`}
-                  </EmployeeName>
-                  <EmployeeRole>
-                    {role}
-                  </EmployeeRole>
-                </EmployeeCardBody>
-              </EmployeeCard>
+            {data?.employees?.map(({ _id, firstName, surname, socialName, role }) => (
+              <Link
+                key={_id}
+                href={`/admin/view-employee/${_id}`}
+                legacyBehavior
+                passHref
+              >
+                <a>
+                  <EmployeeCard>
+                    <EmployeeIcon />
+                    <EmployeeCardBody>
+                      <EmployeeName>
+                        {`${firstName} ${surname}`} {socialName && `(${socialName})`}
+                      </EmployeeName>
+                      <EmployeeRole>
+                        {role}
+                      </EmployeeRole>
+                    </EmployeeCardBody>
+                  </EmployeeCard>
+                </a>
+              </Link>
             ))}
           </>
         )}

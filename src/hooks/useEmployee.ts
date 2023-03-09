@@ -2,9 +2,10 @@ import { useCallback } from 'react';
 
 import type { AxiosResponse } from 'axios';
 
+import type { } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { IEmployee, IRegisterEmployee, IParams } from '@ts/interfaces';
+import type { IParams, ICompany, IEmployee, IEmployeeForm } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 
@@ -14,7 +15,10 @@ import { success } from '@utils/success';
 const useEmployee = () => {
   const ENDPOINT = '/employee';
 
-  const handleRegisterEmployee = useCallback(async (employeeValues: IRegisterEmployee & { responsibleCnpj: string }) => {
+  type ResponseEmployeeById = { employee: IEmployee; company: ICompany } | undefined
+  type ResponseAllEmployees = { employees: IEmployee[]; totalCount: number } | undefined
+
+  const handleRegisterEmployee = useCallback(async (employeeValues: IEmployeeForm & { responsibleCnpj: string }) => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/register`;
 
     try {
@@ -25,31 +29,31 @@ const useEmployee = () => {
     }
   }, []);
 
-  const handleGetEmployeeById = (employeeId: number) => {
+  const handleGetEmployeeById = useCallback((employeeId: string) => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/get-by-id/${employeeId}`;
 
     return useQuery(
-      ['employeeById'],
-      async (): Promise<IEmployee | undefined> => {
+      ['employeeById', employeeId],
+      async (): Promise<ResponseEmployeeById> => {
         try {
-          const { data }: AxiosResponse<{ employee: IEmployee }> = await axiosInstance.get(FORMATTED_ENDPOINT);
-          return data.employee;
+          const { data }: AxiosResponse<ResponseEmployeeById> = await axiosInstance.get(FORMATTED_ENDPOINT);
+          return data;
         } catch (e) {
           catchError(e);
         }
       }
     );
-  };
+  }, []);
 
-  const handleGetAllEmployees = ({ page, limit, name }: IParams) => {
+  const handleGetAllEmployees = useCallback(({ page, limit, name }: IParams) => {
     const PARAMS = `?page=${page}&limit=${limit}&name=${name}`;
     const FORMATTED_ENDPOINT = `${ENDPOINT}/get-all${PARAMS}`;
 
     return useQuery(
       ['allEmployees', page, limit, name],
-      async (): Promise<{ employess: IEmployee[]; totalCount: number } | undefined> => {
+      async (): Promise<ResponseAllEmployees> => {
         try {
-          const { data }: AxiosResponse<{ employess: IEmployee[]; totalCount: number }> = await axiosInstance.get(FORMATTED_ENDPOINT);
+          const { data }: AxiosResponse<ResponseAllEmployees> = await axiosInstance.get(FORMATTED_ENDPOINT);
           return data;
         } catch (e) {
           catchError(e);
@@ -59,7 +63,7 @@ const useEmployee = () => {
         keepPreviousData: true
       }
     );
-  };
+  }, []);
 
   return {
     handleRegisterEmployee,

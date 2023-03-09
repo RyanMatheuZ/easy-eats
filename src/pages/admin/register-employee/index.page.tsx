@@ -5,7 +5,7 @@ import type { FormikProps } from 'formik';
 import { Formik } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
-import type { IRegisterEmployee } from '@ts/interfaces';
+import type { IEmployeeForm } from '@ts/interfaces';
 
 import { useAuth } from '@context/auth';
 
@@ -31,20 +31,20 @@ import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
 const RegisterEmployee: TNextPageWithLayout = () => {
   const { description } = head;
 
-  const formikRef = useRef<FormikProps<IRegisterEmployee> | null>();
+  const formikRef = useRef<FormikProps<IEmployeeForm> | null>();
 
   const { company } = useAuth();
 
   const { handleRegisterEmployee } = useEmployee();
 
-  const onSubmit = (employeeValues: IRegisterEmployee) => {
+  const onSubmit = (employeeValues: IEmployeeForm) => {
     const defaultPassword = '12345678';
 
     handleRegisterEmployee({
       ...employeeValues,
       cpf: unformat(employeeValues.cpf),
       cellPhone: unformat(employeeValues.cellPhone),
-      zipCode: unformat(employeeValues.zipCode),
+      zipCode: unformat(String(employeeValues?.zipCode)),
       responsibleCnpj: unformat(String(company?.cnpj)),
       password: defaultPassword,
       confirmPassword: defaultPassword

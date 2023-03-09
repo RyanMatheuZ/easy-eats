@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
-export const Container = styled.header`
-  background-color: transparent;
+interface ContainerProps {
+  $primary?: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
+  background-color: ${({ $primary, theme }) => $primary ? theme.palette.primary.main : 'transparent'};
+`;
+
+export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
