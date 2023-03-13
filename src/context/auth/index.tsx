@@ -32,8 +32,15 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
 
   const handleSignIn = useCallback(async (signInValues: ISignIn) => {
     try {
-      const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${ENDPOINT}/sign-in`, signInValues);
-      handlePersistCompanyData(data);
+      const { data }: AxiosResponse<{ company: ICompany }> = await axiosInstance.post(`${ENDPOINT}/sign-in`, {
+        info: {
+          cnpj: signInValues.cnpj
+        },
+        security: {
+          password: signInValues.password
+        }
+      });
+      handlePersistCompanyData(data.company);
       push('/admin');
       showToast('Empresa autenticada com sucesso!', 'success');
     } catch (e) {
@@ -43,8 +50,18 @@ const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
 
   const handleSignUp = useCallback(async (signUpValues: ISignUp) => {
     try {
-      const { data }: AxiosResponse<ICompany> = await axiosInstance.post(`${ENDPOINT}/sign-up`, signUpValues);
-      handlePersistCompanyData(data);
+      const { data }: AxiosResponse<{ company: ICompany }> = await axiosInstance.post(`${ENDPOINT}/sign-up`, {
+        info: {
+          fantasyName: signUpValues.fantasyName,
+          cnpj: signUpValues.cnpj,
+          email: signUpValues.email
+        },
+        security: {
+          password: signUpValues.password,
+          confirmPassword: signUpValues.confirmPassword
+        }
+      });
+      handlePersistCompanyData(data.company);
       push('/admin');
       showToast('Empresa cadastrada com sucesso!', 'success');
     } catch (e) {

@@ -5,6 +5,8 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 
+import { Hydrate } from '@tanstack/react-query';
+
 import NextNProgress from 'nextjs-progressbar';
 
 import { ToastContainer } from 'react-toastify';
@@ -37,7 +39,9 @@ const MyApp = ({ Component, pageProps }: TAppPropsWithLayout) => {
             showOnShallow={true}
           />
           <AuthProviver>
-            {getLayout(<Component {...pageProps} />)}
+            <Hydrate state={pageProps.dehydratedState}>
+              {getLayout(<Component {...pageProps} />)}
+            </Hydrate>
           </AuthProviver>
         </MuiThemeProvider>
       </StyledThemeProvider>

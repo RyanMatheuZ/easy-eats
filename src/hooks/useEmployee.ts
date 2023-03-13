@@ -2,10 +2,9 @@ import { useCallback } from 'react';
 
 import type { AxiosResponse } from 'axios';
 
-import type { } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 
-import type { IParams, ICompany, IEmployee, IEmployeeForm } from '@ts/interfaces';
+import type { IParams, ICompany, IEmployee } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 
@@ -18,7 +17,7 @@ const useEmployee = () => {
   type ResponseEmployeeById = { employee: IEmployee; company: ICompany } | undefined
   type ResponseAllEmployees = { employees: IEmployee[]; totalCount: number } | undefined
 
-  const handleRegisterEmployee = useCallback(async (employeeValues: IEmployeeForm & { responsibleCnpj: string }) => {
+  const handleRegisterEmployee = useCallback(async (employeeValues: Omit<IEmployee, '_id' | 'token'>) => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/register`;
 
     try {

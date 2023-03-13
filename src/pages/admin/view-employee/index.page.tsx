@@ -58,7 +58,7 @@ const ViewEmployee: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Head title={company?.fantasyName as string} description={description} />
+      <Head title={company?.info?.fantasyName as string} description={description} />
       <Container>
         <StyledInput
           label="Nome"
@@ -76,10 +76,10 @@ const ViewEmployee: TNextPageWithLayout = () => {
                 onChange={handleChangePagination}
               />
             </PaginationContainer>
-            {data?.employees?.map(({ _id, firstName, surname, socialName, role }) => (
+            {data?.employees?.map((prop) => (
               <Link
-                key={_id}
-                href={`/admin/view-employee/${_id}`}
+                key={prop?._id}
+                href={`/admin/view-employee/${prop?._id}`}
                 legacyBehavior
                 passHref
               >
@@ -88,10 +88,9 @@ const ViewEmployee: TNextPageWithLayout = () => {
                     <EmployeeIcon />
                     <EmployeeCardBody>
                       <EmployeeName>
-                        {`${firstName} ${surname}`} {socialName && `(${socialName})`}
+                        {prop?.info?.firstName}
                       </EmployeeName>
                       <EmployeeRole>
-                        {role}
                       </EmployeeRole>
                     </EmployeeCardBody>
                   </EmployeeCard>
