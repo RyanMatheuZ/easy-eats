@@ -1,10 +1,9 @@
 import { useRef } from 'react';
 
-import type { NextPage } from 'next';
+import { type NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
 import type { IEmployee } from '@ts/interfaces';
 

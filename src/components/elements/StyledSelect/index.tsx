@@ -1,7 +1,6 @@
-import type { FC, HTMLAttributes } from 'react';
+import { type FC, type HTMLAttributes } from 'react';
 
-import type { SelectProps as MuiSelectProps } from '@mui/material';
-import { InputLabel, Select } from '@mui/material';
+import { InputLabel, Select, type SelectProps as MuiSelectProps } from '@mui/material';
 
 import { StyledFormControl } from './styles';
 

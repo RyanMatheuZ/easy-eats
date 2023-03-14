@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import type { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 
 import axiosInstance from '@services/axios';
 

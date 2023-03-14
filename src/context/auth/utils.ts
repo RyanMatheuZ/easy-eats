@@ -1,4 +1,4 @@
-import { IAuthContext } from '@ts/interfaces';
+import type { IAuthContext } from '@ts/interfaces';
 
 export const unauthenticatedRoutes: string[] = [
   '/welcome',

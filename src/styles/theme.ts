@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@mui/material/styles';
+import { createTheme, type Theme } from '@mui/material/styles';
 
 import { colors } from './colors';
 import { sizes, down, up, between } from './breakpoints';

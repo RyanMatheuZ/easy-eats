@@ -1,7 +1,6 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 
-import type { DefaultTheme } from 'styled-components';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { ThemeProvider as StyledThemeProvider, type DefaultTheme } from 'styled-components';
 
 import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 

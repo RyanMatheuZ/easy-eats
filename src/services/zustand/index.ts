@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
-import type { PersistOptions } from 'zustand/middleware';
-import { persist } from 'zustand/middleware';
+import { persist, type PersistOptions } from 'zustand/middleware';
 
 import type { IState, IActions } from '@ts/interfaces';
 

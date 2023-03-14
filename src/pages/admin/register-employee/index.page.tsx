@@ -1,8 +1,6 @@
-import type { ReactElement } from 'react';
-import { useRef } from 'react';
+import { useRef, type ReactElement } from 'react';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
 
@@ -25,8 +23,7 @@ import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
 
-import type { EmployeeFormValues } from './utils';
-import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
+import { head, employeeInitialValues, registerEmployeeSchema, type EmployeeFormValues } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
   const { description } = head;
@@ -61,7 +58,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
         state: employeeValues.state
       },
       company: {
-        cnpj: unformat(employeeValues.cpf)
+        cnpj: unformat(String(company?.info?.cnpj))
       },
       security: {
         password: defaultPassword,

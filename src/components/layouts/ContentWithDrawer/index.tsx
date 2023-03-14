@@ -1,5 +1,4 @@
-import type { FC, PropsWithChildren } from 'react';
-import { useState } from 'react';
+import { useState, type FC, type PropsWithChildren } from 'react';
 
 import { Button, Divider } from '@mui/material';
 

@@ -1,11 +1,10 @@
+import { useEffect, useContext, useCallback, createContext, type FC, type PropsWithChildren } from 'react';
+
 import { useRouter } from 'next/router';
 
-import type { FC, PropsWithChildren } from 'react';
-import { useEffect, useContext, useCallback, createContext } from 'react';
+import { type AxiosResponse } from 'axios';
 
-import type { AxiosResponse } from 'axios';
-
-import type { ICompany, IAuthContext, ISignIn, ISignUp } from '@ts/interfaces';
+import { type ICompany, type IAuthContext, type ISignIn, type ISignUp } from '@ts/interfaces';
 
 import axiosInstance from '@services/axios';
 

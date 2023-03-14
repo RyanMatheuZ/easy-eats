@@ -1,4 +1,4 @@
-import type { Theme, Palette, Breakpoints } from '@mui/material/styles';
+import { type Theme, type Palette, type Breakpoints } from '@mui/material/styles';
 
 declare module 'styled-components' {
   interface DefaultTheme extends Theme {

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import type { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
 
@@ -44,9 +44,9 @@ const useEmployee = () => {
     );
   }, []);
 
-  const handleGetAllEmployees = useCallback(({ page, limit, name }: IParams) => {
+  const handleGetAllEmployees = useCallback((companyCNPJ: string, { page, limit, name }: IParams) => {
     const PARAMS = `?page=${page}&limit=${limit}&name=${name}`;
-    const FORMATTED_ENDPOINT = `${ENDPOINT}/get-all${PARAMS}`;
+    const FORMATTED_ENDPOINT = `${ENDPOINT}/get-all/${companyCNPJ}${PARAMS}`;
 
     return useQuery(
       ['allEmployees', page, limit, name],

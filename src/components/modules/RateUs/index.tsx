@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { useState } from 'react';
+import { useState, type FC } from 'react';
 
 import { Container, Title, StarsContainer, StarIcon, SendRateButton } from './styles';
 

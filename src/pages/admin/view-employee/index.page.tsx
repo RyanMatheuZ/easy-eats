@@ -1,5 +1,4 @@
-import type { ReactElement, ChangeEvent } from 'react';
-import { useState } from 'react';
+import { useState, type ReactElement, type ChangeEvent } from 'react';
 
 import Link from 'next/link';
 
@@ -44,8 +43,9 @@ const ViewEmployee: TNextPageWithLayout = () => {
     name: ''
   });
 
-  const { data, isLoading, isFetched } = handleGetAllEmployees(params);
+  const { data, isLoading, isFetched } = handleGetAllEmployees(String(company?.info?.cnpj), params);
 
+  const hasEmployees = Number(data?.totalCount) > 0;
   const totalPages = Math.ceil(Number(data?.totalCount) / Number(params?.limit));
 
   const handleFilterByName = debounce((event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -66,7 +66,7 @@ const ViewEmployee: TNextPageWithLayout = () => {
           onChange={handleFilterByName}
         />
         <LoadingSpinner isLoading={isLoading || !isFetched} />
-        {(!isLoading && isFetched) && (
+        {(hasEmployees && !isLoading && isFetched) && (
           <>
             <PaginationContainer>
               <Pagination

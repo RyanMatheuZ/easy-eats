@@ -1,8 +1,6 @@
-import type { ReactElement } from 'react';
-import { useRef } from 'react';
+import { useRef, type ReactElement } from 'react';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
 
@@ -21,8 +19,7 @@ import {
 
 import { formatCNPJ } from '@utils/inputs/cnpj';
 
-import type { CompanyFormValues } from './utils';
-import { head, companyDataSchema } from './utils';
+import { head, companyDataSchema, type CompanyFormValues } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
   const { description } = head;
