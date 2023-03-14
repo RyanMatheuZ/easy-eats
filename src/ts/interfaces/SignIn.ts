@@ -1,8 +1,6 @@
-import type { ICompany } from '@ts/interfaces';
-
 interface ISignIn {
-  cnpj: ICompany['cnpj'];
-  password: ICompany['password'];
+  cnpj: string;
+  password: string;
 }
 
 export default ISignIn;
