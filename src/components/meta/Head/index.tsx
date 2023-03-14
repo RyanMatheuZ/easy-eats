@@ -1,8 +1,7 @@
-import type { FC } from 'react';
-
-import { useRouter } from 'next/router';
+import { type FC } from 'react';
 
 import HeadContainer from 'next/head';
+import { useRouter } from 'next/router';
 
 interface HeadProps {
   title: string;

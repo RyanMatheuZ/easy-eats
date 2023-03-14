@@ -1,4 +1,4 @@
-import type { Breakpoint as Devices } from '@mui/material';
+import { type Breakpoint as Devices } from '@mui/material';
 
 type Breakpoint = number | Devices;
 

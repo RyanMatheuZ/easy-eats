@@ -1,6 +1,6 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 
-import type { TextFieldProps as MuiTextFieldProps } from '@mui/material';
+import { type TextFieldProps as MuiTextFieldProps } from '@mui/material';
 
 import { Field } from 'formik';
 

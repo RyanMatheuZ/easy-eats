@@ -1,6 +1,6 @@
-import type { FC, HTMLAttributes } from 'react';
+import { type FC, type HTMLAttributes } from 'react';
 
-import type { SelectProps as MuiSelectProps } from '@mui/material';
+import { type SelectProps as MuiSelectProps } from '@mui/material';
 
 import { Field } from 'formik';
 

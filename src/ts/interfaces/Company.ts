@@ -1,17 +1,31 @@
-import type { IAddress, ICompanyOwner } from '@ts/interfaces';
+import type { IAddress } from '@ts/interfaces';
 
 interface ICompany {
   _id?: string;
   token?: string;
+  info?: ICompanyInfo;
+  address?: IAddress;
+  owner?: ICompanyOwner;
+  security?: ICompanySecurity;
+}
+
+interface ICompanyInfo {
   cnpj?: string;
   fantasyName?: string;
   corporateName?: string;
   email?: string;
+}
+
+interface ICompanyOwner {
+  firstName: string;
+  surname: string;
+  role: string
+}
+
+interface ICompanySecurity {
   password?: string;
   confirmPassword?: string;
-  address?: IAddress;
-  owner?: ICompanyOwner;
   accountCreatedAt?: Date;
 }
 
-export default ICompany;
+export type { ICompany, ICompanyInfo, ICompanyOwner, ICompanySecurity };

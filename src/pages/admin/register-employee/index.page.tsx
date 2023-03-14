@@ -1,11 +1,8 @@
-import type { ReactElement } from 'react';
-import { useRef } from 'react';
+import { useRef, type ReactElement } from 'react';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
-import type { IEmployeeForm } from '@ts/interfaces';
 
 import { useAuth } from '@context/auth';
 
@@ -26,34 +23,53 @@ import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { unformat } from '@utils/inputs/unformat';
 
-import { head, employeeInitialValues, registerEmployeeSchema } from './utils';
+import { head, employeeInitialValues, registerEmployeeSchema, type EmployeeFormValues } from './utils';
 
 const RegisterEmployee: TNextPageWithLayout = () => {
   const { description } = head;
 
-  const formikRef = useRef<FormikProps<IEmployeeForm> | null>();
+  const formikRef = useRef<FormikProps<EmployeeFormValues> | null>();
 
   const { company } = useAuth();
 
   const { handleRegisterEmployee } = useEmployee();
 
-  const onSubmit = (employeeValues: IEmployeeForm) => {
+  const onSubmit = (employeeValues: EmployeeFormValues) => {
     const defaultPassword = '12345678';
 
     handleRegisterEmployee({
-      ...employeeValues,
-      cpf: unformat(employeeValues.cpf),
-      cellPhone: unformat(employeeValues.cellPhone),
-      zipCode: unformat(String(employeeValues?.zipCode)),
-      responsibleCnpj: unformat(String(company?.cnpj)),
-      password: defaultPassword,
-      confirmPassword: defaultPassword
+      info: {
+        firstName: employeeValues.firstName,
+        surname: employeeValues.surname,
+        socialName: employeeValues.socialName,
+        cpf: unformat(employeeValues.cpf),
+        role: employeeValues.role,
+        email: employeeValues.email,
+        cellPhone: employeeValues.cellPhone,
+        dateOfBirth: employeeValues.dateOfBirth,
+        admissionDate: new Date()
+      },
+      address: {
+        zipCode: employeeValues.zipCode,
+        address: employeeValues.address,
+        district: employeeValues.district,
+        locationNumber: employeeValues.locationNumber,
+        city: employeeValues.city,
+        state: employeeValues.state
+      },
+      company: {
+        cnpj: unformat(String(company?.info?.cnpj))
+      },
+      security: {
+        password: defaultPassword,
+        confirmPassword: defaultPassword
+      }
     });
   };
 
   return (
     <>
-      <Head title={company?.fantasyName as string} description={description} />
+      <Head title={company?.info?.fantasyName as string} description={description} />
       <MaxWidthContainer>
         <Formik
           innerRef={(ref) => formikRef.current = ref}

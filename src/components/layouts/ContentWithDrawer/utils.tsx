@@ -1,4 +1,4 @@
-import type { CSSObject, Theme } from '@mui/material';
+import { type CSSObject, type Theme } from '@mui/material';
 
 export const openedMixin = (theme: Theme): CSSObject => ({
   overflowX: 'hidden',

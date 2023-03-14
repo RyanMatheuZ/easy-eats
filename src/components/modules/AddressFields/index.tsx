@@ -1,6 +1,6 @@
-import type { FC, ChangeEvent, MutableRefObject } from 'react';
+import { type FC, type ChangeEvent, type MutableRefObject } from 'react';
 
-import type { FormikProps } from 'formik';
+import { type FormikProps } from 'formik';
 
 import { MenuItem } from '@mui/material';
 

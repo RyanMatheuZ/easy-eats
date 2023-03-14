@@ -1,8 +1,6 @@
-import type { ReactElement } from 'react';
-import { useRef } from 'react';
+import { useRef, type ReactElement } from 'react';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
 
@@ -21,8 +19,7 @@ import {
 
 import { formatCNPJ } from '@utils/inputs/cnpj';
 
-import type { CompanyFormValues } from './utils';
-import { head, companyDataSchema } from './utils';
+import { head, companyDataSchema, type CompanyFormValues } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
   const { description } = head;
@@ -32,18 +29,18 @@ const CompanyData: TNextPageWithLayout = () => {
   const { company } = useAuth();
 
   const companyDataInitialValues: CompanyFormValues = {
-    fantasyName: '' ?? company?.fantasyName,
-    cnpj: '' ?? company?.cnpj,
-    email: '' ?? company?.email,
-    zipCode: '' ?? company?.address?.cep,
-    address: '' ?? company?.address?.logradouro,
-    district: '' ?? company?.address?.bairro,
-    locationNumber: '' ?? company?.address?.numeroDoLocal,
-    city: '' ?? company?.address?.localidade,
-    state: '' ?? company?.address?.uf,
-    firstName: '' ?? company?.owner?.firstName,
-    surname: '' ?? company?.owner?.surname,
-    role: '' ?? company?.owner?.role
+    fantasyName: company?.info?.fantasyName || '',
+    cnpj: company?.info?.cnpj || '',
+    email: company?.info?.email || '',
+    zipCode: company?.address?.zipCode || '',
+    address: company?.address?.address || '',
+    district: company?.address?.district || '',
+    locationNumber: company?.address?.locationNumber || '',
+    city: company?.address?.city || '',
+    state: company?.address?.state || '',
+    firstName: company?.owner?.firstName || '',
+    surname: company?.owner?.surname || '',
+    role: company?.owner?.role || ''
   };
 
   const onSubmit = () => {
@@ -52,7 +49,7 @@ const CompanyData: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Head title={company?.fantasyName as string} description={description} />
+      <Head title={company?.info?.fantasyName as string} description={description} />
       <MaxWidthContainer>
         <Formik
           innerRef={(ref) => formikRef.current = ref}

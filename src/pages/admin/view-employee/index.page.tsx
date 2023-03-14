@@ -1,5 +1,4 @@
-import type { ReactElement, ChangeEvent } from 'react';
-import { useState } from 'react';
+import { useState, type ReactElement, type ChangeEvent } from 'react';
 
 import Link from 'next/link';
 
@@ -44,8 +43,9 @@ const ViewEmployee: TNextPageWithLayout = () => {
     name: ''
   });
 
-  const { data, isLoading, isFetched } = handleGetAllEmployees(params);
+  const { data, isLoading, isFetched } = handleGetAllEmployees(String(company?.info?.cnpj), params);
 
+  const hasEmployees = Number(data?.totalCount) > 0;
   const totalPages = Math.ceil(Number(data?.totalCount) / Number(params?.limit));
 
   const handleFilterByName = debounce((event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -58,7 +58,7 @@ const ViewEmployee: TNextPageWithLayout = () => {
 
   return (
     <>
-      <Head title={company?.fantasyName as string} description={description} />
+      <Head title={company?.info?.fantasyName as string} description={description} />
       <Container>
         <StyledInput
           label="Nome"
@@ -66,7 +66,7 @@ const ViewEmployee: TNextPageWithLayout = () => {
           onChange={handleFilterByName}
         />
         <LoadingSpinner isLoading={isLoading || !isFetched} />
-        {(!isLoading && isFetched) && (
+        {(hasEmployees && !isLoading && isFetched) && (
           <>
             <PaginationContainer>
               <Pagination
@@ -76,10 +76,10 @@ const ViewEmployee: TNextPageWithLayout = () => {
                 onChange={handleChangePagination}
               />
             </PaginationContainer>
-            {data?.employees?.map(({ _id, firstName, surname, socialName, role }) => (
+            {data?.employees?.map((prop) => (
               <Link
-                key={_id}
-                href={`/admin/view-employee/${_id}`}
+                key={prop?._id}
+                href={`/admin/view-employee/${prop?._id}`}
                 legacyBehavior
                 passHref
               >
@@ -88,10 +88,9 @@ const ViewEmployee: TNextPageWithLayout = () => {
                     <EmployeeIcon />
                     <EmployeeCardBody>
                       <EmployeeName>
-                        {`${firstName} ${surname}`} {socialName && `(${socialName})`}
+                        {prop?.info?.firstName}
                       </EmployeeName>
                       <EmployeeRole>
-                        {role}
                       </EmployeeRole>
                     </EmployeeCardBody>
                   </EmployeeCard>

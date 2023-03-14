@@ -1,11 +1,9 @@
-import type { ICompany } from '@ts/interfaces';
-
 interface ISignUp {
-  cnpj: ICompany['cnpj'];
-  fantasyName: ICompany['fantasyName'];
-  email: ICompany['email'];
-  password: ICompany['password'];
-  confirmPassword: ICompany['confirmPassword'];
+  cnpj: string;
+  fantasyName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export default ISignUp;

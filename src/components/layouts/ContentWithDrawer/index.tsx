@@ -1,5 +1,4 @@
-import type { FC, PropsWithChildren } from 'react';
-import { useState } from 'react';
+import { useState, type FC, type PropsWithChildren } from 'react';
 
 import { Button, Divider } from '@mui/material';
 
@@ -21,8 +20,9 @@ const ContentWithDrawer: FC<PropsWithChildren> = ({ children }) => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const fantasyName = ''; // company?.fantasyName as string;
-  const ownerCompletedName = ''; // `${company?.owner?.firstName} ${company?.owner?.surname}`;
+  const fantasyName = String(company?.info?.fantasyName);
+  const hasOwnerCompletedName = !!company?.owner?.firstName && !!company?.owner?.surname;
+  const ownerCompletedName = hasOwnerCompletedName ? `${company?.owner?.firstName} ${company?.owner?.surname}` : '';
 
   const handleToggleDrawer = () => {
     setIsDrawerOpen((prevState) => !prevState);

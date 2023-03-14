@@ -1,6 +1,5 @@
-import type ICompany from './Company';
-import type ICompanyOwner from './CompanyOwner';
-import type { IEmployee, IEmployeeForm } from './Employee';
+import type { ICompany, ICompanyInfo, ICompanyOwner, ICompanySecurity } from './Company';
+import type { IEmployee, IEmployeeInfo, IEmployeeCompany, IEmployeeSecurity } from './Employee';
 import type IAuthContext from './AuthContext';
 import type ISignIn from './SignIn';
 import type ISignUp from './SignUp';
@@ -12,9 +11,13 @@ import type { IState, IActions } from './UseStore';
 
 export type {
   ICompany,
+  ICompanyInfo,
   ICompanyOwner,
+  ICompanySecurity,
   IEmployee,
-  IEmployeeForm,
+  IEmployeeInfo,
+  IEmployeeCompany,
+  IEmployeeSecurity,
   IAuthContext,
   ISignIn,
   ISignUp,

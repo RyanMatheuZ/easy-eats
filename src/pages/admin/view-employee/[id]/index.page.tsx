@@ -1,12 +1,11 @@
 import { useRef } from 'react';
 
-import type { NextPage } from 'next';
+import { type NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import type { FormikProps } from 'formik';
-import { Formik } from 'formik';
+import { Formik, type FormikProps } from 'formik';
 
-import type { IEmployee, IEmployeeForm } from '@ts/interfaces';
+import type { IEmployee } from '@ts/interfaces';
 
 import { TextField, StyledLabel, StyledButton } from '@components/elements';
 import {
@@ -23,6 +22,8 @@ import { formatCEP } from '@utils/inputs/cep';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { formatCPF } from '@utils/inputs/cpf';
 
+import { VieweEmployeeFormValues } from './utils';
+
 import { StyledFormContainer } from './styles';
 
 const EmployeeInfo: NextPage = () => {
@@ -30,7 +31,7 @@ const EmployeeInfo: NextPage = () => {
 
   const { id } = query;
 
-  const formikRef = useRef<FormikProps<Omit<IEmployeeForm, 'password' | 'confirmPassword'>> | null>();
+  const formikRef = useRef<FormikProps<VieweEmployeeFormValues> | null>();
 
   const { handleGetEmployeeById } = useEmployee();
 
@@ -38,21 +39,21 @@ const EmployeeInfo: NextPage = () => {
 
   const employee = data?.employee as IEmployee;
 
-  const employeeInitialValues: Omit<IEmployeeForm, 'password' | 'confirmPassword'> = {
-    firstName: employee?.firstName || '',
-    surname: employee?.surname || '',
-    socialName: employee?.socialName || '',
-    cpf: formatCPF(String(employee?.cpf)) || '',
-    role: employee?.role || '',
-    email: employee?.email || '',
-    cellPhone: formatCellPhone(String(employee?.cellPhone)) || '',
-    zipCode: formatCEP(String(employee?.address.cep)) || '',
-    address: employee?.address.logradouro || '',
-    district: employee?.address.bairro || '',
-    locationNumber: employee?.address.numeroDoLocal || '',
-    city: employee?.address.localidade || '',
-    state: employee?.address.uf || '',
-    dateOfBirth: employee?.dateOfBirth || new Date(),
+  const employeeInitialValues: VieweEmployeeFormValues = {
+    firstName: employee?.info.firstName || '',
+    surname: employee?.info.surname || '',
+    socialName: employee?.info.socialName || '',
+    cpf: formatCPF(String(employee?.info.cpf)) || '',
+    role: employee?.info.role || '',
+    email: employee?.info.email || '',
+    cellPhone: formatCellPhone(String(employee?.info.cellPhone)) || '',
+    zipCode: formatCEP(String(employee?.address.zipCode)) || '',
+    address: employee?.address.address || '',
+    district: employee?.address.district || '',
+    locationNumber: employee?.address.locationNumber || '',
+    city: employee?.address.city || '',
+    state: employee?.address.state || '',
+    dateOfBirth: employee?.info.dateOfBirth || new Date(),
   };
 
   return (

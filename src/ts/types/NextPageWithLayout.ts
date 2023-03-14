@@ -1,9 +1,11 @@
-import type { NextPage } from 'next';
+import { type ReactElement, type ReactNode } from 'react';
 
-import type { ReactElement, ReactNode } from 'react';
+import { type NextPage } from 'next';
+
+import { type DehydratedState } from '@tanstack/react-query';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-type TNextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+type TNextPageWithLayout<P = { dehydratedState: DehydratedState }, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
 }
 

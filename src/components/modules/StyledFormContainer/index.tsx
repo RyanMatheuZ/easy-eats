@@ -1,6 +1,6 @@
-import type { FC, PropsWithChildren } from 'react';
+import { type FC, type PropsWithChildren } from 'react';
 
-import type { FormikFormProps } from 'formik';
+import { type FormikFormProps } from 'formik';
 
 import { Container } from './styles';
 

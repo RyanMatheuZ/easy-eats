@@ -1,5 +1,4 @@
-import type { NextPage } from 'next';
-
+import { type NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { StyledButton } from '@components/elements';
