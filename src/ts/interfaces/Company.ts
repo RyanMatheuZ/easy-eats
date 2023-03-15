@@ -13,13 +13,14 @@ interface ICompany {
 interface ICompanyInfo {
   cnpj?: string;
   fantasyName?: string;
-  corporateName?: string;
+  companyName?: string;
   email?: string;
 }
 
 interface ICompanyOwner {
   firstName?: string;
   surname?: string;
+  cpf?: string;
   role?: string
 }
 
