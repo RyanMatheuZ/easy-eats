@@ -1,10 +1,11 @@
-import type { IAddress } from '@ts/interfaces';
+import type { IAddress, IRating } from '@ts/interfaces';
 
 interface ICompany {
   _id?: string;
   token?: string;
   info?: ICompanyInfo;
   address?: IAddress;
+  rating?: IRating;
   owner?: ICompanyOwner;
   security?: ICompanySecurity;
 }
@@ -17,9 +18,9 @@ interface ICompanyInfo {
 }
 
 interface ICompanyOwner {
-  firstName: string;
-  surname: string;
-  role: string
+  firstName?: string;
+  surname?: string;
+  role?: string
 }
 
 interface ICompanySecurity {
