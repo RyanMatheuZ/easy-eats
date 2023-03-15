@@ -38,6 +38,10 @@ export default createGlobalStyle(
       color: currentColor;
       text-decoration: none;
       border-bottom: 2px solid currentColor;
+
+      &:visited {
+        color: ${theme.palette.secondary.main};
+      }
     }
 
     ul,

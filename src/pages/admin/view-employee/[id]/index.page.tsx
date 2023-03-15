@@ -39,6 +39,8 @@ const EmployeeInfo: NextPage = () => {
 
   const { data, isLoading, isFetched } = handleGetEmployeeById(String(id));
 
+  const isLoadedAndFetched = !isLoading && isFetched;
+
   const employee = data?.employee as IEmployee;
 
   const employeeInitialValues: ViewEmployeeFormValues = {
@@ -66,10 +68,10 @@ const EmployeeInfo: NextPage = () => {
         $primary
       />
       <MaxWidthContainer>
-        {(isLoading && !isFetched) && (
+        {!isLoadedAndFetched && (
           <FormLoadingSkeleton />
         )}
-        {(!isLoading && isFetched) && (
+        {isLoadedAndFetched && (
           <Formik
             innerRef={(ref) => formikRef.current = ref}
             initialValues={employeeInitialValues}

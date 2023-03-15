@@ -17,6 +17,8 @@ import { LoadingSpinner, StyledInput } from '@components/elements';
 
 import { useEmployee } from '@hooks/index';
 
+import NoEmployees from './NoEmployees';
+
 import { head } from './utils';
 
 import {
@@ -45,6 +47,7 @@ const ViewEmployee: TNextPageWithLayout = () => {
 
   const { data, isLoading, isFetched } = handleGetAllEmployees(String(company?.info?.cnpj), params);
 
+  const isLoadedAndFetched = !isLoading && isFetched;
   const hasEmployees = Number(data?.totalCount) > 0;
   const totalPages = Math.ceil(Number(data?.totalCount) / Number(params?.limit));
 
@@ -60,13 +63,18 @@ const ViewEmployee: TNextPageWithLayout = () => {
     <>
       <Head title={company?.info?.fantasyName as string} description={description} />
       <Container>
-        <StyledInput
-          label="Nome"
-          fullWidth
-          onChange={handleFilterByName}
-        />
+        {(!hasEmployees && isLoadedAndFetched) && (
+          <NoEmployees />
+        )}
+        {hasEmployees && (
+          <StyledInput
+            label="Nome"
+            fullWidth
+            onChange={handleFilterByName}
+          />
+        )}
         <LoadingSpinner isLoading={isLoading || !isFetched} />
-        {(hasEmployees && !isLoading && isFetched) && (
+        {(hasEmployees && isLoadedAndFetched) && (
           <>
             <PaginationContainer>
               <Pagination
@@ -76,10 +84,10 @@ const ViewEmployee: TNextPageWithLayout = () => {
                 onChange={handleChangePagination}
               />
             </PaginationContainer>
-            {data?.employees?.map((prop) => (
+            {data?.employees?.map(({ _id, info }) => (
               <Link
-                key={prop?._id}
-                href={`/admin/view-employee/${prop?._id}`}
+                key={_id}
+                href={`/admin/view-employee/${_id}`}
                 legacyBehavior
                 passHref
               >
@@ -88,9 +96,10 @@ const ViewEmployee: TNextPageWithLayout = () => {
                     <EmployeeIcon />
                     <EmployeeCardBody>
                       <EmployeeName>
-                        {prop?.info?.firstName}
+                        {info?.firstName} {info?.surname} {info?.socialName && `(${info.socialName})`}
                       </EmployeeName>
                       <EmployeeRole>
+                        {info?.role}
                       </EmployeeRole>
                     </EmployeeCardBody>
                   </EmployeeCard>
