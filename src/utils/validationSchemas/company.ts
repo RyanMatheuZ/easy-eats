@@ -12,6 +12,14 @@ const schemas = {
       'Esse nome não pode ser numérico!',
       (value) => !hasOnlyNumbers(value || '')
     ),
+  companyName: Yup
+    .string()
+    .required('Você deve inserir o nome da empresa!')
+    .test(
+      'isValidCompanyName',
+      'Esse nome não pode ser numérico!',
+      (value) => !hasOnlyNumbers(value || '')
+    ),
   cnpj: Yup
     .string()
     .required('Você deve inserir o CNPJ!')
@@ -32,6 +40,7 @@ const schemas = {
 
 export const {
   fantasyName,
+  companyName,
   cnpj,
   password,
   confirmPassword

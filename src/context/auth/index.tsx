@@ -20,9 +20,7 @@ const AuthContext = createContext<IAuthContext>(authContextDefaultValues);
 const AuthProviver: FC<PropsWithChildren> = ({ children }) => {
   const { push, replace, asPath } = useRouter();
 
-  const [company, handlePersistCompanyData, handleCleanCompanyData] = useCompanyStore(
-    (state) => [state.company, state.handlePersistCompanyData, state.handleCleanCompanyData]
-  );
+  const { company, handlePersistCompanyData, handleCleanCompanyData } = useCompanyStore();
 
   const isCompanyDataPersisted = !!company;
   const isAuthenticatedCompany = isCompanyDataPersisted && !!unauthenticatedRoutes.includes(asPath);

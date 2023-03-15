@@ -17,7 +17,7 @@ const persistOptions: PersistOptions<IState & IActions> = {
 
 const useCompanyStore = create<IState & IActions>()(
   persist(
-    (set,) => ({
+    (set) => ({
       ...initialState,
       handlePersistCompanyData: (company) => set({ company: company }),
       handleCleanCompanyData: () => set(initialState)

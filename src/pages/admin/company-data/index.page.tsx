@@ -6,6 +6,8 @@ import type { TNextPageWithLayout } from '@ts/types';
 
 import { useAuth } from '@context/auth';
 
+import { useCompany } from '@hooks/index';
+
 import { TextField, StyledLabel, StyledButton } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
@@ -17,6 +19,7 @@ import {
   SubmitButtonContainer
 } from '@components/modules';
 
+import { formatCPF } from '@utils/inputs/cpf';
 import { formatCNPJ } from '@utils/inputs/cnpj';
 
 import { head, companyDataSchema, type CompanyFormValues } from './utils';
@@ -28,8 +31,11 @@ const CompanyData: TNextPageWithLayout = () => {
 
   const { company } = useAuth();
 
+  const { handleUpdateCompanyById } = useCompany();
+
   const companyDataInitialValues: CompanyFormValues = {
     fantasyName: company?.info?.fantasyName || '',
+    companyName: company?.info?.companyName || '',
     cnpj: company?.info?.cnpj || '',
     email: company?.info?.email || '',
     zipCode: company?.address?.zipCode || '',
@@ -40,11 +46,33 @@ const CompanyData: TNextPageWithLayout = () => {
     state: company?.address?.state || '',
     firstName: company?.owner?.firstName || '',
     surname: company?.owner?.surname || '',
+    cpf: company?.owner?.cpf || '',
     role: company?.owner?.role || ''
   };
 
-  const onSubmit = () => {
-    //
+  const onSubmit = (companyValues: CompanyFormValues) => {
+    handleUpdateCompanyById(String(company?._id), {
+      info: {
+        cnpj: companyValues.cnpj,
+        fantasyName: companyValues.fantasyName,
+        companyName: companyValues.companyName,
+        email: companyValues.email
+      },
+      address: {
+        zipCode: companyValues.zipCode as string,
+        address: companyValues.address as string,
+        district: companyValues.district as string,
+        locationNumber: companyValues.locationNumber as string,
+        city: companyValues.city as string,
+        state: companyValues.state as string
+      },
+      owner: {
+        firstName: companyValues.firstName,
+        surname: companyValues.surname,
+        cpf: companyValues.cpf,
+        role: companyValues.role
+      }
+    });
   };
 
   return (
@@ -66,7 +94,13 @@ const CompanyData: TNextPageWithLayout = () => {
                 name="fantasyName"
                 label="Nome fantasia"
                 fullWidth
-                disabled
+              />
+              <TextField
+                type="text"
+                dataTestId="company-name"
+                name="companyName"
+                label="Nome da empresa"
+                fullWidth
               />
               <TextField
                 type="tel" // Numeric keyboard without parsing to number
@@ -106,6 +140,14 @@ const CompanyData: TNextPageWithLayout = () => {
                   fullWidth
                 />
               </HalfToHalContainer>
+              <TextField
+                type="text"
+                dataTestId="cpf"
+                name="cpf"
+                label="CPF"
+                value={formatCPF(String(values.cpf))}
+                fullWidth
+              />
               <TextField
                 type="text"
                 dataTestId="role"
