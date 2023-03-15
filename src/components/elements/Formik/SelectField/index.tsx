@@ -6,6 +6,8 @@ import { Field } from 'formik';
 
 import StyledSelect from '../../StyledSelect';
 
+import ErrorMessage from '../ErrorMessage';
+
 import { Container } from '../styles';
 
 interface SelectDisplayProps extends HTMLAttributes<HTMLDivElement> {
@@ -20,6 +22,7 @@ type SelectFieldProps = MuiSelectProps & {
 const SelectField: FC<SelectFieldProps> = ({
   name,
   label,
+  dataTestId,
   required = false,
   fullWidth = false,
   ...props
@@ -35,6 +38,10 @@ const SelectField: FC<SelectFieldProps> = ({
         fullWidth={fullWidth}
         as={StyledSelect}
         {...props}
+      />
+      <ErrorMessage
+        name={name as string}
+        dataTestId={dataTestId}
       />
     </Container>
   );

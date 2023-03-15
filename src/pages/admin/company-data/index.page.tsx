@@ -57,7 +57,7 @@ const CompanyData: TNextPageWithLayout = () => {
           validationSchema={companyDataSchema}
           onSubmit={onSubmit}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, handleChange }) => (
             <StyledFormContainer>
               <StyledLabel>Informações gerais:</StyledLabel>
               <TextField
@@ -87,6 +87,7 @@ const CompanyData: TNextPageWithLayout = () => {
               <AddressFields
                 formikRef={formikRef}
                 setFieldValue={setFieldValue}
+                handleChange={handleChange}
               />
               <StyledLabel>Responsável:</StyledLabel>
               <HalfToHalContainer>
