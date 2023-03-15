@@ -1,6 +1,6 @@
 import { type FC, type ChangeEvent, type MutableRefObject } from 'react';
 
-import { type FormikProps } from 'formik';
+import { type FormikProps, type FormikHandlers } from 'formik';
 
 import { MenuItem } from '@mui/material';
 
@@ -15,10 +15,11 @@ import { formatCEP } from '@utils/inputs/cep';
 interface AddressFieldsProps {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   formikRef: MutableRefObject<FormikProps<any> | null | undefined>;
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void;
+  handleChange: FormikHandlers['handleChange'];
 }
 
-const AddressFields: FC<AddressFieldsProps> = ({ formikRef, setFieldValue }) => {
+const AddressFields: FC<AddressFieldsProps> = ({ formikRef, setFieldValue, handleChange }) => {
   const { handleGetAdress, isLoadingAddress } = useAddress();
 
   const handleCEPAutoComplete = (cep: string) => {
@@ -86,6 +87,7 @@ const AddressFields: FC<AddressFieldsProps> = ({ formikRef, setFieldValue }) => 
           name="state"
           label="Estado"
           fullWidth
+          onChange={handleChange}
           disabled={isLoadingAddress}
         >
           {states.map((state, index) => (

@@ -24,7 +24,7 @@ import { formatCPF } from '@utils/inputs/cpf';
 
 import FormLoadingSkeleton from './FormLoadingSkeleton';
 
-import { VieweEmployeeFormValues } from './utils';
+import { viewEmployeeSchema, type ViewEmployeeFormValues } from './utils';
 
 import { StyledFormContainer } from './styles';
 
@@ -33,7 +33,7 @@ const EmployeeInfo: NextPage = () => {
 
   const { id } = query;
 
-  const formikRef = useRef<FormikProps<VieweEmployeeFormValues> | null>();
+  const formikRef = useRef<FormikProps<ViewEmployeeFormValues> | null>();
 
   const { handleGetEmployeeById } = useEmployee();
 
@@ -41,7 +41,7 @@ const EmployeeInfo: NextPage = () => {
 
   const employee = data?.employee as IEmployee;
 
-  const employeeInitialValues: VieweEmployeeFormValues = {
+  const employeeInitialValues: ViewEmployeeFormValues = {
     firstName: employee?.info.firstName || '',
     surname: employee?.info.surname || '',
     socialName: employee?.info.socialName || '',
@@ -73,9 +73,10 @@ const EmployeeInfo: NextPage = () => {
           <Formik
             innerRef={(ref) => formikRef.current = ref}
             initialValues={employeeInitialValues}
+            validationSchema={viewEmployeeSchema}
             onSubmit={() => alert('')}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, handleChange }) => (
               <StyledFormContainer>
                 <StyledLabel>Informações gerais:</StyledLabel>
                 <HalfToHalContainer>
@@ -135,6 +136,7 @@ const EmployeeInfo: NextPage = () => {
                 <AddressFields
                   formikRef={formikRef}
                   setFieldValue={setFieldValue}
+                  handleChange={handleChange}
                 />
                 <SubmitButtonContainer>
                   <StyledButton

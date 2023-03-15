@@ -1,6 +1,6 @@
 import { useRef, type ReactElement } from 'react';
 
-import { Formik, type FormikProps } from 'formik';
+import { Formik, type FormikProps, type FormikHelpers } from 'formik';
 
 import type { TNextPageWithLayout } from '@ts/types';
 
@@ -34,10 +34,10 @@ const RegisterEmployee: TNextPageWithLayout = () => {
 
   const { handleRegisterEmployee } = useEmployee();
 
-  const onSubmit = (employeeValues: EmployeeFormValues) => {
+  const onSubmit = async (employeeValues: EmployeeFormValues, { resetForm }: FormikHelpers<EmployeeFormValues>) => {
     const defaultPassword = '12345678';
 
-    handleRegisterEmployee({
+    await handleRegisterEmployee({
       info: {
         firstName: employeeValues.firstName,
         surname: employeeValues.surname,
@@ -65,6 +65,8 @@ const RegisterEmployee: TNextPageWithLayout = () => {
         confirmPassword: defaultPassword
       }
     });
+
+    resetForm();
   };
 
   return (
@@ -77,7 +79,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
           validationSchema={registerEmployeeSchema}
           onSubmit={onSubmit}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, handleChange }) => (
             <StyledFormContainer>
               <StyledLabel>Informações gerais:</StyledLabel>
               <HalfToHalContainer>
@@ -137,6 +139,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
               <AddressFields
                 formikRef={formikRef}
                 setFieldValue={setFieldValue}
+                handleChange={handleChange}
               />
               <SubmitButtonContainer>
                 <StyledButton

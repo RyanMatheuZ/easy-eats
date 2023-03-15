@@ -10,7 +10,6 @@ const schemas = {
     .required('Você deve inserir um endereço!'),
   district: Yup
     .string()
-    .min(10, 'O bairro deve ter no mínimo 10 caracteres!')
     .required('Você deve inserir um bairro!'),
   locationNumber: Yup
     .string()
@@ -18,8 +17,11 @@ const schemas = {
     .optional(),
   city: Yup
     .string()
-    .min(5, 'A cidade deve ter no mínimo 5 caracteres!')
-    .required('Você deve inserir uma cidade!')
+    .min(5, 'A cidade deve ter no mínimo 3 caracteres!')
+    .required('Você deve inserir uma cidade!'),
+  state: Yup
+    .string()
+    .required('Você deve inserir um estado!')
 };
 
 export const {
@@ -27,5 +29,6 @@ export const {
   address,
   district,
   locationNumber,
-  city
+  city,
+  state
 } = schemas;

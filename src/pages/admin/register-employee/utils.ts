@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { zipCode, address, district, locationNumber, city } from '@utils/validationSchemas/address';
+import { zipCode, address, district, locationNumber, city, state } from '@utils/validationSchemas/address';
 import { email, cellPhone } from '@utils/validationSchemas/contacts';
 import { firstName, surname, socialName, cpf, role } from '@utils/validationSchemas/people';
 
@@ -60,5 +60,6 @@ export const registerEmployeeSchema = Yup.object().shape({
   address,
   district,
   locationNumber,
-  city
+  city,
+  state
 });
