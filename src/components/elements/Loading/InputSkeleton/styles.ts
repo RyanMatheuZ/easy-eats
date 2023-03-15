@@ -8,7 +8,7 @@ interface InputSkeleton {
 
 export const StyledSkeleton = styled(Skeleton).attrs({ variant: 'rounded' }) <InputSkeleton>`
   border-radius: 50px;
-  margin-top: ${({ theme }) => theme.spacing(1)};
+  margin-bottom: ${({ theme }) => theme.spacing(2)};
   width: ${({ $isFullWidth }) => $isFullWidth ? '100%' : '200px'};
   height: 50px;
 `;
