@@ -7,6 +7,7 @@ import type IAPIError from './APIError';
 import type IAPIErrorResponse from './APIErrorResponse';
 import type IAddress from './Address';
 import type IParams from './Params';
+import type IRating from './Rating';
 import type { IState, IActions } from './UseStore';
 
 export type {
@@ -25,6 +26,7 @@ export type {
   IAPIErrorResponse,
   IAddress,
   IParams,
+  IRating,
   IState,
   IActions
 };

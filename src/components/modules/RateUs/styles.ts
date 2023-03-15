@@ -32,7 +32,7 @@ export const StarIcon = styled(Star) <StarIconProps>`
   width: 30px;
 `;
 
-export const SendRateButton = styled(StyledButton)`
+export const SendRatingButton = styled(StyledButton)`
   margin-top: ${({ theme }) => theme.spacing(3)};
   padding: ${({ theme }) => theme.spacing(1)};
 
