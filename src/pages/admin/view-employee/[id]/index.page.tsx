@@ -22,6 +22,8 @@ import { formatCEP } from '@utils/inputs/cep';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { formatCPF } from '@utils/inputs/cpf';
 
+import FormLoadingSkeleton from './FormLoadingSkeleton';
+
 import { VieweEmployeeFormValues } from './utils';
 
 import { StyledFormContainer } from './styles';
@@ -64,6 +66,9 @@ const EmployeeInfo: NextPage = () => {
         $primary
       />
       <MaxWidthContainer>
+        {(isLoading && !isFetched) && (
+          <FormLoadingSkeleton />
+        )}
         {(!isLoading && isFetched) && (
           <Formik
             innerRef={(ref) => formikRef.current = ref}

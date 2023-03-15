@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { StyledFormContainer as FormContainer } from '@components/modules';
 
-export const StyledFormContainer = styled(FormContainer)`
+export const formContainerBaseStyles = css`
   background-color: ${({ theme }) => theme.palette.common.white};
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
   border-radius: 8px;
@@ -15,4 +15,8 @@ export const StyledFormContainer = styled(FormContainer)`
   @media ${({ theme }) => theme.breakpoints.down('tablet')} {
     position: relative;
   }
+`;
+
+export const StyledFormContainer = styled(FormContainer)`
+  ${formContainerBaseStyles};
 `;
