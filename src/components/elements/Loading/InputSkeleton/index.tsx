@@ -1,8 +1,12 @@
 import { type FC } from 'react';
 
-import { StyledSkeleton, type InputSkeleton } from './styles';
+import { StyledSkeleton } from './styles';
 
-const InputSkeleton: FC<InputSkeleton> = ({ $isFullWidth }) => {
+interface InputSkeletonProps {
+  $isFullWidth?: boolean;
+}
+
+const InputSkeleton: FC<InputSkeletonProps> = ({ $isFullWidth }) => {
   return (
     <StyledSkeleton $isFullWidth={$isFullWidth} />
   );

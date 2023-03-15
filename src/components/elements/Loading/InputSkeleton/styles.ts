@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Skeleton } from '@mui/material';
 
-export interface InputSkeleton {
+interface InputSkeleton {
   $isFullWidth?: boolean;
 }
 
