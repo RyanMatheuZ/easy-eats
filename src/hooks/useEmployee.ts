@@ -11,13 +11,16 @@ import axiosInstance from '@services/axios';
 import { catchError } from '@utils/error';
 import { success } from '@utils/success';
 
+type EmployeeRegisterValues = Omit<IEmployee, '_id' | 'token'>;
+type EmployeeUpdateValues = Omit<EmployeeRegisterValues, 'company' | 'security'>;
+
+type ResponseEmployeeById = { employee: IEmployee; company: ICompany } | undefined;
+type ResponseAllEmployees = { employees: IEmployee[]; totalCount: number } | undefined;
+
 const useEmployee = () => {
   const ENDPOINT = '/employee';
 
-  type ResponseEmployeeById = { employee: IEmployee; company: ICompany } | undefined
-  type ResponseAllEmployees = { employees: IEmployee[]; totalCount: number } | undefined
-
-  const handleRegisterEmployee = useCallback(async (employeeValues: Omit<IEmployee, '_id' | 'token'>) => {
+  const handleRegisterEmployee = useCallback(async (employeeValues: EmployeeRegisterValues) => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/register`;
 
     try {
@@ -28,11 +31,22 @@ const useEmployee = () => {
     }
   }, []);
 
-  const handleGetEmployeeById = useCallback((employeeId: string) => {
+  const handleUpdateEmployeeById = useCallback(async (employeeId: IEmployee['_id'], employeeValues: EmployeeUpdateValues) => {
+    const FORMATTED_ENDPOINT = `${ENDPOINT}/update-by-id/${employeeId}`;
+
+    try {
+      const response = await axiosInstance.patch(FORMATTED_ENDPOINT, employeeValues);
+      success(response);
+    } catch (e) {
+      catchError(e);
+    }
+  }, []);
+
+  const handleGetEmployeeById = useCallback((employeeId: IEmployee['_id']) => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/get-by-id/${employeeId}`;
 
     return useQuery(
-      ['employeeById', employeeId],
+      ['employee-by-id', employeeId],
       async (): Promise<ResponseEmployeeById> => {
         try {
           const { data }: AxiosResponse<ResponseEmployeeById> = await axiosInstance.get(FORMATTED_ENDPOINT);
@@ -49,7 +63,7 @@ const useEmployee = () => {
     const FORMATTED_ENDPOINT = `${ENDPOINT}/get-all/${companyCNPJ}${PARAMS}`;
 
     return useQuery(
-      ['allEmployees', page, limit, name],
+      ['all-employees', page, limit, name],
       async (): Promise<ResponseAllEmployees> => {
         try {
           const { data }: AxiosResponse<ResponseAllEmployees> = await axiosInstance.get(FORMATTED_ENDPOINT);
@@ -66,6 +80,7 @@ const useEmployee = () => {
 
   return {
     handleRegisterEmployee,
+    handleUpdateEmployeeById,
     handleGetEmployeeById,
     handleGetAllEmployees
   };
