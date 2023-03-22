@@ -3,9 +3,9 @@ import { useRef } from 'react';
 import { type NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { Formik, type FormikProps } from 'formik';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
-import type { IEmployee } from '@ts/interfaces';
+import { Formik, type FormikProps } from 'formik';
 
 import { TextField, StyledLabel, StyledButton } from '@components/elements';
 import {
@@ -35,13 +35,15 @@ const EmployeeInfo: NextPage = () => {
 
   const formikRef = useRef<FormikProps<ViewEmployeeFormValues> | null>();
 
-  const { handleGetEmployeeById } = useEmployee();
+  const queryClient = useQueryClient();
+
+  const { handleUpdateEmployeeById, handleGetEmployeeById } = useEmployee();
 
   const { data, isLoading, isFetched } = handleGetEmployeeById(String(id));
 
   const isLoadedAndFetched = !isLoading && isFetched;
 
-  const employee = data?.employee as IEmployee;
+  const employee = data?.employee;
 
   const employeeInitialValues: ViewEmployeeFormValues = {
     firstName: employee?.info.firstName || '',
@@ -60,6 +62,39 @@ const EmployeeInfo: NextPage = () => {
     dateOfBirth: employee?.info.dateOfBirth || new Date(),
   };
 
+  const { mutate } = useMutation(
+    (employeeValues: ViewEmployeeFormValues) => handleUpdateEmployeeById(String(employee?._id), {
+      info: {
+        firstName: employeeValues.firstName,
+        surname: employeeValues.surname,
+        socialName: employeeValues.socialName,
+        cpf: employeeValues.cpf,
+        role: employeeValues.role,
+        email: employeeValues.email,
+        cellPhone: employeeValues.cellPhone,
+        dateOfBirth: new Date(),
+        admissionDate: new Date()
+      },
+      address: {
+        zipCode: employeeValues.zipCode,
+        address: employeeValues.address,
+        district: employeeValues.district,
+        locationNumber: employeeValues.locationNumber,
+        city: employeeValues.city,
+        state: employeeValues.state
+      }
+    }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['all-employees']);
+      }
+    }
+  );
+
+  const onSubmit = (employeeValues: ViewEmployeeFormValues) => {
+    mutate(employeeValues);
+  };
+
   return (
     <>
       <HeaderWithBackButton
@@ -76,7 +111,7 @@ const EmployeeInfo: NextPage = () => {
             innerRef={(ref) => formikRef.current = ref}
             initialValues={employeeInitialValues}
             validationSchema={viewEmployeeSchema}
-            onSubmit={() => alert('')}
+            onSubmit={onSubmit}
           >
             {({ values, setFieldValue, handleChange }) => (
               <StyledFormContainer>
