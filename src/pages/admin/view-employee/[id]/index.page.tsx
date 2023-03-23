@@ -18,13 +18,12 @@ import {
 
 import { useEmployee } from '@hooks/index';
 
-import { formatCEP } from '@utils/inputs/cep';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { formatCPF } from '@utils/inputs/cpf';
 
 import FormLoadingSkeleton from './FormLoadingSkeleton';
 
-import { viewEmployeeSchema, type ViewEmployeeFormValues } from './utils';
+import { viewEmployeeSchema, getFormInitialValues, type ViewEmployeeFormValues } from './utils';
 
 import { StyledFormContainer } from './styles';
 
@@ -45,22 +44,7 @@ const EmployeeInfo: NextPage = () => {
 
   const employee = data?.employee;
 
-  const employeeInitialValues: ViewEmployeeFormValues = {
-    firstName: employee?.info.firstName || '',
-    surname: employee?.info.surname || '',
-    socialName: employee?.info.socialName || '',
-    cpf: formatCPF(String(employee?.info.cpf)) || '',
-    role: employee?.info.role || '',
-    email: employee?.info.email || '',
-    cellPhone: formatCellPhone(String(employee?.info.cellPhone)) || '',
-    zipCode: formatCEP(String(employee?.address.zipCode)) || '',
-    address: employee?.address.address || '',
-    district: employee?.address.district || '',
-    locationNumber: employee?.address.locationNumber || '',
-    city: employee?.address.city || '',
-    state: employee?.address.state || '',
-    dateOfBirth: employee?.info.dateOfBirth || new Date(),
-  };
+  const employeeInitialValues = getFormInitialValues(employee);
 
   const { mutate } = useMutation(
     (employeeValues: ViewEmployeeFormValues) => handleUpdateEmployeeById(String(employee?._id), {
