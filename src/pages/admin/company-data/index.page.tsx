@@ -22,7 +22,7 @@ import {
 import { formatCPF } from '@utils/inputs/cpf';
 import { formatCNPJ } from '@utils/inputs/cnpj';
 
-import { head, companyDataSchema, type CompanyFormValues } from './utils';
+import { head, companyDataSchema, getFormInitialValues, type CompanyFormValues } from './utils';
 
 const CompanyData: TNextPageWithLayout = () => {
   const { description } = head;
@@ -33,22 +33,7 @@ const CompanyData: TNextPageWithLayout = () => {
 
   const { handleUpdateCompanyById } = useCompany();
 
-  const companyDataInitialValues: CompanyFormValues = {
-    fantasyName: company?.info?.fantasyName || '',
-    companyName: company?.info?.companyName || '',
-    cnpj: company?.info?.cnpj || '',
-    email: company?.info?.email || '',
-    zipCode: company?.address?.zipCode || '',
-    address: company?.address?.address || '',
-    district: company?.address?.district || '',
-    locationNumber: company?.address?.locationNumber || '',
-    city: company?.address?.city || '',
-    state: company?.address?.state || '',
-    firstName: company?.owner?.firstName || '',
-    surname: company?.owner?.surname || '',
-    cpf: company?.owner?.cpf || '',
-    role: company?.owner?.role || ''
-  };
+  const companyDataInitialValues = getFormInitialValues(company);
 
   const onSubmit = (companyValues: CompanyFormValues) => {
     handleUpdateCompanyById(String(company?._id), {
@@ -59,12 +44,12 @@ const CompanyData: TNextPageWithLayout = () => {
         email: companyValues.email
       },
       address: {
-        zipCode: companyValues.zipCode as string,
-        address: companyValues.address as string,
-        district: companyValues.district as string,
-        locationNumber: companyValues.locationNumber as string,
-        city: companyValues.city as string,
-        state: companyValues.state as string
+        zipCode: companyValues.zipCode,
+        address: companyValues.address,
+        district: companyValues.district,
+        locationNumber: companyValues.locationNumber,
+        city: companyValues.city,
+        state: companyValues.state
       },
       owner: {
         firstName: companyValues.firstName,
