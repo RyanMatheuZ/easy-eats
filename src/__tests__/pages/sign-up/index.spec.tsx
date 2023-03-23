@@ -4,8 +4,6 @@ import { faker } from '@faker-js/faker';
 
 import { render, waitFor, fireEvent } from '@utils/tests';
 
-import type { ISignUp } from '@ts/interfaces';
-
 import axiosInstance from '@services/axios';
 
 import SignUp from '@pages/sign-up/index.page';
@@ -27,12 +25,16 @@ const { password, email } = faker.internet;
 const { name } = faker.company;
 
 const mockPassword = password(10);
-const FAKE_SIGN_UP_DATA: ISignUp = {
-  fantasyName: name(),
-  cnpj: '82514016000187',
-  email: email(),
-  password: mockPassword,
-  confirmPassword: mockPassword
+const FAKE_SIGN_UP_DATA = {
+  info: {
+    fantasyName: name(),
+    cnpj: '82514016000187',
+    email: email()
+  },
+  security: {
+    password: mockPassword,
+    confirmPassword: mockPassword
+  }
 };
 
 describe('Sign Up page', () => {
@@ -118,7 +120,8 @@ describe('Sign Up page', () => {
 
     const signUpButton = getByRole('button', { name: /Cadastrar-se/i });
 
-    const { fantasyName, cnpj, email, password, confirmPassword } = FAKE_SIGN_UP_DATA;
+    const { fantasyName, cnpj, email } = FAKE_SIGN_UP_DATA.info;
+    const { password, confirmPassword } = FAKE_SIGN_UP_DATA.security;
 
     fireEvent.change(fantasyNameField, {
       target: { value: fantasyName }

@@ -4,8 +4,6 @@ import { faker } from '@faker-js/faker';
 
 import { render, waitFor, fireEvent } from '@utils/tests';
 
-import type { ISignIn } from '@ts/interfaces';
-
 import axiosInstance from '@services/axios';
 
 import SignIn from '@pages/sign-in/index.page';
@@ -25,9 +23,13 @@ jest.mock('next/router', () => {
 
 const { password } = faker.internet;
 
-const FAKE_SIGN_IN_DATA: ISignIn = {
-  cnpj: '82514016000187',
-  password: password(10),
+const FAKE_SIGN_IN_DATA = {
+  info: {
+    cnpj: '82514016000187'
+  },
+  security: {
+    password: password(10)
+  }
 };
 
 describe('Sign In page', () => {
@@ -79,7 +81,8 @@ describe('Sign In page', () => {
 
     const signInButton = getByRole('button', { name: /Entrar/i });
 
-    const { cnpj, password } = FAKE_SIGN_IN_DATA;
+    const { cnpj } = FAKE_SIGN_IN_DATA.info;
+    const { password } = FAKE_SIGN_IN_DATA.security;
 
     fireEvent.change(cnpjField, {
       target: { value: cnpj }
