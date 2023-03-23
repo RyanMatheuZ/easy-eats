@@ -6,7 +6,6 @@ jobs:
   continuous-integration:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup project
         uses: actions/checkout@v3
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
