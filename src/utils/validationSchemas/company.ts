@@ -10,7 +10,7 @@ const schemas = {
     .test(
       'isValidFantasyName',
       'Esse nome não pode ser numérico!',
-      (value) => !hasOnlyNumbers(value || '')
+      (value) => !hasOnlyNumbers(String(value))
     ),
   companyName: Yup
     .string()
@@ -18,7 +18,7 @@ const schemas = {
     .test(
       'isValidCompanyName',
       'Esse nome não pode ser numérico!',
-      (value) => !hasOnlyNumbers(value || '')
+      (value) => !hasOnlyNumbers(String(value))
     ),
   cnpj: Yup
     .string()
@@ -26,7 +26,7 @@ const schemas = {
     .test(
       'isValidCNPJ',
       'Esse CNPJ não é válido!',
-      (value) => validateCNPJ(value || '')
+      (value) => validateCNPJ(String(value))
     ),
   password: Yup
     .string()
@@ -35,7 +35,7 @@ const schemas = {
   confirmPassword: Yup
     .string()
     .oneOf([Yup.ref('password')], 'As senhas não conferem!')
-    .required('Você deve confirmar a senha!'),
+    .required('Você deve confirmar a senha!')
 };
 
 export const {

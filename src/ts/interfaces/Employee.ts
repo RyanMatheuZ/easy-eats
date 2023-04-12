@@ -13,12 +13,15 @@ interface IEmployeeInfo {
   cpf: string;
   firstName: string;
   surname: string;
+  gender: string;
   socialName: string;
   email: string;
   cellPhone: string;
   dateOfBirth: Date;
   admissionDate: Date;
+  resignationDate?: Date;
   role: string;
+  salary: number;
 }
 
 interface IEmployeeCompany {

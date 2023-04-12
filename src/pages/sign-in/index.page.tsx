@@ -6,9 +6,9 @@ import type { ISignIn } from '@ts/interfaces';
 
 import { useAuth } from '@context/auth';
 
-import { TextField, StyledButton } from '@components/elements';
+import { TextField, SubmitButton } from '@components/elements';
 import { Head } from '@components/meta';
-import { BottomActions, HeaderWithBackButton, MaxWidthContainer, SubmitButtonContainer } from '@components/modules';
+import { BottomActions, HeaderWithBackButton, MaxWidthContainer } from '@components/modules';
 
 import { formatCNPJ } from '@utils/inputs/cnpj';
 import { unformat } from '@utils/inputs/unformat';
@@ -71,11 +71,7 @@ const SignIn: NextPage = () => {
                     label="Senha"
                     fullWidth
                   />
-                  <SubmitButtonContainer>
-                    <StyledButton type="submit">
-                      Entrar
-                    </StyledButton>
-                  </SubmitButtonContainer>
+                  <SubmitButton title="Entrar" />
                 </Form>
               )}
             </Formik>

@@ -1,4 +1,4 @@
-export const states = [
+export const states: ReadonlyArray<string> = [
   'AC', 'AL', 'AP',
   'AM', 'BA', 'CE',
   'DF', 'ES', 'GO',

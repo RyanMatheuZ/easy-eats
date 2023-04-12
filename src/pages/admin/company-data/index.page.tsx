@@ -8,15 +8,14 @@ import { useAuth } from '@context/auth';
 
 import { useCompany } from '@hooks/index';
 
-import { TextField, StyledLabel, StyledButton } from '@components/elements';
+import { TextField, SubmitButton, StyledLabel } from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
 import {
   AddressFields,
-  HalfToHalContainer,
+  HalfToHalfContainer,
   MaxWidthContainer,
-  StyledFormContainer,
-  SubmitButtonContainer
+  StyledFormContainer
 } from '@components/modules';
 
 import { formatCPF } from '@utils/inputs/cpf';
@@ -109,7 +108,7 @@ const CompanyData: TNextPageWithLayout = () => {
                 handleChange={handleChange}
               />
               <StyledLabel>Responsável:</StyledLabel>
-              <HalfToHalContainer>
+              <HalfToHalfContainer>
                 <TextField
                   type="text"
                   dataTestId="first-name"
@@ -124,7 +123,7 @@ const CompanyData: TNextPageWithLayout = () => {
                   label="Sobrenome"
                   fullWidth
                 />
-              </HalfToHalContainer>
+              </HalfToHalfContainer>
               <TextField
                 type="text"
                 dataTestId="cpf"
@@ -140,14 +139,10 @@ const CompanyData: TNextPageWithLayout = () => {
                 label="Cargo/função"
                 fullWidth
               />
-              <SubmitButtonContainer>
-                <StyledButton
-                  $primary
-                  type="submit"
-                >
-                  Atualizar dados
-                </StyledButton>
-              </SubmitButtonContainer>
+              <SubmitButton
+                title="Atualizar dados"
+                $primary
+              />
             </StyledFormContainer>
           )}
         </Formik>

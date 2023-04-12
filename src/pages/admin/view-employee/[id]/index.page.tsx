@@ -3,23 +3,34 @@ import { useRef } from 'react';
 import { type NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import { MenuItem } from '@mui/material';
+
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { Formik, type FormikProps } from 'formik';
 
-import { TextField, StyledLabel, StyledButton } from '@components/elements';
+import {
+  DateField,
+  TextField,
+  SelectField,
+  SubmitButton,
+  StyledAdornment,
+  StyledLabel
+} from '@components/elements';
 import {
   AddressFields,
-  HalfToHalContainer,
+  HalfToHalfContainer,
   HeaderWithBackButton,
   MaxWidthContainer,
-  SubmitButtonContainer
+  ThreeThirdContainer
 } from '@components/modules';
 
 import { useEmployee } from '@hooks/index';
 
 import { formatCellPhone } from '@utils/inputs/cellPhone';
 import { formatCPF } from '@utils/inputs/cpf';
+import { formatMoney } from '@utils/inputs/money';
+import { genders } from '@utils/datas/genders';
 
 import FormLoadingSkeleton from './FormLoadingSkeleton';
 
@@ -51,13 +62,16 @@ const EmployeeInfo: NextPage = () => {
       info: {
         firstName: employeeValues.firstName,
         surname: employeeValues.surname,
+        gender: employeeValues.gender,
         socialName: employeeValues.socialName,
         cpf: employeeValues.cpf,
+        dateOfBirth: employeeValues.dateOfBirth,
+        admissionDate: employeeValues.admissionDate,
+        resignationDate: employeeValues.resignationDate,
         role: employeeValues.role,
+        salary: formatMoney(employeeValues.salary).numericValue,
         email: employeeValues.email,
-        cellPhone: employeeValues.cellPhone,
-        dateOfBirth: new Date(),
-        admissionDate: new Date()
+        cellPhone: employeeValues.cellPhone
       },
       address: {
         zipCode: employeeValues.zipCode,
@@ -70,7 +84,7 @@ const EmployeeInfo: NextPage = () => {
     }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['all-employees']);
+        queryClient.invalidateQueries();
       }
     }
   );
@@ -100,7 +114,7 @@ const EmployeeInfo: NextPage = () => {
             {({ values, setFieldValue, handleChange }) => (
               <StyledFormContainer>
                 <StyledLabel>Informações gerais:</StyledLabel>
-                <HalfToHalContainer>
+                <HalfToHalfContainer>
                   <TextField
                     type="text"
                     dataTestId="first-name"
@@ -115,7 +129,23 @@ const EmployeeInfo: NextPage = () => {
                     label="Sobrenome"
                     fullWidth
                   />
-                </HalfToHalContainer>
+                </HalfToHalfContainer>
+                <SelectField
+                  dataTestId="gender"
+                  name="gender"
+                  label="Gênero"
+                  fullWidth
+                  onChange={handleChange}
+                >
+                  {genders.map((gender, index) => (
+                    <MenuItem
+                      key={`gender${index}`}
+                      value={gender}
+                    >
+                      {gender}
+                    </MenuItem>
+                  ))}
+                </SelectField>
                 <TextField
                   type="text"
                   dataTestId="social-name"
@@ -131,12 +161,43 @@ const EmployeeInfo: NextPage = () => {
                   value={formatCPF(String(values.cpf))}
                   fullWidth
                 />
+                <ThreeThirdContainer>
+                  <DateField
+                    dataTestId="date-of-birth"
+                    name="dateOfBirth"
+                    label="Data de nascimento"
+                    fullWidth
+                  />
+                  <DateField
+                    dataTestId="admission-date"
+                    name="admissionDate"
+                    label="Data de admissão"
+                    fullWidth
+                  />
+                  <DateField
+                    dataTestId="resignation-date"
+                    name="resignationDate"
+                    label="Data de demissão"
+                    fullWidth
+                  />
+                </ThreeThirdContainer>
                 <TextField
                   type="text"
                   dataTestId="role"
                   name="role"
                   label="Cargo/função"
                   fullWidth
+                />
+                <TextField
+                  type="tel" // Numeric keyboard without parsing to number
+                  dataTestId="salary"
+                  name="salary"
+                  label="Salário"
+                  value={formatMoney(values.salary).formattedTypingValue}
+                  fullWidth
+                  InputProps={{
+                    startAdornment: <StyledAdornment position="start">R$</StyledAdornment>,
+                  }}
                 />
                 <StyledLabel>Contatos:</StyledLabel>
                 <TextField
@@ -159,14 +220,10 @@ const EmployeeInfo: NextPage = () => {
                   setFieldValue={setFieldValue}
                   handleChange={handleChange}
                 />
-                <SubmitButtonContainer>
-                  <StyledButton
-                    $primary
-                    type="submit"
-                  >
-                    Atualizar dados
-                  </StyledButton>
-                </SubmitButtonContainer>
+                <SubmitButton
+                  title="Atualizar dados"
+                  $primary
+                />
               </StyledFormContainer>
             )}
           </Formik>
