@@ -2,26 +2,36 @@ import { useRef, type ReactElement } from 'react';
 
 import { Formik, type FormikProps, type FormikHelpers } from 'formik';
 
+import { MenuItem } from '@mui/material';
+
 import type { TNextPageWithLayout } from '@ts/types';
 
 import { useAuth } from '@context/auth';
 
 import { useEmployee } from '@hooks/index';
 
-import { TextField, StyledLabel, StyledButton } from '@components/elements';
+import {
+  DateField,
+  TextField,
+  SelectField,
+  SubmitButton,
+  StyledAdornment,
+  StyledLabel
+} from '@components/elements';
 import { ContentWithDrawer } from '@components/layouts';
 import { Head } from '@components/meta';
 import {
   AddressFields,
-  HalfToHalContainer,
+  HalfToHalfContainer,
   MaxWidthContainer,
-  StyledFormContainer,
-  SubmitButtonContainer
+  StyledFormContainer
 } from '@components/modules';
 
 import { formatCPF } from '@utils/inputs/cpf';
 import { formatCellPhone } from '@utils/inputs/cellPhone';
+import { formatMoney } from '@utils/inputs/money';
 import { unformat } from '@utils/inputs/unformat';
+import { genders } from '@utils/datas/genders';
 
 import { head, employeeInitialValues, registerEmployeeSchema, type EmployeeFormValues } from './utils';
 
@@ -34,20 +44,22 @@ const RegisterEmployee: TNextPageWithLayout = () => {
 
   const { handleRegisterEmployee } = useEmployee();
 
-  const onSubmit = async (employeeValues: EmployeeFormValues, { resetForm }: FormikHelpers<EmployeeFormValues>) => {
+  const onSubmit = (employeeValues: EmployeeFormValues, { resetForm }: FormikHelpers<EmployeeFormValues>) => {
     const defaultPassword = '12345678';
 
-    await handleRegisterEmployee({
+    handleRegisterEmployee({
       info: {
         firstName: employeeValues.firstName,
         surname: employeeValues.surname,
+        gender: employeeValues.gender,
         socialName: employeeValues.socialName,
         cpf: unformat(employeeValues.cpf),
         role: employeeValues.role,
         email: employeeValues.email,
         cellPhone: employeeValues.cellPhone,
         dateOfBirth: employeeValues.dateOfBirth,
-        admissionDate: new Date()
+        admissionDate: employeeValues.admissionDate,
+        salary: formatMoney(employeeValues.salary).numericValue
       },
       address: {
         zipCode: employeeValues.zipCode,
@@ -64,9 +76,8 @@ const RegisterEmployee: TNextPageWithLayout = () => {
         password: defaultPassword,
         confirmPassword: defaultPassword
       }
-    });
-
-    resetForm();
+    })
+      .then(() => resetForm());
   };
 
   return (
@@ -82,7 +93,7 @@ const RegisterEmployee: TNextPageWithLayout = () => {
           {({ values, setFieldValue, handleChange }) => (
             <StyledFormContainer>
               <StyledLabel>Informações gerais:</StyledLabel>
-              <HalfToHalContainer>
+              <HalfToHalfContainer>
                 <TextField
                   type="text"
                   dataTestId="first-name"
@@ -97,7 +108,23 @@ const RegisterEmployee: TNextPageWithLayout = () => {
                   label="Sobrenome"
                   fullWidth
                 />
-              </HalfToHalContainer>
+              </HalfToHalfContainer>
+              <SelectField
+                dataTestId="gender"
+                name="gender"
+                label="Gênero"
+                fullWidth
+                onChange={handleChange}
+              >
+                {genders.map((gender, index) => (
+                  <MenuItem
+                    key={`gender${index}`}
+                    value={gender}
+                  >
+                    {gender}
+                  </MenuItem>
+                ))}
+              </SelectField>
               <TextField
                 type="text"
                 dataTestId="social-name"
@@ -113,12 +140,37 @@ const RegisterEmployee: TNextPageWithLayout = () => {
                 value={formatCPF(String(values.cpf))}
                 fullWidth
               />
+              <HalfToHalfContainer>
+                <DateField
+                  dataTestId="date-of-birth"
+                  name="dateOfBirth"
+                  label="Data de nascimento"
+                  fullWidth
+                />
+                <DateField
+                  dataTestId="admission-date"
+                  name="admissionDate"
+                  label="Data de admissão"
+                  fullWidth
+                />
+              </HalfToHalfContainer>
               <TextField
                 type="text"
                 dataTestId="role"
                 name="role"
                 label="Cargo/função"
                 fullWidth
+              />
+              <TextField
+                type="tel" // Numeric keyboard without parsing to number
+                dataTestId="salary"
+                name="salary"
+                label="Salário"
+                value={formatMoney(values.salary).formattedTypingValue}
+                fullWidth
+                InputProps={{
+                  startAdornment: <StyledAdornment position="start">R$</StyledAdornment>,
+                }}
               />
               <StyledLabel>Contatos:</StyledLabel>
               <TextField
@@ -141,14 +193,10 @@ const RegisterEmployee: TNextPageWithLayout = () => {
                 setFieldValue={setFieldValue}
                 handleChange={handleChange}
               />
-              <SubmitButtonContainer>
-                <StyledButton
-                  $primary
-                  type="submit"
-                >
-                  Salvar dados
-                </StyledButton>
-              </SubmitButtonContainer>
+              <SubmitButton
+                title="Salvar dados"
+                $primary
+              />
             </StyledFormContainer>
           )}
         </Formik>

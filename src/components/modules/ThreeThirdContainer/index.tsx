@@ -2,7 +2,7 @@ import { type FC, type PropsWithChildren } from 'react';
 
 import { Container } from './styles';
 
-const SubmitButtonContainer: FC<PropsWithChildren> = ({ children }) => {
+const ThreeThirdContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Container>
       {children}
@@ -10,4 +10,4 @@ const SubmitButtonContainer: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
-export default SubmitButtonContainer;
+export default ThreeThirdContainer;

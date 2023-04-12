@@ -1,4 +1,4 @@
-export const messages = [
+export const messages: ReadonlyArray<string> = [
   // Acknowledgment
   'Obrigado por escolher nos escolher. Estamos aqui para ajudá-lo a fazer seu negócio crescer!',
   'Estamos animados para ajudá-lo a gerenciar seu negócio de forma eficiente!',
